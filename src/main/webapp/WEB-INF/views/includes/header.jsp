@@ -132,17 +132,16 @@
 			<nav id="nav3">
 				<div class="home">
 					<a href="/main/main">
-						<img src="https://futsalhaja.s3.ap-northeast-2.amazonaws.com/free/0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20221228T142104Z&X-Amz-SignedHeaders=host&X-Amz-Expires=43200&X-Amz-Credential=AKIAUNIOIJTP2IMYO7NA%2F20221228%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=1bc2fb056e89b9d03498ff7abae683760436be905cfc9b82fde739e5c3943a39" alt="">
+						<img src="https://ifh.cc/g/PQ7QMk.png" alt="">
 					</a>
 				</div>
 			   	<ul class="menu-bottom">
-				  	<li><a href="#">New</a></li>
-					<li><a href="#">CUTAIN</a></li>
+				  	<li><a href="#">NEW</a></li>
+					<li><a href="#">FURNITURE</a></li>
 					<li><a href="#">BEDDING</a></li>
 					<li><a href="#">LIVING FABRIC</a></li>
 					<li><a href="#">KITCHEN</a></li>
 					<li><a href="#">DECO</a></li>
-					<li><a href="#">KIDS</a></li>
 					<li><a href="#">PETS</a></li>
 			    </ul>
 			</nav>
