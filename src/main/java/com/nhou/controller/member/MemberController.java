@@ -19,13 +19,13 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	@GetMapping("signup")
+	@GetMapping("join")
 	public void insert() {
 		//singup.jsp로 이동
 	}
 	
 	//@InitBinder //날짜를 bean(vo)에 매핑할때 form에 입력된 날짜는 String형인데 bean의 날짜변수 타입은 Date 타입이라면 typeMisMatch 오류
-	@PostMapping("signup")
+	@PostMapping("join")
 	public String insert(MemberDto member) {
 		memberService.signupMember(member);
 		
