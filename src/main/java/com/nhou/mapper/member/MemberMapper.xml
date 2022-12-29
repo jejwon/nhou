@@ -6,8 +6,8 @@
  <!-- 회원가입 정보 저장 -->
  <insert id="insertMember">
  INSERT INTO member 
- (userId, userName, password, nickName, email, birthDate, address, phone, auth, insertDatetime)
+ (userId, userName, password, nickName, email, birthDate, address, phone)
  VALUES
- (#{userId}, #{userName}, #{password}, #{nickName}, #{email}, #{birthDate}, #{address}, #{phone}, #{auth}, #{insertDatetime})
+ (#{userId}, #{userName}, #{password}, #{nickName}, #{email}, #{birthDate}, #{address}, #{phone})
 </insert>
  </mapper>

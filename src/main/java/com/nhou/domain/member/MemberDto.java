@@ -1,6 +1,9 @@
 package com.nhou.domain.member;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -14,10 +17,10 @@ public class MemberDto {
 	private String email;
 	private String nickName;
 	private String address;
-	private String auth;
-	
-	private int birthDate;
-	private int phone;
+	private String phone;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date birthDate;
+	private int auth; //admin: 0/ user: 1/ seller: 2
 
-	private String insertDatetime;
+	private LocalDateTime insertDatetime;
 }
