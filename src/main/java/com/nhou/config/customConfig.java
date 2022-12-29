@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
@@ -66,11 +67,14 @@ public class customConfig {
 	
 	// 로그인 성공 실패 
 	@Bean
-	public org.springframework.security.web.SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests().antMatchers("/css/**", "/js/**", "/images/**").permitAll();
-		http.formLogin().loginPage("/member/login").defaultSuccessUrl("/main/list", true);// 로그인 성공하면  메인 리스트로. 
-		http.logout().logoutUrl("/member/logout").logoutSuccessUrl("/main/list");
-		http.csrf().disable(); // 원래는 이러면 안됌, 모든 페이지에 csrf공격 보안적용을 해제중!!!!!!  
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf().disable(); // CSRF 공격에 대한 방어를 해제(xxx)
+		http.authorizeHttpRequests() //URI에 따른 페이지에 대한 권한을 부여하기 위해 시작하는 메소드,antMatchers 기능을 이용하기 위한 메소드
+			.antMatchers("/css/**", "/js/**", "/images/**") //특정 URL 접근 시 인가가 필요한 URI를 설정
+			.permitAll();//특정 URI을 제외한 나머지 URI은 전부 인가
+		http.formLogin() //아이디와 비밀번호를 입력해서 들어오는 로그인 형태를 지원
+			.loginPage("/member/login").defaultSuccessUrl("/member/join", true);// 로그인 성공하면  메인으로. 
+		http.logout().logoutUrl("/member/logout").logoutSuccessUrl("/main/main");
 		http.rememberMe(); // 브라우저를 닫아도 쿠키를 저장 시킴 
 		
 		return http.build();

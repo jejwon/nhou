@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.net.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,6 +117,13 @@
 <link rel="stylesheet" href="includes/header.jsp">
 </head>
 <body>
+	<sec:authorize access="isAuthenticated()">
+		<h1>로그인됨!</h1>
+	</sec:authorize>
+	<sec:authorize access="not isAuthenticated()">
+		<h1>로그인 안됨!</h1>
+	</sec:authorize>
+
 	<div id="wrap">
 		<div id="header">
 			<div id="loginBar">
