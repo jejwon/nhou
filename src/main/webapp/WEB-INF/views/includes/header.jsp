@@ -120,9 +120,9 @@
 		<div id="header">
 			<div id="loginBar">
 				<ul id="menu-top"  class="top">
-					<li><a href="#" >LOGIN</a></li>
-					<li><a href="#">JOIN</a></li>
-					<li><a href="#">MYPAGE</a></li>
+					<li><a href="/member/login" >LOGIN</a></li>
+					<li><a href="/member/join">JOIN</a></li>
+					<li><a href="/myPage/myPageList">MYPAGE</a></li>
 					<li><a href="#">CART</a></li>
 					<li><a href="/board/boardList">CUMMUNITY</a></li>
 				</ul>

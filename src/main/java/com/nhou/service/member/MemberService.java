@@ -6,4 +6,6 @@ public interface MemberService {
 
 	int signupMember(MemberDto member);
 
+
+
 }
