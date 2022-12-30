@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.net.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
+<%@ include file = "../includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +13,7 @@
 </head>
 <body>
 	<div class="container" style="background-color:pink;">
-		<h1>회원가입</h1>
+		<h1>정보 수정</h1>
 		<form action="" method="post">
 		<input type="hidden" value="${member.userId }">
 		<div class="form-floating">
