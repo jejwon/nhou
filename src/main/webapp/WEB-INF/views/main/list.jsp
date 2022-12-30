@@ -20,7 +20,7 @@
 	  
 	    <div class="carousel-item active" data-bs-interval="10000">
             <a href="#">
-                <img src="https://pixabay.com/images/id-3346192/" class="d-block w-100" alt="..." style="max-width:100%; height:500px;">
+                <img src="..." class="d-block w-100" alt="..." style="max-width:100%; height:500px;">
             </a> 
 	    </div>
 	    
