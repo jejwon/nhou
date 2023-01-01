@@ -16,9 +16,9 @@ public class AdminController {
 	private MemberService memberService;
 	
 	@GetMapping("memberInfo")
-	public void info(Model model) {
-
+	public void list(Model model) {
 		model.addAttribute("memberList", memberService.list());
+		//System.out.println(model);
 	}
 	
 	@GetMapping("QnAList")

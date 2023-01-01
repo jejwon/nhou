@@ -26,9 +26,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 		
 		
 		
-		String encodedPw = passwordEncoder.encode(username + "pw");
+		//String encodedPw = passwordEncoder.encode(username + "pw");
+		MemberDto member = memberMapper.selectById(username);
 		
-		User user = new User(username, encodedPw, List.of());
+		if(member == null) {
+			return null;
+		}
+		//String encodedPw =  passwordEncoder.encode(member.getPassword());
+		User user = new User(member.getUserId(), member.getPassword(), List.of());
 		
 		return user;
 	}
