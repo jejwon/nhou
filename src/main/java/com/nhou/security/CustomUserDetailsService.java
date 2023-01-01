@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.nhou.domain.member.MemberDto;
 import com.nhou.mapper.member.MemberMapper;
 
 @Component //빈을 만들기 위해 컴포넌 :  Bean이 되어야 스프링이 알아보고 UserDetailsService 를 사용한다.
@@ -22,6 +23,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+		
+		
+		
 		String encodedPw = passwordEncoder.encode(username + "pw");
 		
 		User user = new User(username, encodedPw, List.of());

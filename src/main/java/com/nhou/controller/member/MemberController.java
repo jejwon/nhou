@@ -1,11 +1,13 @@
 package com.nhou.controller.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +34,7 @@ public class MemberController {
 	
 	//@InitBinder //날짜를 bean(vo)에 매핑할때 form에 입력된 날짜는 String형인데 bean의 날짜변수 타입은 Date 타입이라면 typeMisMatch 오류
 	@PostMapping("join")
-	public String insert(MemberDto member) {
+	public String insert(MemberDto member) { //회원가입
 	//String rawPassword = member.getPassword();	
 		//static으로 선언되지 않은 메서드나 필드를 참조할 수 없다는 오류
 		//다른 멤버보다 static 멤버가 먼저 컴파일됨
@@ -54,5 +56,11 @@ public class MemberController {
 		
 	}
 	
+	@GetMapping("modify")
+	public void getById(String userId, Model model) {
+		model.addAttribute("member", memberService.getById(userId));
+	}
+	
+
 	
 }

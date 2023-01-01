@@ -1,5 +1,7 @@
 package com.nhou.service.member;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +16,15 @@ public class MemberServiceImpl implements MemberService{
 	public int signupMember(MemberDto member) {
 		int cnt = memberMapper.insertMember(member);
 		return cnt;
+	}
+	
+	@Override
+	public MemberDto getById(String userId) {
+		return memberMapper.selectById(userId);
+	}
+	
+	@Override
+	public List<MemberDto> list(){
+		return memberMapper.selectAll();
 	}
 }
