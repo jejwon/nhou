@@ -10,4 +10,46 @@
  VALUES
  (#{userId}, #{userName}, #{password}, #{nickName}, #{email}, #{birthDate}, #{address}, #{phone})
 </insert>
+
+<select id="selectById" resultMap="memberMap">
+	SELECT 
+		userId,
+		userName, 
+		password, 
+		nickName, 
+		email, 
+		birthDate, 
+		address, 
+		phone
+	FROM
+		member 
+	WHERE
+		userId = #{userId}
+	</select>
+	
+	<resultMap type="com.nhou.domain.member.MemberDto" id="memberMap">
+		<id column="userId" property="userId"></id>
+		<result column="userName" property="userName"/>
+		<result column="password" property="password"/>
+		<result column="nickName" property="nickName"/>
+		<result column="email" property="email"/>
+		<result column="birthDate" property="birthDate"/>
+		<result column="address" property="address"/>
+		<result column="phone" property="phone"/>
+		<!-- <collection property="auth" ofType="string">
+			<result column="auth" property="auth"/>
+		</collection> -->
+	</resultMap>
+	
+	<select id="selectAll" resultType="com.nhou.domain.member.MemberDto">
+	SELECT 
+		userId,
+		userName, 
+		'숨김' password, 
+		nickName, 
+		email
+	FROM
+		member 
+	ORDER BY userId
+	</select>
  </mapper>

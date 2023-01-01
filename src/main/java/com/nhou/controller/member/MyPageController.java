@@ -1,5 +1,4 @@
-package com.nhou.controller.myPage;
-
+package com.nhou.controller.member;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;

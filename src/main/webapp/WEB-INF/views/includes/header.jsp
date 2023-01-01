@@ -123,7 +123,7 @@
 	<sec:authorize access="not isAuthenticated()">
 		<h1>로그인 안됨!</h1>
 	</sec:authorize>
-
+	
 	<div id="wrap">
 		<div id="header">
 			<div id="loginBar">
@@ -133,6 +133,11 @@
 					<li><a href="/myPage/myPageList">MYPAGE</a></li>
 					<li><a href="#">CART</a></li>
 					<li><a href="/board/boardList">CUMMUNITY</a></li>
+					
+					<li><a href="/member/logout" >LOGOUT</a></li>
+					<!-- 권한설정하기 -->
+					<li><a href="/admin/memberInfo">MEMBER INFO</a></li>
+					<li><a href="/admin/QnAList">QnAList</a></li>
 				</ul>
 			</div>
 				
