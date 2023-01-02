@@ -63,7 +63,8 @@
 		nickName = #{nickName}, 
 		email = #{email}, 
 		address = #{address}, 
-		phone = #{phone}
+		phone = #{phone},
+		auth = #{auth}
 	WHERE 
 		userId = #{userId}	
 		
