@@ -120,22 +120,27 @@
 	<sec:authorize access="isAuthenticated()">
 		<h1>로그인됨!</h1>
 	</sec:authorize>
-	<sec:authorize access="not isAuthenticated()">
-		<h1>로그인 안됨!</h1>
-	</sec:authorize>
+	
+	<!-- 로그인시 보이는 메뉴 설정 -->
+	<sec:authorize access="isAuthenticated()" var="loggedIn"/>
 	
 	<div id="wrap">
 		<div id="header">
 			<div id="loginBar">
 				<ul id="menu-top"  class="top">
+				<c:if test="${not loggedIn }">
 					<li><a href="/member/login" >LOGIN</a></li>
 					<li><a href="/member/join">JOIN</a></li>
+				</c:if>
+				<c:if test="${loggedIn }">
 					<li><a href="/myPage/myPageList">MYPAGE</a></li>
+				</c:if>	
 					<li><a href="#">CART</a></li>
-					<li><a href="/board/boardList">CUMMUNITY</a></li>
-					
+					<li><a href="/board/boardList">COMMUNITY</a></li>
+				<c:if test="${loggedIn }">
 					<li><a href="/member/logout" >LOGOUT</a></li>
-					<!-- 권한설정하기 -->
+				</c:if>		
+					<!-- 관리자만 보이게 권한설정하기 -->
 					<li><a href="/admin/memberInfo">MEMBER INFO</a></li>
 					<li><a href="/admin/QnAList">QnAList</a></li>
 				</ul>

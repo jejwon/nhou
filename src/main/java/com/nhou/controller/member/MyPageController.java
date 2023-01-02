@@ -26,8 +26,11 @@ public class MyPageController {
 	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping("myPageList")
-	public void listMenu() {
+	public void listMenu(Principal principal, Model model) {
+		String loginId = principal.getName(); //로그인한 아이디 구하기
+		MemberDto member = memberService.getById(loginId); //아이디 구해서 데이터베이스에서 회원정보 얻기
 		
+		model.addAttribute("member", member);
 	}
 	
 	@GetMapping("myPageOrderList")
@@ -40,13 +43,16 @@ public class MyPageController {
 		
 	}
 	
-	@GetMapping("myPageModify")
-	public void modify(Principal principal, String userId, Model model) {
-		String loginId = principal.getName();
-		MemberDto member = memberService.getById(loginId);
+	//사용자가 로그인한 상태: 스프링 mvc는 컨트롤러 메소드에 회원정보를 저장하고 있는 Principal 객체를 파라미터로 받을 수 있음
+	//public String memberInfo(Principal principal, ModelMap modelMap) 메소드: 로그인한 회원정보를 받기 위해 Principal을 파라미터로 선언
+	@GetMapping("myPageModify") 
+	public void modify(Principal principal, Model model) { 
+		String loginId = principal.getName(); //로그인한 아이디 구하기
+		MemberDto member = memberService.getById(loginId); //아이디 구해서 데이터베이스에서 회원정보 얻기
 		
 		model.addAttribute("member", member);
 		
+
 	}
 	
 	@PostMapping("myPageModify")
@@ -54,6 +60,7 @@ public class MyPageController {
 		memberService.update(member);
 		
 		rttr.addAttribute("userId", member.getUserId());
+		System.out.println(member);
 		
 		return "redirect:/myPage/myPageList";
 	}

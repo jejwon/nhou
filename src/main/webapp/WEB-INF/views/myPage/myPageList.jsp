@@ -48,9 +48,7 @@
 			<h1>마이페이지</h1>
 			<!--  본인만 들어갈 수 있는 권한 설정하세요-->
 			
-			<c:url value="/myPage/myPageModify" var="modifyLink">
-						<c:param value="${member.userId }" name="userId"></c:param>
-					</c:url>
+		<c:url value="/myPage/myPageModify" var="modifyLink"></c:url>
 		<div id="memberInfo" class="container-sm" style="">
 			<i class="fa-sharp fa-solid fa-user"></i><br>
 			<a href="${modifyLink }">${member.nickName }님 회원정보</a>			
