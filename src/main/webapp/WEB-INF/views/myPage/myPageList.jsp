@@ -53,7 +53,7 @@
 					</c:url>
 		<div id="memberInfo" class="container-sm" style="">
 			<i class="fa-sharp fa-solid fa-user"></i><br>
-			<a href="${modifyLink }">회원정보</a>			
+			<a href="${modifyLink }">${member.nickName }님 회원정보</a>			
 		</div>
 		
 		
