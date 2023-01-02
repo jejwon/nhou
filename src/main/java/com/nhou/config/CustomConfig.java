@@ -75,7 +75,7 @@ public class CustomConfig {
 			.permitAll();//특정 URI을 제외한 나머지 URI은 전부 인가
 		http.formLogin() //아이디와 비밀번호를 입력해서 들어오는 로그인 형태를 지원
 			.loginPage("/member/login").defaultSuccessUrl("/member/join", true);// 로그인 성공하면  메인으로. 
-		http.logout().logoutUrl("/member/logout").logoutSuccessUrl("/main/main");
+		http.logout().logoutUrl("/member/logout").logoutSuccessUrl("/main/list");
 		http.rememberMe(); // 브라우저를 닫아도 쿠키를 저장 시킴 
 		
 		return http.build();

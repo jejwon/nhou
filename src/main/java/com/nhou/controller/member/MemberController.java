@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nhou.domain.member.MemberDto;
 import com.nhou.service.member.MemberService;
@@ -48,7 +49,7 @@ public class MemberController {
 		
 		memberService.signupMember(member);
 		
-		return "redirect:/main/main"; //등록 성공-> /main/main로 이동
+		return "redirect:/main/list"; //등록 성공-> /main/main로 이동
 	}
 	
 	@GetMapping("login")
@@ -56,10 +57,6 @@ public class MemberController {
 		
 	}
 	
-	@GetMapping("modify")
-	public void getById(String userId, Model model) {
-		model.addAttribute("member", memberService.getById(userId));
-	}
 	
 
 	

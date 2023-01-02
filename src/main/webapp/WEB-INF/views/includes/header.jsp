@@ -144,7 +144,7 @@
 				
 			<nav id="nav3">
 				<div class="home">
-					<a href="/main/main">
+					<a href="/main/list">
 						<img src="https://ifh.cc/g/PQ7QMk.png" alt="">
 					</a>
 				</div>

@@ -13,40 +13,41 @@
 </head>
 <body>
 	<div class="container" style="background-color:pink;">
-		<h1>정보 수정</h1>
-		<form action="" method="post">
+		<h1>개인정보 수정</h1>
+		<form id="editForm"action="" method="post">
+
 		<input type="hidden" value="${member.userId }">
 		<div class="form-floating">
-			<input type="text" class="form-control" id="userId"placeholder="ID"name="userId"> 
-			<label for="ID">${member.userId }</label>
+			<input type="text" class="form-control" value="${member.userId }"id="userId"placeholder="ID"name="userId"> 
+			<label for="ID"></label>
 		</div>
 		<div class="form-floating">
-			<input type="password" class="form-control" id="password"placeholder="Password" name="password"> 
-			<label for="Password">Password</label>
+			<input type="password" class="form-control" value="${member.password }"id="password"placeholder="Password" name="password"> 
+			<label for="Password"></label>
 		</div>
 		<div class="form-floating">
-			<input type="text" class="form-control" id="userName"placeholder="userName" name="userName"> 
-			<label for="nickName">${member.userName }</label>
+			<input type="text" class="form-control" value="${member.userName }"id="userName"placeholder="userName" name="userName"> 
+			<label for="nickName"></label>
 		</div>
 		<div class="form-floating">
-			<input type="text" class="form-control" id="nickName"placeholder="Nickname" name="nickName"> 
-			<label for="nickName">${member.nickName }</label>
+			<input type="text" class="form-control" value="${member.nickName }"id="nickName"placeholder="Nickname" name="nickName"> 
+			<label for="nickName"></label>
 		</div>		
 		<div class="form-floating">
-			<input type="email" class="form-control" id="email"placeholder="name@example.com" name="email"> 
-			<label for="email">${member.email }</label>
+			<input type="email" class="form-control" value="${member.email }"id="email"placeholder="name@example.com" name="email"> 
+			<label for="email"></label>
 		</div>
 		<div class="form-floating">
 			<input type="Date" class="form-control" id="birthDate"placeholder="birthDate"name="birthDate"> 
-			<label for="birthDate">${member.birthDate }</label>
+			<label for="birthDate"></label>
 		</div>
 		<div class="form-floating">
-			<input type="text" class="form-control" id="address"placeholder="address"name="address"> 
-			<label for="address">${member.address }</label>
+			<input type="text" class="form-control" value="${member.address }" id="address"placeholder="address"name="address"> 
+			<label for="address"></label>
 		</div>
 		<div class="form-floating">
-			<input type="text" class="form-control" id="phone"placeholder="phone" name="phone"> 
-			<label for="phone">${member.phone }</label>
+			<input type="text" class="form-control" value="${member.phone }"id="phone"placeholder="phone" name="phone"> 
+			<label for="phone"></label>
 		</div>
 		<div class="form-check">
 			  <input class="form-check-input" type="checkbox" value="2" id="auth" name="auth">
@@ -58,5 +59,10 @@
 		</form>
 	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script>
+document.querySelector("#editSubmit").addEventListener("click", function(){
+	document.querySelector("#editForm").submit();
+})
+</script>
 </body>
 </html>

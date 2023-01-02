@@ -10,7 +10,7 @@
  VALUES
  (#{userId}, #{userName}, #{password}, #{nickName}, #{email}, #{birthDate}, #{address}, #{phone})
 </insert>
-
+<!--회원 목록 보기 -->
 <select id="selectById" resultMap="memberMap">
 	SELECT 
 		userId,
@@ -47,9 +47,25 @@
 		userName, 
 		'숨김' password, 
 		nickName, 
-		email
+		email,
+		insertDatetime
 	FROM
 		member 
 	ORDER BY userId
 	</select>
+	
+	<!-- 회원정보 수정 -->
+	<update id="update">
+	UPDATE member
+	SET 
+		userName = #{userName}, 
+	<!-- 	password = #{password},  비밀번호 암호화 설정 --> 
+		nickName = #{nickName}, 
+		email = #{email}, 
+		address = #{address}, 
+		phone = #{phone}
+	WHERE 
+		userId = #{userId}	
+		
+	</update>
  </mapper>

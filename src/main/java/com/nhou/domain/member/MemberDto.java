@@ -20,6 +20,7 @@ public class MemberDto {
 	private String nickName;
 	private String address;
 	private String phone;
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date birthDate;
 	private int auth; //admin: 0/ user: 1/ seller: 2
