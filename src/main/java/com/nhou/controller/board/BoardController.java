@@ -1,5 +1,6 @@
 package com.nhou.controller.board;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,12 @@ public class BoardController {
 	}
 	
 	@PostMapping("boardInsert")
-	public String insert(BoardDto board, RedirectAttributes rttr) {
+	public String insert(BoardDto board, RedirectAttributes rttr,
+			Principal principal) { // 작성한 작성자의 id정보를 가져와 닉네임을 알 수 있음
+		
+		String loginId = principal.getName();
+		board.setMember_userId(loginId);
+		boardService.insert(board);
 		
 		int cnt = boardService.insert(board);
 		
