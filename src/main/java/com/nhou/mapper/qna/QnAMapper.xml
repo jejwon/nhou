@@ -58,4 +58,34 @@ VALUES (#{qnaCategory}, #{title}, #{content}, 0, #{member_userId})
 	<result column="member_userId" property="member_userId"/>
 	<result column="nickName" property="nickName"/>
  </resultMap>
+ 
+ <delete id="delete">
+ DELETE FROM qna
+ WEHRE qnaId = #{qnaId}
+ </delete>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

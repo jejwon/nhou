@@ -31,4 +31,9 @@ public class QnAServiceImpl implements QnAService{
 	public QnADto getByQnAId(int qnaId) {
 		return qnaMapper.getByQnAId(qnaId);
 	}
+	
+	@Override
+	public int delete(int qnaId) {
+		return qnaMapper.delete(qnaId);
+	}
 }

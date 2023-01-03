@@ -37,8 +37,8 @@
 			<label for="email">이메일</label>
 		</div>
 		<div class="form-floating">
-			<input type="text" readonly class="form-control" value="${member.birthDate }" id="birthDate"placeholder="birthDate"name="birthDate"> 
-			<label for="birthDate">생년월일</label>
+			<input type="Date" readonly class="form-control" value="${member.birthDate }" id="birthDate"placeholder="birthDate"name="birthDate"> 
+			<label for="birthDate">${member.birthDate }</label>
 		</div>
 		<div class="form-floating">
 			<input type="text" class="form-control" value="${member.address }" id="address"placeholder="address"name="address"> 
