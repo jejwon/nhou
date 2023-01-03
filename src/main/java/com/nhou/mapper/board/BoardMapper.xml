@@ -2,3 +2,42 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nhou.mapper.board.BoardMapper">
+<!-- 게시글 작성하기 -->
+<insert id="insert" keyProperty="boardId">
+INSERT INTO board(boardCategory, title, content, member_userId)
+VALUES (#{boardCategory}, #{title}, #{content}, #{member_userId})
+</insert>
+
+<!-- 글 목록 -->
+<!-- <select id="list" resultType="com.nhou.domain.board.BoardDto">
+SELECT 
+	b.boardId,
+    b.title,
+    b.insertDatetime,
+    m.nickName
+FROM 
+	board b LEFT JOIN member m ON b.member_userId = m.userId
+GROUP BY b.boardId
+ORDER BY b.boardId DESC
+</select>
+
+게시물 갯수
+<select id="countAll" resultType="int">
+SELECT COUNT(*) FROM board
+WHERE
+	<trim prefixOverrides="OR">
+		<if test="type == 'all' or type == 'title'">
+			title LIKE #{keyword}
+		</if>
+		
+		<if test="type == 'all' or type == 'content'">
+			OR content LIKE #{keyword}
+		</if>
+		
+		<if test="type == 'all' or type == 'writer'">
+			OR member_userId LIKE #{keyword}
+		</if>
+	</trim>
+</select> -->
+</mapper>
