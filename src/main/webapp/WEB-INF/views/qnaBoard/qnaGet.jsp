@@ -5,6 +5,9 @@
 <%@ include file = "../includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
+<style>
+
+</style>
 <head>
 <meta charset="UTF-8">
 <title>개별문의</title>
@@ -15,7 +18,7 @@
 	<div class="container" style="background-color:pink;">
 
 		<h1>문의보기</h1>
-		<form id="deleteForm"action="" method="post">
+		
 		  <c:choose>
 		  	<c:when test="${qna.qnaCategory == 0 }">
 		  	<input type="text" readonly value="배송">
@@ -41,8 +44,15 @@
 		
 		
 		<%-- <input readonly type="text" value="${member_userId }" name="member_userId"> --%>
-		<input id="deleteSubmit" type="submit" value="삭제">
-		</form>
+		<%-- <c:if test="${qna.member_userId == username}"> </c:if>--%>
+
+		
+			<c:url value="/qnaBoard/delete" var="deleteLink"/>
+			<form id="deleteForm" action="${deleteLink }" method="post">
+				<input type="hidden" name="qnaId" value="${qna.qnaId }">
+			</form>
+			<input id="deleteSubmit" type="submit" value="삭제">
+		
 		<c:url value="/main/list" var="listLink"/>
 		<a href="${listLink }">
 			<input type="submit" value="홈으로">

@@ -11,6 +11,8 @@ public interface QnAService {
 	public List<QnADto> list();
 
 	public QnADto getByQnAId(int qnaId);
+
+	public int delete(int qnaId);
 	
 	
 }

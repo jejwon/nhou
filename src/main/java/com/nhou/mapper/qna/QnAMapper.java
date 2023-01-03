@@ -12,4 +12,6 @@ public interface QnAMapper {
 
 	QnADto getByQnAId(int qnaId);
 
+	int delete(int qnaId);
+
 }

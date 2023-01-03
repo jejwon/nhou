@@ -49,10 +49,21 @@ public class QnAController {
 	}
 	
 	@GetMapping("qnaGet")
-	public void get(@RequestParam(name="qnaId") int qnaId, Model model) {
+	public void get(@RequestParam(name="qnaId") int qnaId, Model model, Principal principal) {
+		//String loginId = principal.getName();
 		QnADto qna = qnaService.getByQnAId(qnaId);
+		
+		//qna.setMember_userId(loginId);
 		
 		model.addAttribute("qna", qna);
 		
 	}
+	
+	@PostMapping("delete")
+	public String remove(int qnaId) {
+		qnaService.delete(qnaId);
+		
+		return "redirect:/main/list";
+	}
+	
 }
