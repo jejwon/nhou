@@ -21,8 +21,4 @@ public class AdminController {
 		//System.out.println(model);
 	}
 	
-	@GetMapping("QnAList")
-	public void getByQnAId() {
-		
-	}
 }
