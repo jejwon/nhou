@@ -9,6 +9,11 @@ INSERT INTO board(boardCategory, title, content, member_userId)
 VALUES (#{boardCategory}, #{title}, #{content}, #{member_userId})
 </insert>
 
+<!-- 닉네임 가져오기 -->
+<select id="selectNick" resultType="java.lang.String">
+SELECT nickName FROM member WHERE userId = #{userId}
+</select>
+
 <!-- 글 목록 list는 mapper에서 사용한 명명 -->
 <select id="list" resultType="com.nhou.domain.board.BoardDto">
 SELECT 

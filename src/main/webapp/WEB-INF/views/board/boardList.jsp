@@ -29,7 +29,7 @@
 #categorySelect .categoryBtn {
 	border: 0;
 	background: 0;
-	font-size: 15px;
+	font-size: 18px;
 	margin: 0 20px;
 }
 
@@ -39,9 +39,50 @@
 	transition: 0.3s;
 }
 
+#btn1::after {
+	content: "|";
+	padding-left: 33px;
+}	
+
+#btn2::after {
+	content: "|";
+	padding-left: 33px;
+}	
+
+#btn3::after {
+	content: "|";
+	padding-left: 33px;
+}	
+
 /* 바디 */
 .container {
 	font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* 글쓰기 버튼 */
+#writeBtn {
+	background-color: #DCC1B0;
+	display: inline-block;
+	float: right;
+}
+
+#writeBtn:hover {
+	color: #fff;
+}
+
+/* 게시판 body */
+#tableList {
+	text-align: center;
+	border-spacing: 10px;
+}
+
+#tableList .table {
+	font-size: 17px;
+}
+
+#tableList .table tr td {
+	height: 60px;
+	vertical-align: middle;
 }
 
 </style>
@@ -75,9 +116,9 @@
 		<table class="table bg-white">
 			<thead class="bg-light">
 				<tr style="background-color: #DCC1B0;/* #E3A6A1; */">
-					<th>글 번호</th>
-					<th>카테고리</th>
-					<th>제목</th>
+					<th style="width: 80px;">#</th>
+					<th style="width: 110px;">카테고리</th>
+					<th style="width: 800px;">제목</th>
 					<th>작성자</th>
 					<th>날짜</th>
 				</tr>
@@ -86,21 +127,39 @@
 				<c:forEach items="${boardList }" var="board">
 					<tr>
 						<td>${board.boardId }</td>
-						<td>${board.boardCategory }</td>
 						
-						<td>
+						<!-- 카테고리값 출력 -->
+						<c:if test="${board.boardCategory eq 1}">
+							<td>집들이</td>
+						</c:if>
+						<c:if test="${board.boardCategory eq 2}">
+							<td>꿀팁전수</td>
+						</c:if>
+						<c:if test="${board.boardCategory eq 3}">
+							<td>자유잡담</td>
+						</c:if>
+						
+						<td style="text-align: left; padding-left: 15px;">
 							<c:url value="/board/boardGet" var="getLink">
 								<c:param name="boardId" value="${board.boardId }"></c:param>
 							</c:url>
 							<a href="${getLink }">${board.title }</a>
 						</td>
 						
-						<td>${board.member_userId }</td>
+						<td>${board.nickName }</td>
 						<td>${board.insertDatetime }</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+	</div>
+	
+	<!-- 글작성 버튼 -->
+	<div class="insertBtn">
+		<c:url value="/board/boardInsert" var="insertLink"></c:url>
+		<a href="${insertLink }">
+			<button id="writeBtn" class="btn btn-outline">글쓰기</button>
+		</a>
 	</div>
 </div>
 </section>

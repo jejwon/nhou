@@ -20,6 +20,9 @@ public interface BoardMapper {
 
 	// 게시글 삭제하기
 	int delete(int boardId);
+	
+	// 닉네임 정보 불러오기
+	String selectNick(String userId);
 
 	// 페이지네이션 페이지 갯수
 	/* int countAll(String type, String string); */
