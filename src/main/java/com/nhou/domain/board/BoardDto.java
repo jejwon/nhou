@@ -5,6 +5,7 @@ import java.util.List;
 
 import lombok.Data;
 
+// 화면에서 보여줄 엘리멘트
 @Data
 public class BoardDto {
 	private int boardId;
