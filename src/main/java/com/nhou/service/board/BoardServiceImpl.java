@@ -17,42 +17,34 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	// 게시글 작성
 	@Override
 	public int insert(BoardDto board) {
 		
 		return boardMapper.insert(board); // 매퍼로 보냄
 	}
 	
-	
-	
-	
-	
 	// 게시글 목록
-	// listBoard > BoardController에서 가져옴
-	/*
-	 * public List<BoardDto> listBoard(int page, String type, String keyword, String
-	 * category, PageInfo pageInfo) { int records = 10; // 게시글 갯수 int offset = (page
-	 * - 1) * records; // 어디서부터
-	 * 
-	 * int countAll = boardMapper.countAll(type, "%" + keyword + "%"); // 총 게시물 갯수
-	 * int lastPage = (countAll - 1) / records + 1; // 마지막 페이지
-	 * 
-	 * // 5페이지씩 보이게 int leftPageNum = (page - 1) / 5 * 5 + 1; int rightPageNum =
-	 * leftPageNum + 4; rightPageNum = Math.min(rightPageNum, lastPage);
-	 * 
-	 * // 이전 버튼 유무 boolean hasPreBtn = page > 5; // 다음 버튼 유무 boolean hasNextBtn =
-	 * page <= ((lastPage - 1) / 5 * 5);
-	 * 
-	 * // 이전 버튼 눌렀을때 위치하는 페이지 넘버 int jumpPrePageNum = (page - 1) / 5 * 5 - 4; // 다음
-	 * 버튼 눌렀을때 위치하는 페이지 넘버 int jumpNextPageNum = (page - 1) / 5 * 5 + 6;
-	 * 
-	 * pageInfo.setHasNextBtn(hasNextBtn); pageInfo.setHasPreBtn(hasPreBtn);
-	 * pageInfo.setJumpPrePageNum(jumpPrePageNum);
-	 * pageInfo.setJumpNextPageNum(jumpNextPageNum);
-	 * pageInfo.setCurrentPageNum(page); pageInfo.setLeftPageNum(leftPageNum);
-	 * pageInfo.setRightPageNum(rightPageNum); pageInfo.setLastPageNum(lastPage);
-	 * 
-	 * return boardMapper.list(offset, records, type, "%" + keyword + "%",
-	 * category); }
-	 */
+	@Override
+	public List<BoardDto> listBoard() { // service에 사용한 명명
+		return boardMapper.list();		// mapper에서 사용할 명명
+	}
+	
+	// 게시물 가져와서 보기
+	@Override
+	public BoardDto get(int boardId) {		// service에 사용한 명명
+		return boardMapper.select(boardId); // mapper에서 사용할 명명
+	}
+	
+	// 가져온 게시물 수정하고 등록하기
+	@Override
+	public int update(BoardDto board) { 	// service에 사용한 명명
+		return boardMapper.update(board);	// mapper에서 사용할 명명
+	}
+	
+	// 게시물 삭제하기
+	@Override
+	public int remove(int boardId) {		// service에 사용한 명명
+		return boardMapper.delete(boardId); // mapper에서 사용할 명명
+	}
  }

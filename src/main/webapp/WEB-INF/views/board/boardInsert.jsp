@@ -1,14 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.net.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file = "../includes/header.jsp"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
 <style type="text/css">
+
+/* 글씨폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
 
 .container-sm {
 	letter-spacing: -1px;
@@ -16,10 +21,12 @@
 	margin: 10px;
 	padding: 0 100px 0 100px;
 	width: 800px;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 .categorySelectBox {
 	text-align: left;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 .categorySelectBox p {
@@ -44,6 +51,7 @@
 	font-size: 16px;
 	color: #666;
 	font-weight: normal;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 	
 .b1 {
@@ -78,7 +86,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 <div class="container">
 	<form action="/board/boardInsert" method="post">
 		<div class="categorySelectBox">
@@ -88,9 +96,9 @@
 			<p>카테고리</p>
 			
 			<select class="category" name="boardCategory" id="">
-				<option name="houses">집들이</option>
-				<option name="tip">꿀팁전수</option>
-				<option name="chat">자유잡담</option>
+				<option name="houses" value="1">집들이</option>
+				<option name="tip" value="2">꿀팁전수</option>
+				<option name="chat" value="3">자유잡담</option>
 			</select>
 		</div>
 		
