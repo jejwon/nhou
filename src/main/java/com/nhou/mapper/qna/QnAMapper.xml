@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.nhou.mapper.qna.QnAMapper">
+ 
+ <insert id="insert">
+INSERT qna (qnaCategory, title, content, status, member_userId)
+VALUES (#{qnaCategory}, #{title}, #{content}, 0, #{member_userId})
+ </insert>
+ 
+ <select id="list" resultMap="listMap">
+ SELECT
+ 		q.qnaId,
+ 		q.qnaCategory,
+ 		q.title, 
+ 		q.content, 
+ 		q.status,
+ 		q.insertDatetime,
+ 		q.member_userId,
+ 		m.nickName
+ FROM qna q LEFT JOIN member m ON q.member_userId = m.userId
+ ORDER BY qnaId DESC
+ </select>
+ 
+ <resultMap type="com.nhou.domain.qna.QnADto" id="listMap"> <!-- list 리턴타입은 resultMap안에 넣어서 -->
+ 	<id column="qnaId" property="qnaId"></id>
+ 	<result column="qnaCategory" property="qnaCategory"/>
+	<result column="title" property="title"/>
+	<result column="content" property="content"/>
+	<result column="status" property="status"/>
+	<result column="insertDatetime" property="insertDatetime"/>
+	<result column="member_userId" property="member_userId"/>
+	<result column="nickName" property="nickName"/>
+ </resultMap>
+ 
+ <select id="getByQnAId" resultMap="getMap">
+  SELECT
+ 		q.qnaId,
+ 		q.qnaCategory,
+ 		q.title, 
+ 		q.content, 
+ 		q.status,
+ 		q.insertDatetime,
+ 		q.member_userId,
+ 		m.nickName
+ FROM qna q LEFT JOIN member m ON q.member_userId = m.userId
+ WHERE qnaId = #{qnaId}
+ </select>
+ 
+  <resultMap type="com.nhou.domain.qna.QnADto" id="getMap"> <!-- list 리턴타입은 resultMap안에 넣어서 -->
+ 	<id column="qnaId" property="qnaId"></id>
+ 	<result column="qnaCategory" property="qnaCategory"/>
+	<result column="title" property="title"/>
+	<result column="content" property="content"/>
+	<result column="status" property="status"/>
+	<result column="insertDatetime" property="insertDatetime"/>
+	<result column="member_userId" property="member_userId"/>
+	<result column="nickName" property="nickName"/>
+ </resultMap>
+ </mapper>

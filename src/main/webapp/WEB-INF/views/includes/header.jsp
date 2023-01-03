@@ -139,10 +139,10 @@
 					<li><a href="/board/boardList">COMMUNITY</a></li>
 				<c:if test="${loggedIn }">
 					<li><a href="/member/logout" >LOGOUT</a></li>
-				</c:if>		
+				</c:if>	
+					<li><a href="/qnaBoard/qnaList">QnABoard</a></li>
 					<!-- 관리자만 보이게 권한설정하기 -->
 					<li><a href="/admin/memberInfo">MEMBER INFO</a></li>
-					<li><a href="/admin/QnAList">QnAList</a></li>
 				</ul>
 			</div>
 				
