@@ -61,15 +61,8 @@ VALUES (#{qnaCategory}, #{title}, #{content}, 0, #{member_userId})
  
  <delete id="delete">
  DELETE FROM qna
- WEHRE qnaId = #{qnaId}
+ WHERE qnaId = #{qnaId}
  </delete>
- 
- 
- 
- 
- 
- 
- 
  
  </mapper>
  

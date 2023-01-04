@@ -49,7 +49,7 @@ public class MemberController {
 		
 		memberService.signupMember(member);
 		
-		return "redirect:/main/list"; //등록 성공-> /main/main로 이동
+		return "redirect:/main/list"; //등록 성공-> /main/list로 이동
 	}
 	
 	@GetMapping("login")
