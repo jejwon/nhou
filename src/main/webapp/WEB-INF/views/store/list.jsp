@@ -44,8 +44,8 @@
         </h1>
         
         
-        <div class="today-deal-item__stats-mobile">
-            <p class="production-item-stats production-item-stats--review">
+        <div class="product_item">
+            <p class="review">
             <span class="production-item-price__price">13,900</span>
                 <svg class="icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"></svg>
                 <strong class="avg">⭐4.9</strong> 
