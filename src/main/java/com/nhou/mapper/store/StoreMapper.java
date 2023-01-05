@@ -8,6 +8,6 @@ public interface StoreMapper {
 	
 	int insert(StoreDto store);
 
-	/* List<StoreDto> list(); */
+	List<StoreDto> list();
 
 }
