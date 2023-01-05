@@ -6,19 +6,33 @@
 <mapper namespace="com.nhou.mapper.store.StoreMapper">
 
 	<insert id="insert">
-		INSERT INTO product (productName, price, stock, product_content)
-		VALUES (#{productName}, #{price}, #{stock}, #{product_content})
+		INSERT ALL 
+			INTO product (productName, price, stock, product_content)
+			VALUES (#{productName}, #{price}, #{stock}, #{product_content})
+		
+			INTO productCategory (categoryName)
+			VALUES (#{categoryName})
+		
+			INTO productFile (productImage)
+			VALUES (#{productImage})
+			
+			<!-- ??? +구글링 -->
+
 	</insert>
 	
-<!-- 	<select id="list" resultType="com.nhou.domain.store.StoreDto">
-	SELECT
-		id,
-		productName,
-		productFileImage,
-		price
-	FROM Store
-	ORDER BY id DESC
-	</select> -->
-	
+	<select id="list" resultType="com.nhou.domain.store.StoreDto">
+		SELECT
+			productId,
+			productName,
+			price,
+		FROM 
+			Product,  
+<!-- 		JOIN productFile,
+			ON
+		JOINproductReply
+			ON -->
+		ORDER BY id DESC
+		
+	</select>
 
 </mapper>

@@ -36,15 +36,15 @@ public class StoreController {
 	
 	@GetMapping("list")
 	public void list(Model model) {
-		/*
-		 * // request param 수집
-		 * 
-		 * // business logic List<StoreDto> list = service.listStore();
-		 * 
-		 * // 모델에 add attr 넣고 model.addAttribute("storeList", list);
-		 * 
-		 * // forward
-		 */		
-	}
+		
+		// request param 수집
+		  
+		// business logic List<StoreDto> list = service.listStore();
+		List<StoreDto> list = service.listStore();
+		// 모델에 add attr 넣고 model.addAttribute("storeList", list);
+		model.addAttribute("productList", list);
+		// forward
+				
+}
 	
 }

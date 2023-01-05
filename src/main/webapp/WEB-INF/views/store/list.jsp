@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.net.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file = "../includes/header.jsp"%>
 
 <!DOCTYPE html>
 <html>
@@ -13,14 +12,12 @@
 
 </head>
 <body>
-<%-- 	<!-- 상품list -->
-        <div class="row tm-row">
-            <c:forEach items="${productList}" var="product">
-            <c:url value="/store/get" var="getLink">
-                <c:param name="productId" value="${product.productId}"/>
-            </c:url>
-            <input type="hidden" class="scrolling" data-productId="${product.productId}">
-            <article class="col-12 col-md-6 tm-post" style="min-width:50%;max-width:calc(100 - 50%);">
+<jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
+<%-- 	<!-- 상품list (1:48:18) -->
+			
+			...
+			
+            <article class="col-12 col-md-6 tm-post">
 
                 <hr class="tm-hr-primary">
 
@@ -30,29 +27,49 @@
                         <img src="${imgUrl}/${product.productId}/${product.productFileImage}" alt="Image"
                              class="img-fluid" style="max-width:470px">
                     </a>
-                </div>
-                    제목
-                <h2 class="tm-pt-30 tm-color-primary tm-post-title">"${product.productName}"</h2>
- 			</article>
- 			</c:forEach> --%>
+                </div>--%>
  			
- 			
-    <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/165888771016524175.jpg?gif=1&w=360&h=360&c=c&q=0.8&webp=1" class="rounded float-start" alt="...">
-        <h1 class="today-deal-item__header">
-            <span class="today-deal-item__header__brand">루시아이 </span>
-            <span class="today-deal-item__header__name">[오늘의딜] 귀여운 볼살 토끼 저금통2colors</span>
-        </h1>
-        
-        
-        <div class="product_item">
-            <p class="review">
-            <span class="production-item-price__price">13,900</span>
-                <svg class="icon" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"></svg>
-                <strong class="avg">⭐4.9</strong> 
-                리뷰 52
-            </p>
-        </div>
-                     		
+	<div class="container">
+	
+		<c:forEach items="${productList}" var="product">
+        <c:url value="/store/get" var="getLink">
+        	<c:param name="productId" value="${product.productId}"/>
+       	</c:url>
+       	<input type="hidden" class="scrolling" data-productId="${product.productId}"> 	
+ 	
+			<a herf="# ${getLink }">			       
+				<div class="card" style="width: 18rem;">
+				  <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/165888771016524175.jpg?gif=1&w=360&h=360&c=c&q=0.8&webp=1" class="card-img-top" >
+				  <div class="card-body">
+				    <h5 class="card-title">[오늘의딜] 귀여운 볼살 토끼 저금통2colors "${product.productName }"</h5>
+				    <span class="product_item_price">13,900 "${product.price }"</span>
+				    <p class="review">
+				    	<strong class="avg">⭐4.9 "${productReply.star }"</strong> 
+				    	리뷰 52 "${productReply.productReplyId }"
+				    </p>
+				  </div>
+				</div>
+			</a>		        
+    	
+    	</c:forEach>
+    </div> 
+
+<%-- 	<ul class="product-list">
+		<li><a herf="# ${getLink }">			       
+				<i class="card" style="width: 18rem;">
+				  <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/165888771016524175.jpg?gif=1&w=360&h=360&c=c&q=0.8&webp=1" class="card-img-top" >
+				  <i class="card-body">
+				    <h5 class="card-title">[오늘의딜] 귀여운 볼살 토끼 저금통2colors "${product.productName }"</h5>
+				    <span class="product_item_price">13,900 "${product.price }"</span>
+				    <p class="review">
+				    	<strong class="avg">⭐4.9 "${productReply.star }"</strong> 
+				    	리뷰 52 "${productReply.productReplyId }"
+				    </p>
+				  </i>
+				</i>
+			</a></li>  --%>   
+    
+                  		
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>

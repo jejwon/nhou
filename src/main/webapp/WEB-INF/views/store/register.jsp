@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.net.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file = "../includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +11,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-
+<jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 <h1> 상품등록 페이지 </h1>
 
 <!-- 카테고리명 선택 -->

@@ -21,7 +21,7 @@ public class StoreService {
 	}
 
 	public List<StoreDto> listStore() {
-		// TODO Auto-generated method stub
+
 		return mapper.list();
 	}
 
