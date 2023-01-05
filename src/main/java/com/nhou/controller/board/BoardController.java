@@ -22,21 +22,6 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
-
-	/*
-	 * @GetMapping("boardList") public void boardList(
-	 * 
-	 * @RequestParam(name="page", defaultValue = "1") int page,
-	 * 
-	 * @RequestParam(name="t", defaultValue = "all") String type,
-	 * 
-	 * @RequestParam(name="q", defaultValue = "") String keyword,
-	 * 
-	 * @RequestParam(name="category", defaultValue = "") String category, BoardDto
-	 * board, Model model, PageInfo pageInfo) { // 게시글 목록 List<BoardDto> list =
-	 * boardService.listBoard(page, type, keyword, category, pageInfo);
-	 * model.addAttribute("boardList", list); }
-	 */
 	
 	@GetMapping("boardInsert")
 	public void insert() {
@@ -49,7 +34,6 @@ public class BoardController {
 		
 		String loginId = principal.getName();
 		board.setMember_userId(loginId);
-		boardService.insert(board);
 		
 		int cnt = boardService.insert(board);
 		
@@ -64,8 +48,11 @@ public class BoardController {
 	
 	// 게시글 리스트
 	@GetMapping("boardList")
-	public void get(Model model) {
-		List<BoardDto> list = boardService.listBoard(); // service에 listBoard로 넘어감
+	public void get(@RequestParam(name="page", defaultValue = "1") int page, // 페이지
+					@RequestParam(name="t", defaultValue = "all") String type, // 검색할 범위(카테고리)
+					@RequestParam(name="q", defaultValue = "") String keyword, // 검색 키워드
+					PageInfo pageInfo, Model model) {
+		List<BoardDto> list = boardService.listBoard(page, type, keyword, pageInfo); // service에 listBoard로 넘어감
 		
 		model.addAttribute("boardList", list); // boardList라는 곳에 list를 담겠다
 	}

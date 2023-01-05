@@ -12,8 +12,11 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
+<div class="container">
+
+
 <h1>${board.boardId }번 게시물 수정</h1>
-<form id="modiftForm" action="" method="post">
+<form id="modifyForm" action="" method="post">
 	<input type="text" name="boardId" value="${board.boardId }" readonly="readonly"> <br>
 	
 	카테고리
@@ -25,20 +28,64 @@
 	제목 <input type="text" name="title" value="${board.title }"> <br>
 	내용 <input type="text" name="content" value="${board.content }"> <br>
 	
-	<input class="modifyBtn" type="submit" value="수정완료">
+	<input type="submit" value="수정완료" data-bs-target="#modifyModal">
 </form>
 
 	<!-- 삭제버튼 -->
 	<c:url value="/board/boardRemove" var="removeLink"></c:url>
-		<form action="${removeLink }" method="post">
-			<input type="submit" value="삭제">
+		<form id="removeForm" action="${removeLink }" method="post">
 		</form>
+			<input type="submit" value="삭제" data-bs-target="#removeModal">
+</div> <!-- 전체 컨테이너 -->
+
+<!-- 수정 모달 -->
+	<div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">수정 확인</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        수정하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	        <button id="modifyConfirmBtn" type="button" class="btn btn-primary">확인</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- 삭제 모달 -->
+	<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        삭제하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	        <button id="removeConfirmBtn" type="button" class="btn btn-primary">삭제</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript">
-// 수정 버튼 누르면 수정하도록 동작 설정
-document.querySelector("#modifyBtn").addEventListener("click", function() {
-	document.querySelector("#modiftForm").submit();
-})
+// 수정 버튼 누르면 수정하도록 form으로 전송
+document.querySelector("#modifyConfirmBtn").addEventListener("click", function() {
+	document.querySelector("#modifyForm").submit();
+});
+
+// 삭제 버튼 누르면 삭제하도록 form으로 전송
+document.querySelector("#removeConfirmBtn").addEventListener("click", function() {
+	document.querySelector("#removeForm").submit();
+});
 </script>
 </body>
 </html>
