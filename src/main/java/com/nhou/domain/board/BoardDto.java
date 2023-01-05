@@ -15,7 +15,6 @@ public class BoardDto {
 	private LocalDateTime insertDatetime;
 	private String member_userId;
 	private int likeCount;
-	private String wirter;
 	private int replyCount;
 	private int viewCount;
 	private String nickName;

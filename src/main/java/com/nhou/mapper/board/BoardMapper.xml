@@ -9,10 +9,10 @@ INSERT INTO board(boardCategory, title, content, member_userId)
 VALUES (#{boardCategory}, #{title}, #{content}, #{member_userId})
 </insert>
 
-<!-- 닉네임 가져오기 -->
+<!-- 닉네임 가져오기 
 <select id="selectNick" resultType="java.lang.String">
 SELECT nickName FROM member WHERE userId = #{userId}
-</select>
+</select> -->
 
 <!-- 글 목록 list는 mapper에서 사용한 명명 -->
 <select id="list" resultType="com.nhou.domain.board.BoardDto">
@@ -24,8 +24,42 @@ SELECT
     m.nickName
 FROM 
 	board b LEFT JOIN member m ON b.member_userId = m.userId
+WHERE
+	<trim prefixOverrides="OR">
+		<if test="type == 'all' or type == 'title'">
+			title LIKE #{keyword}
+		</if>
+		
+		<if test="type == 'all' or type == 'content'">
+			OR content LIKE #{keyword}
+		</if>
+
+		<if test="type == 'all' or type == 'memeber_userId'">
+			OR member_userId LIKE #{keyword}
+		</if>
+	</trim>
 GROUP BY b.boardId
 ORDER BY b.boardId DESC
+LIMIT #{offset}, #{records}
+</select>
+
+<!-- 게시물 총 갯수 -->
+<select id="countAll" resultType="int">
+SELECT COUNT(*) FROM board
+WHERE
+	<trim prefixOverrides="OR">
+		<if test="type == 'all' or type == 'title'">
+			title LIKE #{keyword}
+		</if>
+		
+		<if test="type == 'all' or type == 'content'">
+			OR content LIKE #{keyword}
+		</if>
+
+		<if test="type == 'all' or type == 'writer'">
+			OR member_userId LIKE #{keyword}
+		</if>
+	</trim>
 </select>
 
 <!-- 게시물 선택해서 보기 select는 mapper에서 사용한 명명 / resultType은 DB에 있는 컬럼들 -->
@@ -57,22 +91,5 @@ WHERE
 DELETE FROM board
 WHERE boardId = #{boardId}
 </delete>
-<!-- 게시물 갯수
-<select id="countAll" resultType="int">
-SELECT COUNT(*) FROM board
-WHERE
-	<trim prefixOverrides="OR">
-		<if test="type == 'all' or type == 'title'">
-			title LIKE #{keyword}
-		</if>
-		
-		<if test="type == 'all' or type == 'content'">
-			OR content LIKE #{keyword}
-		</if>
-		
-		<if test="type == 'all' or type == 'writer'">
-			OR member_userId LIKE #{keyword}
-		</if>
-	</trim>
-</select> -->
+
 </mapper>

@@ -154,6 +154,21 @@
 		</table>
 	</div>
 	
+	<!-- 검색창 -->
+	<c:url value="/board/boardList" var="listLink"></c:url>
+	<form action="${listLink }" role="search">
+		<!-- 검색 범위 설정 -->
+		<select name="t">
+			<option value="all">전체
+			<option value="title" ${param.t == 'title' ? 'selected' : ''}>제목
+			<option value="content" ${param.t == 'content' ? 'selected' : ''}>내용
+			<option value="writer" ${param.t == 'writer' ? 'selected' : ''}>작성자
+		</select>
+		
+		<input value="${param.q }" type="search" placeholder="검색어" aria-label="Search" name="q">
+		<button class="btn btn-outline-success" type="submit">검색</button> 
+	</form>
+	
 	<!-- 글작성 버튼 -->
 	<div class="insertBtn">
 		<c:url value="/board/boardInsert" var="insertLink"></c:url>
@@ -161,7 +176,71 @@
 			<button id="writeBtn" class="btn btn-outline">글쓰기</button>
 		</a>
 	</div>
-</div>
+	
+	<!-- 페이징 처리 -->
+	<div class="row">
+		<div class="col">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination">
+				
+					<!-- 1페이지 일때 첫번째 버튼 제외하고 다른 페이지에선 '처음으로' 버튼 존재하도록 -->
+						<c:if test="${pageInfo.currentPageNum != 1}">
+							<c:url value="/board/boardList" var="listLink">
+								<c:param name="page" value="1"></c:param>
+								<c:param name="q" value="${param.q }"></c:param>
+								<c:param name="t" value="${param.t }"></c:param>
+							</c:url>
+							<li class="page-item"><a class="page-link" href="${listLink }">처음으로</a></li>
+						</c:if>
+						
+					<!-- 이전 페이지 버튼 -->
+					<c:if test="${pageInfo.hasPreBtn }">
+						<c:url value="/board/boardList" var="listLink">
+							<c:param name="page" value="${pageInfo.jumpPrePageNum }"></c:param>
+							<c:param name="q" value="${param.q }"></c:param>
+							<c:param name="t" value="${param.t }"></c:param>
+						</c:url>
+						<li class="page-item"><a class="page-link" href="${listLink }">이전</a></li>
+					</c:if>
+					
+					<c:forEach begin="${pageInfo.leftPageNum }" end="${rightPageNum }" var="pageNum">
+						<c:url value="/board/boardList" var="listLink">
+							<c:param name="page" value="${pageNum }"></c:param>
+							<c:param name="q" value="${param.q }"></c:param>
+							<c:param name="t" value="${param.t }"></c:param>
+						</c:url>
+						
+					<!-- 현재 자신이 위치하고있는 페이지 표시(active) -->
+					<li class="page-item ${pageInfo.currentPageNum == pageNum ? 'active' : '' }">
+						<a class="page-link" href="${pageNum }">${pageNum }</a>
+					</li>
+					</c:forEach>
+					
+				<!-- 다음 페이지 버튼 활성화 -->
+				<c:if test="${pageInfo.hasNextBtn }">
+					<c:url value="/board/boardList" var="listLink">
+						<c:param name="page" value="${pageInfo.jumpNextPageNum }"></c:param>
+						<c:param name="q" value="${param.q }"></c:param>
+						<c:param name="t" value="${param.t }"></c:param>
+					</c:url>
+					<li class="page-item"><a class="page-item" href="${listLink }">다음</a></li>
+				</c:if>
+				
+				<!-- 맨끝으로 가는 페이지 버튼 활성화 : 맨마지막 제외하고 다른 페이지에서는 존재하도록 -->
+				<c:if test="${pageInfo.currentPageNum != pageInfo.lastPageNum}">
+					<c:url value="/board/boardList" var="listLink">
+						<c:param name="page" value="${pageInfo.lastPageNum}"></c:param>
+						<c:param name="q" value="${param.q }"></c:param>
+						<c:param name="t" value="${param.t }"></c:param>
+					</c:url>
+					<li class="page-item"><a class="page-link" href="${listLink }">맨끝으로</a></li>
+				</c:if>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	
+</div> <!-- 첫번째 container를 감싸는 div -->
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 

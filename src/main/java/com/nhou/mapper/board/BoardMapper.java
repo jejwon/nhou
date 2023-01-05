@@ -9,8 +9,11 @@ public interface BoardMapper {
 	// 게시글 작성하기
 	int insert(BoardDto board);
 
-	// 게시글 리스트
-	List<BoardDto> list();
+	// 게시글 리스트 + 페이지네이션
+	List<BoardDto> list(int offset, int records, String type, String keyword);
+
+	// 게시물 총갯수
+	int countAll(String type, String keyword);
 
 	// 게시글 선택해서 보기
 	BoardDto select(int boardId);
@@ -23,14 +26,5 @@ public interface BoardMapper {
 	
 	// 닉네임 정보 불러오기
 	String selectNick(String userId);
-
-	// 페이지네이션 페이지 갯수
-	/* int countAll(String type, String string); */
-
-	// 페이지네이션 보여줄 요소들 list에 담기
-	/*
-	 * List<BoardDto> list(int offset, int records, String type, String keyword,
-	 * String category);
-	 */
 
 }
