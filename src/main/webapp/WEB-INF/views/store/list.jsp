@@ -29,7 +29,7 @@
                     </a>
                 </div>--%>
  			
-	<div class="container">
+<%-- 	<div class="container">
 	
 		<c:forEach items="${productList}" var="product">
         <c:url value="/store/get" var="getLink">
@@ -45,29 +45,53 @@
 				    <span class="product_item_price">13,900 "${product.price }"</span>
 				    <p class="review">
 				    	<strong class="avg">⭐4.9 "${productReply.star }"</strong> 
-				    	리뷰 52 "${productReply.productReplyId }"
+				    	리뷰 "${productReply.productReplyId }"
 				    </p>
 				  </div>
 				</div>
 			</a>		        
     	
     	</c:forEach>
-    </div> 
+    </div>  --%>
 
 <%-- 	<ul class="product-list">
 		<li><a herf="# ${getLink }">			       
 				<i class="card" style="width: 18rem;">
-				  <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/165888771016524175.jpg?gif=1&w=360&h=360&c=c&q=0.8&webp=1" class="card-img-top" >
+				  <img src="##" class="card-img-top" >
 				  <i class="card-body">
-				    <h5 class="card-title">[오늘의딜] 귀여운 볼살 토끼 저금통2colors "${product.productName }"</h5>
-				    <span class="product_item_price">13,900 "${product.price }"</span>
+				    <h5 class="card-title">"${product.productName }"</h5>
+				    <span class="product_item_price">"${product.price }"</span>
 				    <p class="review">
-				    	<strong class="avg">⭐4.9 "${productReply.star }"</strong> 
-				    	리뷰 52 "${productReply.productReplyId }"
+				    	<strong class="avg">"${productReply.star }"</strong> 
+				    		"${productReply.productReplyId }"
 				    </p>
 				  </i>
 				</i>
-			</a></li>  --%>   
+			</a></li> --%> 
+			
+	<table class="product-list">
+		<tbody>
+			<c:forEach items="${storeList}" var="store">
+			<c:url value="/store/get" var="getLink">
+				<tr>
+					<td>		       
+						<div  class="card" style="width: 18rem;">
+					  		<img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/165888771016524175.jpg?gif=1&w=360&h=360&c=c&q=0.8&webp=1" class="card-img-top" >
+					  		<div  class="card-body">
+					    		<h5 class="card-title">[오늘의딜] 귀여운 볼살 토끼 저금통2colors "${product.productName }"</h5>
+					    		<span class="product_item_price">12,500"${product.price }"</span>
+					    		<p class="review">
+					    			<strong class="avg">⭐4.9"${productReply.star }"</strong> 
+					    			리뷰 "${productReply.productReplyId }"
+					    		</p>
+					    	</div>
+					    </div>	
+					</td>
+				</tr>
+			</c:url>	
+			</c:forEach>
+		</tbody>
+	</table>			
     
                   		
 
