@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,7 +70,8 @@ public class BoardController {
 	}
 	
 	// 게시글 수정하기(이전에 쓴 글 가져오기)
-	@GetMapping("boardModify")
+	@GetMapping("boardModify") // @은 외부 빈, #은 메소드의 파라미터
+	@PreAuthorize("@boardSecurity.checkUserId(authentication.name, #boardId)")
 	public void modify(@RequestParam(name="boardId") int boardId,
 			Model model) {
 		
@@ -80,6 +82,7 @@ public class BoardController {
 	
 	// 게시글 수정해서 다시 등록하기
 	@PostMapping("boardModify")
+	@PreAuthorize("@boardSecurity.checkUserId(authentication.name, #board.boardId)")
 	public String modify(BoardDto board, RedirectAttributes rttr) {
 		int cnt = boardService.update(board); // service에 update를 사용
 
@@ -94,6 +97,7 @@ public class BoardController {
 	
 	// 게시글 삭제하기
 	@PostMapping("boardRemove")
+	@PreAuthorize("@boardSecurity.checkUserId(authentication.name, #boardId)")
 	public String remove(@RequestParam(name="boardId") int boardId,
 			RedirectAttributes rttr) {
 		int cnt = boardService.remove(boardId);
