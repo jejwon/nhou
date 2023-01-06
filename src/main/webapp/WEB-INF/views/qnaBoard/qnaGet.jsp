@@ -60,12 +60,134 @@
 		</a>
 	</div>
 
+
+	
+<%--댓글 작성 --%>
+<hr>
+<input type="hidden" id="qna_qnaId" value="${qna.qnaId }">
+<!-- 로그인했을 떄
+<sec:authorize access="isAuthenticated()"></sec:authorize> 관리자권한만 확인-->
+<!-- 댓글 입력 -->
+<div class="container" style="background-color: skyblue;">
+<input type="text" id="qnaReplyInput" placeholder="답변쓰기">
+<button type="button" id="qnaReplySend">작성</button>
+</div>
+
+<div class="container" style="background-color: skyblue;">
+	<div  id="replyAnswerBox"style="background-color: green;"></div>
+</div>
+
+<%-- 댓글 삭제 확인 모달 --%>
+	<!-- Modal -->
+	<!-- <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">댓글 삭제 확인</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        답변을 삭제하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" data-bs-dismiss="modal" id="deleteSubmit" class="btn btn-danger">삭제</button>
+	      </div>
+	    </div>
+	  </div>
+	</div> -->
+						
+			
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
+const ctx = "${pageContext.request.contextPath}";
 //삭제 버튼 클릭하면 삭제 form 전송
 document.querySelector("#deleteSubmit").addEventListener("click", function(){
 	document.querySelector("#deleteForm").submit();
-})
+});
+//댓글 입력
+document.querySelector("#qnaReplySend").addEventListener("click", function(){
+	const qna_qnaId = document.querySelector("#qna_qnaId").value;
+	const content = document.querySelector("#qnaReplyInput").value;
+	
+	const data = {
+			qna_qnaId,
+			content
+	}
+	
+	fetch(`\${ctx}/qnaReply/insert`, {
+		method: "post",
+		headers: {
+			"Content-Type" : "application/json"
+		},
+		body: JSON.stringify(data) 
+	})
+	.then(res=>res.json())
+	.then(data=>{
+		document.querySelector("#qnaReplyInput").value="";
+	})
+	.then(() => replyAnswer());
+});
+
+//답변 리스트 (1개 작성)
+function replyAnswer(){
+	const qna_qnaId = document.querySelector("#qna_qnaId").value;
+	
+	fetch(`\${ctx}/qnaReply/list/\${qna_qnaId}`)
+	.then(res => res.json())
+	.then(list => {
+		const replyAnswerBox = document.querySelector("#replyAnswerBox");
+		replyAnswerBox.innerHTML = "";
+		
+		for(const item of list){
+		
+		//const deleteReplyId = `deleteReplyButton\${item.qnaReplyId}`;		
+		
+		//const deleteButton = `<button data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" data-reply-id="\${item.qnaReplyId}" id="\${deleteReplyId}">삭제</button>`
+
+		const replyDiv = `
+							<div id="reply">
+							\${item.writer} \${item.content} \${item.insertDatetime}
+							</div>`;
+				replyAnswerBox.insertAdjacentHTML("beforeend", replyDiv);
+				
+				//삭제 확인 버튼에 qnaReplyId 옮기기
+				//document.querySelector("#" + deleteReplyId).addEventListener("click", function(){
+					//document.querySelector("#deleteSubmit").setAttribute("data-reply-id", this.dataset.qnaReplyId)
+				//});
+				
+				
+		}					
+	});
+}
+
+//댓글 삭제
+/* function deleteReply(qnaReplyId){
+	fetch(ctx + "/qnaReply/delete/" + qnaReplyId, {
+		method : "delete"
+	})
+	//받은 게 없어서 코드 지우기
+	.then(res => res.json())
+	.then(()=> replyAnswer());
+} */
+
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
