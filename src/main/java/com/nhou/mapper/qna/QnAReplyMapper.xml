@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.nhou.mapper.qna.QnAReplyMapper">
+ <insert id="insert">
+ INSERT INTO qnaReply 
+ (content, qna_qnaId)
+ VALUES 
+ (#{content}, #{qna_qnaId})
+ </insert>
+ 
+ <select id="list" resultType="com.nhou.domain.qna.QnAReplyDto">
+ SELECT 
+ 	qnaReplyId,
+ 	content,
+ 	writer, 
+ 	insertDatetime,
+ 	qna_qnaId
+ FROM qnaReply
+ WHERE qna_qnaId = #{qnaId}	
+ </select>
+ 
+ <select id="get" resultType="com.nhou.domain.qna.QnAReplyDto">
+  SELECT 
+ 	r.qnaReplyId,
+ 	r.content,
+ 	r.writer, 
+ 	r.insertDatetime,
+ 	r.qna_qnaId
+ FROM qnaReply
+ WHERE qnaReplyId = #{qnaReplyId}	
+ </select>
+ 
+ <delete id="delete">
+ DELETE FROM qnaReply
+ WHERE qnaReply = #{qnaReplyId}
+ </delete>
+ </mapper>
