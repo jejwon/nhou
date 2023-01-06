@@ -1,5 +1,6 @@
 package com.nhou.controller.board;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,12 @@ public class BoardReplyController {
 	// 댓글 작성하기
 	@PostMapping("add")
 	@ResponseBody
-	public Map<String, Object> add(@RequestBody BoardReplyDto reply) {
+	public Map<String, Object> add(@RequestBody BoardReplyDto reply,
+			Principal principal) {
+		
+		String loginId = principal.getName();
+		reply.setMember_userId(loginId);
+		
 		int cnt = boardReplyService.addReply(reply); // service로
 		Map<String, Object> map = new HashMap<>();
 		
@@ -52,9 +58,10 @@ public class BoardReplyController {
 	@DeleteMapping("delete/{boardReplyId}")
 	@ResponseBody
 	public Map<String, Object> delete(@PathVariable int boardReplyId) {
+		Map<String, Object> map = new HashMap<>();
+
 		int cnt = boardReplyService.deleteById(boardReplyId);
 		
-		Map<String, Object> map = new HashMap<>();
 		
 		if (cnt == 1) {
 			map.put("message", "새 댓글 삭제완료");

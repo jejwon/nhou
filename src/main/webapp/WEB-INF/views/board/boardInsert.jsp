@@ -106,7 +106,7 @@
 			<input class="form-control" type="text" name="title">
 			<label>제목</label>		
 		</div>
-		
+		 
 		<div class="form-floating mb-3">
 			<textarea class="form-control" name="content" style="resize: none; height: 150px;"></textarea>
 		</div>

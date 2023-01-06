@@ -16,26 +16,42 @@ SELECT nickName FROM member WHERE userId = #{userId}
 
 <!-- 글 목록 list는 mapper에서 사용한 명명 -->
 <select id="list" resultType="com.nhou.domain.board.BoardDto">
+<!-- <![CDATA[
+SELECT 
+	b.boardId,
+	b.boardCategory,
+    b.title,
+    IF (
+	DATE_FORMAT(b.insertDatetime, '%Y%m%d') < DATE_FORMAT(now(), '%Y%m%d'),
+    DATE_FORMAT(b.insertDatetime, '%Y.%m.%d'),
+	DATE_FORMAT(b.insertDatetime, '%H:%i')
+) AS insertDatetime,
+    m.nickName
+FROM 
+	board b LEFT JOIN member m ON b.member_userId = m.userId
+]]> -->
 SELECT 
 	b.boardId,
 	b.boardCategory,
     b.title,
     b.insertDatetime,
-    m.nickName
+    m.nickName,
+    COUNT(r.boardReplyId) replyCount
 FROM 
 	board b LEFT JOIN member m ON b.member_userId = m.userId
+			LEFT JOIN boardReply r ON b.boardId = r.board_boardId
 WHERE
 	<trim prefixOverrides="OR">
 		<if test="type == 'all' or type == 'title'">
-			title LIKE #{keyword}
+			b.title LIKE #{keyword}
 		</if>
 		
 		<if test="type == 'all' or type == 'content'">
-			OR content LIKE #{keyword}
+			OR b.content LIKE #{keyword}
 		</if>
 
-		<if test="type == 'all' or type == 'memeber_userId'">
-			OR member_userId LIKE #{keyword}
+		<if test="type == 'all' or type == 'nickName'">
+			OR m.nickName LIKE #{keyword}
 		</if>
 	</trim>
 GROUP BY b.boardId
@@ -56,7 +72,7 @@ WHERE
 			OR content LIKE #{keyword}
 		</if>
 
-		<if test="type == 'all' or type == 'writer'">
+		<if test="type == 'all' or type == 'nickName'">
 			OR member_userId LIKE #{keyword}
 		</if>
 	</trim>
