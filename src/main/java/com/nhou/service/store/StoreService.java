@@ -20,9 +20,10 @@ public class StoreService {
 	//	System.out.println("service =============> "+store);
 	}
 
-	public List<StoreDto> listStore() {
-
-		return mapper.list();
-	}
+	/*
+	 * public List<StoreDto> listStore() {
+	 * 
+	 * return mapper.list(); }
+	 */
 
 }
