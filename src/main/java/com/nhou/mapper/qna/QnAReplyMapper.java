@@ -14,4 +14,8 @@ public interface QnAReplyMapper {
 
 	int delete(int qnaReplyId);
 
+	QnAReplyDto edit(QnAReplyDto qnaReply);
+	
+	int deleteByQnAId(int qna_qnaId);
+
 }

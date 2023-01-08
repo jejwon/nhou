@@ -19,21 +19,33 @@
  	qna_qnaId
  FROM qnaReply
  WHERE qna_qnaId = #{qnaId}	
+ ORDER BY qnaReplyId DESC
  </select>
  
  <select id="get" resultType="com.nhou.domain.qna.QnAReplyDto">
   SELECT 
- 	r.qnaReplyId,
- 	r.content,
- 	r.writer, 
- 	r.insertDatetime,
- 	r.qna_qnaId
+ 	qnaReplyId,
+ 	content,
+ 	writer, 
+ 	insertDatetime,
+ 	qna_qnaId
  FROM qnaReply
  WHERE qnaReplyId = #{qnaReplyId}	
  </select>
  
  <delete id="delete">
  DELETE FROM qnaReply
- WHERE qnaReply = #{qnaReplyId}
+ WHERE qnaReplyId = #{qnaReplyId}
+ </delete>
+ 
+ <update id="edit">
+ UPDATE qnaReply
+ SET content = #{content}
+ WHERE qnaReplyId = #{qnaReplyId}
+ </update>
+ 
+ <delete id="deleteByQnAId">
+ DELETE FROM qnaReply
+ WHERE qna_qnaId = #{qna_qnaId}
  </delete>
  </mapper>

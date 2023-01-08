@@ -33,4 +33,9 @@ public class QnAReplyServiceImpl implements QnAReplyService{
 	public int deleteByQnAReplyId(int qnaReplyId) {
 		return qnaReplyMapper.delete(qnaReplyId);
 	}
+	
+	@Override
+	public QnAReplyDto editReply(QnAReplyDto qnaReply) {
+		return qnaReplyMapper.edit(qnaReply);
+	}
 }
