@@ -4,10 +4,17 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nhou.mapper.board.BoardMapper">
 <!-- 게시글 작성하기 -->
-<insert id="insert" keyProperty="boardId">
+<insert id="insert" useGeneratedKeys="true" keyProperty="boardId">
 INSERT INTO board(boardCategory, title, content, member_userId)
 VALUES (#{boardCategory}, #{title}, #{content}, #{member_userId})
 </insert>
+
+<!-- 파일 첨부 작성 -->
+<insert id="insertFile">
+INSERT INTO boardFile (boardFileName, boardFilePath, board_boardId)
+VALUES (#{boardFileName}, #{boardFilePath}, #{board_boardId})
+</insert>
+
 
 <!-- 닉네임 가져오기 
 <select id="selectNick" resultType="java.lang.String">
@@ -36,10 +43,11 @@ SELECT
     b.title,
     b.insertDatetime,
     m.nickName,
-    COUNT(r.boardReplyId) replyCount
-FROM 
-	board b LEFT JOIN member m ON b.member_userId = m.userId
-			LEFT JOIN boardReply r ON b.boardId = r.board_boardId
+    COUNT(DISTINCT r.boardReplyId) replyCount,
+    COUNT(DISTINCT l.member_userId) likeCount
+FROM board b LEFT JOIN member m ON b.member_userId = m.userId
+			 LEFT JOIN boardReply r ON b.boardId = r.board_boardId
+             LEFT JOIN boardLike l ON l.member_userId = m.userId
 WHERE
 	<trim prefixOverrides="OR">
 		<if test="type == 'all' or type == 'title'">
@@ -79,17 +87,40 @@ WHERE
 </select>
 
 <!-- 게시물 선택해서 보기 select는 mapper에서 사용한 명명 / resultType은 DB에 있는 컬럼들 -->
-<select id="select" resultType="com.nhou.domain.board.BoardDto">
+<!-- resultType은 DB에 있는 컬럼들 -->
+<select id="select" resultMap="boardMap">
 SELECT
-	boardId,
-	boardCategory,
-	title,
-	content,
-	insertDatetime,
-	member_userId
-FROM board
+	b.boardId,
+	b.boardCategory,
+	b.title,
+	b.content,
+	b.insertDatetime,
+	b.member_userId,
+	m.nickName,
+ 	(SELECT COUNT(*) FROM boardLike WHERE board_boardId = b.boardId AND member_userId = #{member_userId}) liked,
+ 	(SELECT COUNT(*) FROM boardLike WHERE board_boardId = b.boardId) likeCount,
+ 	f.boardFileName,
+ 	f.boardFileId
+FROM
+ 		board b LEFT JOIN member m ON b.member_userId = m.userId
+ 				LEFT JOIN boardFile f ON f.board_boardId = b.boardId
 WHERE boardId = #{boardId}
 </select>
+<resultMap type="com.nhou.domain.board.BoardDto" id="boardMap">
+	<id column="boardId" property="boardId"></id>
+	<result column="boardCategory" property="boardCategory"/>
+	<result column="title" property="title"/>
+	<result column="content" property="content"/>
+	<result column="boardCategory" property="boardCategory"/>
+	<result column="insertDatetime" property="insertDatetime"/>
+	<result column="likeCount" property="likeCount"/>
+	<result column="nickName" property="nickName"/>
+	<result column="liked" property="liked"/>
+	<result column="member_userId" property="member_userId"/>
+	<collection property="boardFileName" ofType="string">
+		<result property="boardFileName" column="boardFileName"/>
+	</collection>
+</resultMap>
 
 <!-- 게시물 수정하기 -->
 <update id="update">
@@ -108,4 +139,33 @@ DELETE FROM board
 WHERE boardId = #{boardId}
 </delete>
 
+<!-- 좋아요 존재유무 -->
+<select id="getLikeByBoardIdAndUserId" resultType="int">
+SELECT COUNT(*) FROM boardLike
+WHERE board_boardId = #{board_boardId} AND member_userId = #{member_userId}
+</select>
+
+<!-- 좋아요 추가 -->
+<insert id="insertLike">
+INSERT INTO boardLike (board_boardId, member_userId)
+VALUES (#{board_boardId}, #{member_userId})
+</insert>
+
+<!-- 좋아요 삭제 -->
+<delete id="deleteLike">
+DELETE FROM boardLike
+WHERE board_boardId = #{board_boardId} AND member_userId = #{member_userId}
+</delete>
+
+<!-- 좋아요 카운트 갯수 -->
+<select id="countLikeByBoardId" resultType="int">
+SELECT COUNT(*) FROM boardLike
+WHERE board_boardId = #{board_boardId}
+</select>
+
+<!-- 게시글 삭제할때 좋아요 같이 삭제 -->
+<delete id="deleteLikeByBoardId">
+DELETE FROM boardLike
+WHERE board_boardId = #{board_boardId}
+</delete>
 </mapper>

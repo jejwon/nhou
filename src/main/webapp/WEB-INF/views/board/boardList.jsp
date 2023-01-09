@@ -13,7 +13,6 @@
 <style type="text/css">
 /* 폰트 */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
-
 /* top */
 #serachBox {
 	position: absolute;
@@ -21,14 +20,12 @@
 	top: 29%;
 	transform: translate(-70%, -30%);
 }
-
 select {
 	border-radius: 50px;
 	border: 1px solid #DCC1B0;
 	padding: 0px 10px;
 	display: inline-block;
 }
-
 input {
 	position: relative;
 	display: inline-block;
@@ -38,7 +35,6 @@ input {
 	border: 1px solid #DCC1B0;
 	vertical-align: middle;
 }	
-
 input[type="search"] {
 	padding: 0 25px;
 	border-radius: 25px 0 0 25px;
@@ -48,7 +44,6 @@ input[type="search"] {
 	text-align: left;
 	height: 28px;
 }
-
 input[type="submit"] {
 	position: relative;
 	border-radius: 0 25px 25px 0;
@@ -62,59 +57,47 @@ input[type="submit"] {
 	vertical-align: middle;
 	color: #fff;
 }
-
-
 /* 카테고리 */
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
-
 #categorySelect {
 	text-align: center;
 	margin: 60px;
 }
-
 #categorySelect .categoryBtn {
 	border: 0;
 	background: 0;
 	font-size: 18px;
 	margin: 0 20px;
 }
-
 #categorySelect .categoryBtn:hover {
 	color: #CD7070;
 	font-weight: bold;
 	transition: 0.3s;
 }
-
 #btn1::after {
 	content: "|";
 	padding-left: 33px;
 }	
-
 #btn2::after {
 	content: "|";
 	padding-left: 33px;
 }	
-
 #btn3::after {
 	content: "|";
 	padding-left: 33px;
 }
-
 /* 댓글 아이콘 */
 #chatCount {
 	font-size: 20px;
 }	
-
 /* 바디 */
 .container {
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
-
 /* buttom */
 #buttom {
 	text-align: center;
@@ -125,7 +108,6 @@ input[type="submit"] {
 	display: inline-block;
 	
 }
-
 /* 글쓰기 버튼 */
 #buttom .insertBtn {
 	display: inline-block;
@@ -134,27 +116,21 @@ input[type="submit"] {
 	left: 0;
 	background-color: #DCC1B0;
 }
-
 #writeBtn:hover {
 	color: #fff;
 }
-
 /* 게시판 body */
 #tableList {
 	text-align: center;
 	border-spacing: 10px;
 }
-
 #tableList .table {
 	font-size: 17px;
 }
-
 #tableList .table tr td {
 	height: 60px;
 	vertical-align: middle;
 }
-
-
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -247,6 +223,7 @@ input[type="submit"] {
 						
 						<td>${board.nickName }</td>
 						<td>${board.ago }</td>
+						<td>${board.likeCount }</td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -306,7 +283,7 @@ input[type="submit"] {
 						<c:param name="q" value="${param.q }"></c:param>
 						<c:param name="t" value="${param.t }"></c:param>
 					</c:url>
-					<li class="page-item"><a class="page-item" href="${listLink }">다음</a></li>
+					<li class="page-item"><a class="page-link" href="${listLink }">다음</a></li>
 				</c:if>
 				
 				<!-- 맨끝으로 가는 페이지 버튼 활성화 : 맨마지막 제외하고 다른 페이지에서는 존재하도록 -->

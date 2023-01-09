@@ -1,10 +1,14 @@
 package com.nhou.service.board;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nhou.domain.board.BoardDto;
 import com.nhou.domain.board.PageInfo;
@@ -22,10 +26,46 @@ public class BoardServiceImpl implements BoardService {
 	private BoardReplyMapper boardReplyMapper;
 	
 	// 게시글 작성
+	/*
+	 * @Override public int insert(BoardDto board) { return
+	 * boardMapper.insert(board); }
+	 */
+	
+	// 게시글 파일첨부 작성
 	@Override
-	public int insert(BoardDto board) {
+	public int insertFile(BoardDto board, MultipartFile[] files) {
 		
-		return boardMapper.insert(board); // 매퍼로 보냄
+		// db에 게시물 정보 삽입
+		int cnt = boardMapper.insert(board);
+		
+		for (MultipartFile file : files) {
+			
+			if (file != null && file.getSize() > 0) {
+				// db에 파일 저장
+				// 파일명, 게시물id정보가 있어야함
+				boardMapper.insertFile(board.getBoardId(), file.getOriginalFilename());
+				
+				// 파일 저장
+				// 파일이 업로드 될때마다 boardId를 가져와 새폴더를 만드는 작업
+				File folder = new File("C:\\Users\\sj\\Desktop\\study\\upload\\nhou\\board\\"
+						+ board.getBoardId());
+				folder.mkdirs();
+				
+				File dest = new File(folder, file.getOriginalFilename());
+				
+				try {
+					// 받은 파일을 목적지로 전송 transferTo
+					file.transferTo(dest);
+				} catch (Exception e) {
+					// @Transactional은 RuntiemExecption에서만 rollback됨 
+					e.printStackTrace();
+					throw new RuntimeException(e);
+				}
+			}
+		}
+		
+		return cnt;
+		
 	}
 	
 	// 게시글 목록
@@ -67,9 +107,15 @@ public class BoardServiceImpl implements BoardService {
 	
 	// 게시물 가져와서 보기
 	@Override
-	public BoardDto get(int boardId) {		// service에 사용한 명명
-		return boardMapper.select(boardId); // mapper에서 사용할 명명
+	public BoardDto get(int boardId, String member_userId) {		// service에 사용한 명명
+		return boardMapper.select(boardId, member_userId); // mapper에서 사용할 명명
 	}
+	
+	public BoardDto get(int boardId) {
+		return get(boardId, null);
+	}
+	
+	
 	
 	// 가져온 게시물 수정하고 등록하기
 	@Override
@@ -87,4 +133,27 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.delete(boardId); // mapper에서 사용할 명명
 		
 	}
+	
+	// 좋아요
+		public Map<String, Object> updateLike(String boardId, String member_userId) {
+			Map<String, Object> map = new HashMap<>();
+			
+			int cnt = boardMapper.getLikeByBoardIdAndUserId(boardId, member_userId);
+			
+			if (cnt == 1) {
+				// 좋아요 있으면 삭제
+				boardMapper.deleteLike(boardId, member_userId);
+				map.put("current", "not liked");
+			} else {
+				// 없으면 좋아요 누르기 보이기
+				boardMapper.insertLike(boardId, member_userId);
+				map.put("current", "liked");
+			}
+			
+			// 좋아요 카운트 갯수
+			int countAll = boardMapper.countLikeByBoardId(boardId);
+			map.put("count", countAll);
+			
+			return map;
+		}
  }
