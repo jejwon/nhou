@@ -20,7 +20,8 @@ VALUES (#{qnaCategory}, #{title}, #{content}, 0, #{member_userId})
  		q.member_userId,
  		m.nickName
  FROM qna q LEFT JOIN member m ON q.member_userId = m.userId
- ORDER BY qnaId DESC
+ ORDER BY q.qnaId DESC
+ LIMIT #{offset}, #{records}	
  </select>
  
  <resultMap type="com.nhou.domain.qna.QnADto" id="listMap"> <!-- list 리턴타입은 resultMap안에 넣어서 -->
@@ -33,6 +34,10 @@ VALUES (#{qnaCategory}, #{title}, #{content}, 0, #{member_userId})
 	<result column="member_userId" property="member_userId"/>
 	<result column="nickName" property="nickName"/>
  </resultMap>
+ 
+ <select id="countAll" resultType="int">
+ SELECT COUNT(*) FROM qna
+ </select>
  
  <select id="getByQnAId" resultMap="getMap">
   SELECT

@@ -1,8 +1,11 @@
 package com.nhou.domain.qna;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-import com.nhou.domain.member.MemberDto;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -19,7 +22,10 @@ public class QnADto {
 	public String writer;
 	public String member_userId;
 	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	public LocalDateTime insertDatetime;
+	
+	
 	
 	public String nickName;
 }
