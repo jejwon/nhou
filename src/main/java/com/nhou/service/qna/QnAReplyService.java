@@ -14,4 +14,6 @@ public interface QnAReplyService {
 
 	int deleteByQnAReplyId(int qnaReplyId);
 
+	QnAReplyDto editReply(QnAReplyDto qnaReply);
+
 }

@@ -4,16 +4,21 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nhou.domain.qna.PageInfo;
 import com.nhou.domain.qna.QnADto;
 import com.nhou.mapper.member.MemberMapper;
 import com.nhou.mapper.qna.QnAMapper;
+import com.nhou.mapper.qna.QnAReplyMapper;
 
 @Service
 public class QnAServiceImpl implements QnAService{
 	@Autowired
 	private QnAMapper qnaMapper;
+	
+	@Autowired
+	private QnAReplyMapper qnaReplyMapper;
 	
 	@Autowired
 	private MemberMapper memberMapper;
@@ -65,7 +70,10 @@ public class QnAServiceImpl implements QnAService{
 	}
 	
 	@Override
+	@Transactional
 	public int delete(int qnaId) {
+		qnaReplyMapper.deleteByQnAId(qnaId);
+		
 		return qnaMapper.delete(qnaId);
 	}
 }
