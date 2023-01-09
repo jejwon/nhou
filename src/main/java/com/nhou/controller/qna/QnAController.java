@@ -1,6 +1,8 @@
 package com.nhou.controller.qna;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nhou.domain.member.MemberDto;
+import com.nhou.domain.qna.PageInfo;
 import com.nhou.domain.qna.QnADto;
 import com.nhou.service.member.MemberService;
 import com.nhou.service.qna.QnAService;
@@ -31,7 +34,7 @@ public class QnAController {
 	public void insert(){
 		
 	}
-	
+	//문의 작성
 	@PostMapping("qnaInsert")
 	public String insert(Principal principal, QnADto qna) {
 		String loginId = principal.getName();
@@ -41,13 +44,16 @@ public class QnAController {
 		return "redirect:/qnaBoard/qnaList";
 	}
 	
+	//문의 리스트
 	@GetMapping("qnaList")
-	public void list(Model model){
-		List<QnADto> list = qnaService.list();
+	public void list(@RequestParam(name="page", defaultValue="1") int page,//페이지
+					PageInfo pageInfo,Model model){
+		List<QnADto> list = qnaService.list(page, pageInfo);
 		
 		model.addAttribute("qnaList", list);
 	}
 	
+	//문의 보기 페이지
 	@GetMapping("qnaGet")
 	public void get(@RequestParam(name="qnaId") int qnaId, Model model, Principal principal) {
 		//String loginId = principal.getName();
@@ -59,11 +65,14 @@ public class QnAController {
 		
 	}
 	
+	//문의 삭제
 	@PostMapping("delete")
 	public String remove(int qnaId) {
 		qnaService.delete(qnaId);
 		
 		return "redirect:/main/list";
 	}
+	
+	
 	
 }
