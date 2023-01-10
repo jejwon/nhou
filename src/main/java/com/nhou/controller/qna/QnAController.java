@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,24 +56,26 @@ public class QnAController {
 	
 	//문의 보기 페이지
 	@GetMapping("qnaGet")
-	public void get(@RequestParam(name="qnaId") int qnaId, Model model, Principal principal) {
-		//String loginId = principal.getName();
+	public void get(@RequestParam(name="qnaId") int qnaId, Model model, Principal principal, MemberDto member) {
+		String loginId = principal.getName();
 		QnADto qna = qnaService.getByQnAId(qnaId);
 		
-		//qna.setMember_userId(loginId);
+		member.setUserId(loginId);
 		
+		model.addAttribute("member", member);
 		model.addAttribute("qna", qna);
 		
 	}
 	
 	//문의 삭제
+	@PreAuthorize("@qnABoardSecurity.checkWriter(authentication.name, #qnaId)")
 	@PostMapping("delete")
 	public String remove(int qnaId) {
 		qnaService.delete(qnaId);
 		
 		return "redirect:/main/list";
 	}
-	
+
 	
 	
 }
