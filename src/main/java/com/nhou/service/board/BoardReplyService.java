@@ -10,7 +10,7 @@ public interface BoardReplyService {
 	public int addReply(BoardReplyDto reply);
 
 	// 댓글 리스트 불러오기
-	public List<BoardReplyDto> listReplyByBoardId(int board_boardId);
+	public List<BoardReplyDto> listReplyByBoardId(int board_boardId, String userName);
 
 	// 댓글 삭제하기
 	public int deleteById(int boardReplyId);

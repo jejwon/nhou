@@ -28,14 +28,14 @@ public class BoardReplyServiceImpl implements BoardReplyService {
 	
 	// 댓글 리스트
 	@Override
-	public List<BoardReplyDto> listReplyByBoardId(int board_boardId) {
-		return boardReplyMapper.listReplyByBoardId(board_boardId);
+	public List<BoardReplyDto> listReplyByBoardId(int board_boardId, String userName) {
+		return boardReplyMapper.listReplyByBoardId(board_boardId, userName);
 	}
 	
 	// 댓글 가져오기
 	@Override
 	public BoardReplyDto getById(int boardReplyId) {
-		return boardReplyMapper.getById(boardReplyId);
+		return boardReplyMapper.selectById(boardReplyId);
 	}
 	
 	// 댓글 수정하기

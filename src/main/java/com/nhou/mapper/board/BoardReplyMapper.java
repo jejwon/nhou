@@ -15,13 +15,16 @@ public interface BoardReplyMapper {
 	int deleteById(int boardReplyId);
 
 	// 댓글 리스트
-	List<BoardReplyDto> listReplyByBoardId(int board_boardId);
+	List<BoardReplyDto> listReplyByBoardId(int board_boardId, String userName);
 
 	// 댓글 가져오기
-	BoardReplyDto getById(int boardReplyId);
+	BoardReplyDto selectById(int boardReplyId);
 
 	// 댓글 수정하기
 	int update(BoardReplyDto reply);
+
+	
+	
 	
 	
 

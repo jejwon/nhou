@@ -13,10 +13,10 @@ public class BoardSecurity {
 	private BoardMapper boardMapper;
 	
 	// 로그인한 아이디 == 작성자 아이디 수정가능
-	public boolean checkUserId(String userId, int boardId) {
+	public boolean checkUserId(String userName, int boardId) {
 		BoardDto board = boardMapper.select(boardId);
 		
-		return board.getMember_userId().equals(userId);
+		return board.getMember_userId().equals(userName);
 		
 	}
 }

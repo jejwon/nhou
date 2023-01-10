@@ -1,11 +1,11 @@
 package com.nhou.controller.board;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,14 +29,17 @@ public class BoardReplyController {
 	// 댓글 작성하기
 	@PostMapping("add")
 	@ResponseBody
+	@PreAuthorize("isAuthenticated()") // 로그인 했을때만 작동하도록
 	public Map<String, Object> add(@RequestBody BoardReplyDto reply,
-			Principal principal) {
+			org.springframework.security.core.Authentication auth) { // 로그인한 정보 들어있음
 		
-		String loginId = principal.getName();
-		reply.setMember_userId(loginId);
+		if (auth != null) {
+			reply.setMember_userId(auth.getName());
+		}
+		
+		Map<String, Object> map = new HashMap<>();
 		
 		int cnt = boardReplyService.addReply(reply); // service로
-		Map<String, Object> map = new HashMap<>();
 		
 		if (cnt == 1) {
 			map.put("message", "새 댓글 등록완료");
@@ -50,8 +53,16 @@ public class BoardReplyController {
 	// 댓글 리스트
 	@GetMapping("list/{board_boardId}")
 	@ResponseBody
-	public List<BoardReplyDto> list(@PathVariable int board_boardId) {
-		return boardReplyService.listReplyByBoardId(board_boardId);
+	public List<BoardReplyDto> list(@PathVariable int board_boardId,
+			org.springframework.security.core.Authentication auth) {
+		
+		String userName = "";
+		
+		// 로그인한 상태일때
+		if (auth != null) {
+			userName = auth.getName(); // 로그인한 아이디 얻어오기
+		}
+		return boardReplyService.listReplyByBoardId(board_boardId, userName);
 	}
 	
 	// 댓글 삭제하기
@@ -64,9 +75,9 @@ public class BoardReplyController {
 		
 		
 		if (cnt == 1) {
-			map.put("message", "새 댓글 삭제완료");
+			map.put("message", "댓글 삭제완료");
 		} else {
-			map.put("message", "새 댓글 삭제실패");
+			map.put("message", "댓글 삭제실패");
 		}
 		
 		return map;
@@ -81,7 +92,6 @@ public class BoardReplyController {
 	
 	// 댓글 수정하기
 	@PutMapping("modify")
-	@ResponseBody
 	public Map<String, Object> modify(@RequestBody BoardReplyDto reply) {
 		Map<String, Object> map = new HashMap<>();
 		

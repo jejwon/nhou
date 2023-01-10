@@ -19,6 +19,8 @@ public class BoardReplyDto {
 	private int board_boardId;
 	private String nickName;
 	
+	private boolean editable; // 작성자 == 현재 로그인계정 확인하여 수정/삭제 판별
+	
 	// 댓글 작성시간
 	@JsonFormat(shape = Shape.STRING)
 	private LocalDateTime insertDatetime;

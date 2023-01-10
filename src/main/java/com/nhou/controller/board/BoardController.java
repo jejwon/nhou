@@ -2,15 +2,21 @@ package com.nhou.controller.board;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhou.domain.board.BoardDto;
@@ -30,13 +36,13 @@ public class BoardController {
 	}
 	
 	@PostMapping("boardInsert")
-	public String insert(BoardDto board, RedirectAttributes rttr,
-			Principal principal) { // 작성한 작성자의 id정보를 가져와 닉네임을 알 수 있음
+	public String insert(BoardDto board, Principal principal, // 작성한 작성자 정보 가져옴
+			MultipartFile[] files, RedirectAttributes rttr) { 
 		
 		String loginId = principal.getName();
 		board.setMember_userId(loginId);
 		
-		int cnt = boardService.insert(board);
+		int cnt = boardService.insertFile(board, files);
 		
 		if (cnt == 1) {
 			rttr.addFlashAttribute("message", "새 게시물이 등록되었습니다.");
@@ -61,17 +67,28 @@ public class BoardController {
 	// 게시글 보기
 	@GetMapping("boardGet")
 	public void get(@RequestParam(name="boardId") int boardId,
-			Model model) {
+			Model model, Authentication auth) {
 			
-		BoardDto board = boardService.get(boardId);
-		
+		String member_userId = null;
+			
+		if (auth != null) {
+			member_userId = auth.getName();
+		}
+			
+		BoardDto board = boardService.get(boardId, member_userId);
+			
 		model.addAttribute("board", board);
-		
+				
+			/*
+			 * BoardDto board = boardService.get(boardId);
+			 * 
+			 * model.addAttribute("board", board);
+			 */
+			
 	}
 	
 	// 게시글 수정하기(이전에 쓴 글 가져오기)
 	@GetMapping("boardModify") // @은 외부 빈, #은 메소드의 파라미터
-	@PreAuthorize("@boardSecurity.checkUserId(authentication.name, #boardId)")
 	public void modify(@RequestParam(name="boardId") int boardId,
 			Model model) {
 		
@@ -82,7 +99,6 @@ public class BoardController {
 	
 	// 게시글 수정해서 다시 등록하기
 	@PostMapping("boardModify")
-	@PreAuthorize("@boardSecurity.checkUserId(authentication.name, #board.boardId)")
 	public String modify(BoardDto board, RedirectAttributes rttr) {
 		int cnt = boardService.update(board); // service에 update를 사용
 
@@ -97,7 +113,6 @@ public class BoardController {
 	
 	// 게시글 삭제하기
 	@PostMapping("boardRemove")
-	@PreAuthorize("@boardSecurity.checkUserId(authentication.name, #boardId)")
 	public String remove(@RequestParam(name="boardId") int boardId,
 			RedirectAttributes rttr) {
 		int cnt = boardService.remove(boardId);
@@ -109,6 +124,23 @@ public class BoardController {
 		}
 		
 		return "redirect:/board/boardList";
+	}
+	
+
+	// 좋아요
+	@PutMapping("boardLike")
+	@ResponseBody
+	@PreAuthorize("isAuthenticated()") // 로그인 했을때만 작동하도록
+	public Map<String, Object> like(@RequestBody Map<String, String> req,
+							Authentication auth) {
+		
+		System.out.println(req);
+		
+		String boardId = req.get("boardId");
+		
+		Map<String, Object> result = boardService.updateLike(boardId, auth.getName());
+		
+		return result;
 	}
 
 }

@@ -87,7 +87,7 @@
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 <div class="container">
-	<form action="/board/boardInsert" method="post">
+	<form action="/board/boardInsert" method="post" enctype="multipart/form-data">
 		<div class="categorySelectBox">
 		<div>
 			<input type="text" name="member_userId" disabled="disabled">
@@ -111,8 +111,9 @@
 			<textarea class="form-control" name="content" style="resize: none; height: 150px;"></textarea>
 		</div>
 		
-		<div>
-			<input multiple="multiple" type="file" class="form-control">
+		<div class="mb-3">
+			<label class="form-label">파일</label>
+			<input multiple type="file" accept="image/*" class="form-control" name="files">
 		</div>
 		
 		

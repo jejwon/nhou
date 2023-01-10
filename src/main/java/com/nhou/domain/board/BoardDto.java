@@ -21,6 +21,7 @@ public class BoardDto {
 	private int viewCount;
 	private String nickName;
 	
+	// 여러 파일명을 담기 위해 리스트로
 	private List<String> boardFileName;
 	private int countFile;
 	private boolean liked;

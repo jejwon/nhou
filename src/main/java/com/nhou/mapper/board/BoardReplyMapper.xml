@@ -17,7 +17,8 @@ SELECT
 	r.content, 
 	r.insertDatetime,
 	m.nickName,
-	r.member_userId
+	r.member_userId,
+	(r.member_userId = #{userName}) editable <!-- mapper에서 가져옴 -->
 FROM 
 	boardReply r LEFT JOIN member m ON r.member_userId = m.userId
 WHERE 
@@ -39,10 +40,16 @@ WHERE boardReplyId = #{boardReplyId}
 </delete>
 
 <!-- 댓글 가져오기 -->
-<select id="getById" resultType="com.nhou.domain.board.BoardReplyDto">
-SELECT boardReplyId, board_boardId, content, insertDatetime
-FROM boardReply
-WHERE boardReplyId = #{boardReplyId}
+<select id="selectById" resultType="com.nhou.domain.board.BoardReplyDto">
+SELECT 
+	boardReplyId, 
+	board_boardId, 
+	content, 
+	insertDatetime
+FROM 
+	boardReply
+WHERE 
+	boardReplyId = #{boardReplyId}
 </select>
 
 <!-- 댓글 수정하기 -->
