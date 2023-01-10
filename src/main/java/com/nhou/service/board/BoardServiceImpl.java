@@ -40,7 +40,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		for (MultipartFile file : files) {
 			
-			if (file != null && file.getSize() > 0) {
+			if (files != null && file.getSize() > 0) {
 				// db에 파일 저장
 				// 파일명, 게시물id정보가 있어야함
 				boardMapper.insertFile(board.getBoardId(), file.getOriginalFilename());
@@ -61,8 +61,9 @@ public class BoardServiceImpl implements BoardService {
 					e.printStackTrace();
 					throw new RuntimeException(e);
 				}
-			}
-		}
+		 }
+			
+	}
 		
 		return cnt;
 		
@@ -70,7 +71,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	// 게시글 목록
 	@Override
-	public List<BoardDto> listBoard(int page, String type, String keyword, PageInfo pageInfo) { // service에 사용한 명명
+	public List<BoardDto> listBoard(int page, String type, String keyword, PageInfo pageInfo, String category) { // service에 사용한 명명
 		int records = 10; // 게시글 갯수
 		int offset = (page - 1) * records; // 어디서부터 시작할지
 		
@@ -102,7 +103,7 @@ public class BoardServiceImpl implements BoardService {
 		pageInfo.setLastPageNum(lastPage);
 		
 		
-		return boardMapper.list(offset, records, type, "%" + keyword + "%");		// mapper에서 사용할 명명
+		return boardMapper.list(offset, records, type, "%" + keyword + "%", category);		// mapper에서 사용할 명명
 	}
 	
 	// 게시물 가져와서 보기

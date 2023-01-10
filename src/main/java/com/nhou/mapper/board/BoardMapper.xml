@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nhou.mapper.board.BoardMapper">
-<!-- 게시글 작성하기 -->
+<!-- 게시글 작성하기 파일 경로 저장을 위해 id값을 갖고오기 위해  useGeneratedKeys, keyProperty 사용 -->
 <insert id="insert" useGeneratedKeys="true" keyProperty="boardId">
 INSERT INTO board(boardCategory, title, content, member_userId)
 VALUES (#{boardCategory}, #{title}, #{content}, #{member_userId})
@@ -11,8 +11,8 @@ VALUES (#{boardCategory}, #{title}, #{content}, #{member_userId})
 
 <!-- 파일 첨부 작성 -->
 <insert id="insertFile">
-INSERT INTO boardFile (boardFileName, boardFilePath, board_boardId)
-VALUES (#{boardFileName}, #{boardFilePath}, #{board_boardId})
+INSERT INTO boardFile (board_boardId, boardFileName)
+VALUES (#{board_boardId}, #{boardFileName})
 </insert>
 
 
@@ -49,6 +49,10 @@ FROM board b LEFT JOIN member m ON b.member_userId = m.userId
 			 LEFT JOIN boardReply r ON b.boardId = r.board_boardId
              LEFT JOIN boardLike l ON l.member_userId = m.userId
 WHERE
+	<if test="category !=null and category != ''">
+		b.boardCategory = #{category} AND
+	</if>
+	(
 	<trim prefixOverrides="OR">
 		<if test="type == 'all' or type == 'title'">
 			b.title LIKE #{keyword}
@@ -62,6 +66,7 @@ WHERE
 			OR m.nickName LIKE #{keyword}
 		</if>
 	</trim>
+	)
 GROUP BY b.boardId
 ORDER BY b.boardId DESC
 LIMIT #{offset}, #{records}

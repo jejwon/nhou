@@ -38,7 +38,7 @@
 
 .categorySelectBox .category {
 	display: inline-block;
-	width: 105px;
+	width: 200px;
 	height: 40px;
 	border: 0;
 	outline: none;
@@ -55,13 +55,19 @@
 }
 	
 .b1 {
-	background-color: #6D8B74;
-	border-radius: 5px;
-	border-color: #6D8B74;
-	color: #fff;
-	width: 60px;
-	height: 30px;
-	float: center;
+	position: relative;
+    border: none;
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+
+}
+
+.w-btn-green {
+    background-color: #DCC1B0;
+    color: #fbfbf7;
 }
 
 .b2 {
@@ -95,9 +101,9 @@
 			<p>카테고리</p>
 			
 			<select class="category" name="boardCategory" id="">
-				<option name="houses" value="1">집들이</option>
-				<option name="tip" value="2">꿀팁전수</option>
-				<option name="chat" value="3">자유잡담</option>
+				<option name="houses">인테리어 자랑</option>
+				<option name="tip">꿀팁 방출</option>
+				<option name="chat">잡담</option>
 			</select>
 		</div>
 		
@@ -118,7 +124,7 @@
 		
 		
 		<div class="row-g-2" style="display: inline-block; padding: 10px 100px 10px 100px; margin: 10px 500px 10px 500px;">
-			<input style="" class="b1" type="submit" value="등록"> 
+			<input class="b1 w-btn-green" type="submit" value="등록"> 
 			<c:url value="/board/boardList" var="listLink" />
 		</div>
 	</form>

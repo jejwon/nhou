@@ -173,10 +173,10 @@ input[type="submit"] {
  	<div id="categorySelect" class="">
 		<c:url value="/board/boardList" var="listLink"></c:url>
 		<form action="${listLink }">
-			<button id="btn1" class="categoryBtn" name="boardCategory" value="">전체</button>
-			<button id="btn2" class="categoryBtn" name="boardCategory" value="1">인테리어 자랑</button>
-			<button id="btn3" class="categoryBtn" name="boardCategory" value="2">꿀팁 방출</button>
-			<button id="btn4" class="categoryBtn" name="boardCategory" value="3">잡담</button>
+			<button id="btn1" class="categoryBtn" name="category" value="">전체</button>
+			<button id="btn2" class="categoryBtn" name="category" value="인테리어 자랑">인테리어 자랑</button>
+			<button id="btn3" class="categoryBtn" name="category" value="꿀팁 방출">꿀팁 방출</button>
+			<button id="btn4" class="categoryBtn" name="category" value="잡담">잡담</button>
 		</form>
 	</div> 
 		
@@ -186,10 +186,11 @@ input[type="submit"] {
 			<thead class="bg-light">
 				<tr style="background-color: #DCC1B0;/* #E3A6A1; */">
 					<th style="width: 80px;">#</th>
-					<th style="width: 110px;">카테고리</th>
+					<th style="width: 130px;">카테고리</th>
 					<th style="width: 800px;">제목</th>
 					<th>작성자</th>
 					<th>날짜</th>
+					<th>조회수</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -197,16 +198,7 @@ input[type="submit"] {
 					<tr>
 						<td>${board.boardId }</td>
 						
-						<!-- 카테고리값 출력 -->
-						<c:if test="${board.boardCategory eq 1}">
-							<td>집들이</td>
-						</c:if>
-						<c:if test="${board.boardCategory eq 2}">
-							<td>꿀팁전수</td>
-						</c:if>
-						<c:if test="${board.boardCategory eq 3}">
-							<td>자유잡담</td>
-						</c:if>
+						<td>${board.boardCategory }</td>
 						
 						<td style="text-align: left; padding-left: 15px;">
 							<c:url value="/board/boardGet" var="getLink">
@@ -249,6 +241,7 @@ input[type="submit"] {
 						<c:param name="page" value="1"></c:param>
 						<c:param name="q" value="${param.q }"></c:param>
 						<c:param name="t" value="${param.t }"></c:param>
+						<c:param name="category" value="${param.category }"></c:param>
 					</c:url>
 					<li class="page-item"><a class="page-link" href="${listLink }">처음으로</a></li>
 				</c:if>
@@ -259,6 +252,7 @@ input[type="submit"] {
 							<c:param name="page" value="${pageInfo.jumpPrePageNum }"></c:param>
 							<c:param name="q" value="${param.q }"></c:param>
 							<c:param name="t" value="${param.t }"></c:param>
+							<c:param name="category" value="${param.category }"></c:param>
 						</c:url>
 						<li class="page-item"><a class="page-link" href="${listLink }">이전</a></li>
 					</c:if>
@@ -268,6 +262,7 @@ input[type="submit"] {
 							<c:param name="page" value="${pageNum }"></c:param>
 							<c:param name="q" value="${param.q }"></c:param>
 							<c:param name="t" value="${param.t }"></c:param>
+							<c:param name="category" value="${param.category }"></c:param>
 						</c:url>
 						
 					<!-- 현재 자신이 위치하고있는 페이지 표시(active) -->
@@ -282,6 +277,7 @@ input[type="submit"] {
 						<c:param name="page" value="${pageInfo.jumpNextPageNum }"></c:param>
 						<c:param name="q" value="${param.q }"></c:param>
 						<c:param name="t" value="${param.t }"></c:param>
+						<c:param name="category" value="${param.category }"></c:param>
 					</c:url>
 					<li class="page-item"><a class="page-link" href="${listLink }">다음</a></li>
 				</c:if>
@@ -292,6 +288,7 @@ input[type="submit"] {
 						<c:param name="page" value="${pageInfo.lastPageNum}"></c:param>
 						<c:param name="q" value="${param.q }"></c:param>
 						<c:param name="t" value="${param.t }"></c:param>
+						<c:param name="category" value="${param.category }"></c:param>
 					</c:url>
 					<li class="page-item"><a class="page-link" href="${listLink }">맨끝으로</a></li>
 				</c:if>
