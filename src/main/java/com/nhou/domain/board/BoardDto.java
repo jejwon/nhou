@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class BoardDto {
 	private int boardId;
-	private int boardCategory;
+	private String boardCategory;
 	private String title;
 	private String content;
 	private LocalDateTime insertDatetime;
@@ -20,6 +20,8 @@ public class BoardDto {
 	private int replyCount;
 	private int viewCount;
 	private String nickName;
+	
+	private int board_boardId;
 	
 	// 여러 파일명을 담기 위해 리스트로
 	private List<String> boardFileName;

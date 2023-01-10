@@ -74,7 +74,7 @@ table {
 	border: 1px solid #DCC1B0;
 	border-radius: 10px;
 	margin-bottom: 30px;
-	height: 100px;
+	height: 70px;
 	position: relative;
 }
 .replyInsertBox .row {
@@ -94,10 +94,16 @@ table {
 	background-color: #DCC1B0;
 	font-family: 'Nunito', sans-serif;
 	font-weight: bolder;
-	border-radius: 5px 5px 10px 5px;
+	border-radius: 5px 5px 8px 5px;
+	color: #fff;
+	width: 40px;
+	height: 30px;
+	text-align: center;
+	vertical-align: middle;
 }
 input[type="text"] {
 	border-style: none;
+	height: 30px;
 }
 /* 댓글 리스트 */
 .reply_list {
@@ -144,6 +150,7 @@ input[type="text"] {
 	box-sizing: border-box;
 	float: right;
 	flex: 0.5;
+	font: #fff;
 }
 
 .deleteBtn {
@@ -152,6 +159,118 @@ input[type="text"] {
 	flex: 0;
 }
 
+/* 댓글 목록 */
+#comentBox {
+	width: 100%;
+	border-bottom: 1px solid #DCC1B0;
+	position: relative;
+}
+
+#comentBox .contentText, .date, .editBtns, .nickName {
+	width: 100%;
+	margin: 3px;
+	padding: 3px;
+	display: flex;
+	
+}
+
+#comentBox .nickName {
+	font-size: 20px;
+	font-family: 'Nunito', sans-serif;
+	font-weight: bolder;
+}
+
+#comentBox .editBtns {
+	justify-content: flex-end;
+	font-family: 'Nunito', sans-serif;
+}
+
+#comentBox .date {
+	font-size: 14px;
+	font-family: 'Nunito', sans-serif;
+	vertical-align: middle;
+}
+
+#comentBox i {
+	margin-right: 3px;
+	vertical-align: middle;
+}
+
+.modiBtn{
+	box-shadow:inset 0px 39px 0px -24px #DCC1B0;
+	background-color:#d4b39e;
+	border-radius:4px;
+	border:1px solid #ffffff;
+	display:inline-block;
+	cursor:pointer;
+	color:#fbfbf7;
+	font-family:Arial;
+	font-size:15px;
+	padding:6px 9px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #e4cfc2;
+}
+.modiBtn:hover {
+	background-color:#e4cfc2;
+}
+.modiBtn:active {
+	position:relative;
+	top:1px;
+}
+
+.remoBtn{
+	box-shadow:inset 0px 39px 0px -24px #e67a73;
+	background-color:#e4685d;
+	border-radius:4px;
+	border:1px solid #ffffff;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:6px 9px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #b23e35;
+}
+.remoBtn {
+	background-color:#eb675e;
+}
+.remoBtn:active {
+	position:relative;
+	top:1px;
+}
+
+/* 게시글 수정/삭제 버튼 */
+.w-btn {
+    position: relative;
+    border: none;
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.w-btn-outline {
+    position: relative;
+    padding: 6px 12px;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.w-btn-green {
+    background-color: #DCC1B0;
+    color: #fbfbf7;
+}
+
+.w-btn-gray {
+    background-color: #e0e3e3;
+    color: #fff;
+}
+
+
+
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -159,7 +278,7 @@ input[type="text"] {
 </head>
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
-<input type="text" value="${board.boardId }" readonly="readonly">
+<input type="hidden" value="${board.boardId }" readonly="readonly">
 <input type="hidden" value="${board.member_userId }">
 <input type="hidden" id="board_boardId" value="${board.boardId }" readonly="readonly">
 
@@ -181,7 +300,7 @@ input[type="text"] {
 					<c:param name="boardId" value="${board.boardId }"></c:param>
 				</c:url>
 					<a href="${modifyLink }">
-						<input class="btn btn-outline-success" type="button" value="수정">
+						<input class="w-btn w-btn-green" type="button" value="수정">
 					</a>
 			</div>
 				
@@ -191,7 +310,7 @@ input[type="text"] {
 				<form action="${removeLink }" id="removeForm" method="post">
 					<input type="hidden" name="boardId" value="${board.boardId }">
 				</form>
-				<input class="btn btn-outline-success removeBtn" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
+				<input class="w-btn w-btn-gray" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
 				
 				<!-- 작성자 == 로그인한 아이디 확인 -->
 				<%-- <sec:authentication property="name" var="member_userId"/>
@@ -218,8 +337,11 @@ input[type="text"] {
 			<table class="table">
 				<thead>
 				<tr class="table-active">
-					<th class="thTop" style="width: 60%">${board.title }<br />
-										${board.nickName }</th> 
+					<th class="thTop" style="width: 50%">
+						<span>${board.title }</span><br />
+						<span>${board.nickName }</span><br>
+						<span>${board.boardCategory }</span><br>
+					</th> 
 					<th class="thbuttom" style="width: 40%">좋아요 : ${board.likeCount } <br />
 										 ${board.ago }</th>
 				</tr>
@@ -244,10 +366,11 @@ input[type="text"] {
 
 
 <!-- 파일 -->
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <div class="imgBox">
-	<c:forEach items="${board.boardFileName }" var="name">
+	<c:forEach items="${board.boardFileName }" var="fileName">
 		<div class="img">
-			<img class="img-fluid img-thumbnail" alt="" src="/image/${board.boardId }/${name}">
+			<img class="img-fluid img-thumbnail" alt="" src="${ctx }/board/${board.boardId}/${fileName}">
 		</div>
 	</c:forEach>
 </div>
@@ -283,7 +406,7 @@ input[type="text"] {
 			<input id="content" class="row replyContentInput" type="text" placeholder="댓글을 입력하세요."/>
 			<br />
 		</div>
-		<button class="insertBtn" id="replyBtn1">댓글작성</button>
+		<button class="insertBtn" id="replyBtn1"><i class="fa-solid fa-pen-to-square"></i></button>
 	</sec:authorize>
 	
 		<!-- 로그인 안했을때 -->
@@ -354,7 +477,7 @@ input[type="text"] {
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	        <input type="text" id="modifyReplyInput">
+	        <input type="text" class="form-control" id="modifyReplyInput">
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -449,10 +572,19 @@ function listReply() {
 				const removeReplyBtnId = `removeReplyBtn\${item.boardReplyId}`;
 				// console.log(item.boardReplyId);
 				const replyDiv = 
-					`<div>
-					\${item.content} : \${item.ago}
-					<button data-bs-toggle="modal" data-bs-target="#modifyReplyFormModal" data-reply-id="\${item.boardReplyId}" id="\${modifyReplyBtnId}">수정</button>
-					<button data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.boardReplyId}" id="\${removeReplyBtnId}">삭제</button>
+					`<div id="comentBox">
+						<div class="nickName">\${item.nickName}</div>
+						<div class="contentText">\${item.content}</div>
+						<div class="date">
+							<i class="fa-regular fa-clock"></i>
+							\${item.ago}
+						</div>
+						<div class="editBtns">
+							<button class="modiBtn" data-bs-toggle="modal" data-bs-target="#modifyReplyFormModal" data-reply-id="\${item.boardReplyId}" id="\${modifyReplyBtnId}">수정</button>
+							<button class="remoBtn" data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.boardReplyId}" id="\${removeReplyBtnId}">삭제</button>
+						</div>
+					  
+						
 					</div>`;
 					/* data-reply-id라는 attribute 통해 버튼마다 id값 부여 */
 				replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
@@ -520,12 +652,6 @@ if (replyBtn1 != null) {
 		.then(() => listReply());
 	});
 }	
-	
-	
-	
-	
-	
-
 </script>
 </body>
 </html>

@@ -42,6 +42,14 @@ public class BoardController {
 		String loginId = principal.getName();
 		board.setMember_userId(loginId);
 		
+		/*
+		 * System.out.println(files.length);
+		 * 
+		 * for (MultipartFile file : files) {
+		 * System.out.println(file.getOriginalFilename()); }
+		 */
+		
+		
 		int cnt = boardService.insertFile(board, files);
 		
 		if (cnt == 1) {
@@ -58,8 +66,9 @@ public class BoardController {
 	public void get(@RequestParam(name="page", defaultValue = "1") int page, // 페이지
 					@RequestParam(name="t", defaultValue = "all") String type, // 검색할 범위(카테고리)
 					@RequestParam(name="q", defaultValue = "") String keyword, // 검색 키워드
+					@RequestParam(name = "category", defaultValue = "") String category, // 카테고리
 					PageInfo pageInfo, Model model) {
-		List<BoardDto> list = boardService.listBoard(page, type, keyword, pageInfo); // service에 listBoard로 넘어감
+		List<BoardDto> list = boardService.listBoard(page, type, keyword, pageInfo, category); // service에 listBoard로 넘어감
 		
 		model.addAttribute("boardList", list); // boardList라는 곳에 list를 담겠다
 	}

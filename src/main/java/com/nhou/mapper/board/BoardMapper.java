@@ -8,11 +8,11 @@ public interface BoardMapper {
 	
 	// 게시글 작성하기
 	int insert(BoardDto board);
-	// 파일 업로드
-	int insertFile(int boardId, String boardFileName);
+	// 파일 업로드(파일 이름 저장하기)
+	int insertFile(int board_boardId, String boardFileName);
 
 	// 게시글 리스트 + 페이지네이션
-	List<BoardDto> list(int offset, int records, String type, String keyword);
+	List<BoardDto> list(int offset, int records, String type, String keyword, String category);
 
 	// 게시물 총갯수
 	int countAll(String type, String keyword);

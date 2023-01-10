@@ -14,7 +14,7 @@ public interface BoardService {
 	// public int insert(BoardDto board);
 
 	// 게시물 리스트 + 페이지네이션
-	public List<BoardDto> listBoard(int page, String type, String keyword, PageInfo pageInfo);
+	public List<BoardDto> listBoard(int page, String type, String keyword, PageInfo pageInfo, String category);
 
 	// 게시물 가져와서 보기
 	public BoardDto get(int boardId, String member_userId);
