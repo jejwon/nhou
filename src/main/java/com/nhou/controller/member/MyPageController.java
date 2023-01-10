@@ -1,6 +1,7 @@
 package com.nhou.controller.member;
 import java.lang.ProcessBuilder.Redirect;
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,10 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhou.domain.member.MemberDto;
+import com.nhou.domain.qna.PageInfo;
+import com.nhou.domain.qna.QnADto;
 import com.nhou.service.member.MemberService;
+import com.nhou.service.qna.QnAService;
 
 @Controller
 @RequestMapping("myPage")
@@ -21,7 +26,9 @@ public class MyPageController {
 	
 	@Autowired
 	private MemberService memberService;
-	
+	@Autowired
+	private QnAService qnaService;
+		
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -39,8 +46,14 @@ public class MyPageController {
 	}
 	
 	@GetMapping("myPageQnA")
-	public void getQnA() {
+	public void getQnA(@RequestParam(name="page", defaultValue="1") int page,//페이지
+			PageInfo pageInfo, Principal principal, Model model) {
+		String loginId = principal.getName();
+		MemberDto member = memberService.getById(loginId);
 		
+		List<QnADto> list = qnaService.list(page, pageInfo);
+		model.addAttribute("member", member);
+		model.addAttribute("qnaList", list);
 	}
 	
 	//사용자가 로그인한 상태: 스프링 mvc는 컨트롤러 메소드에 회원정보를 저장하고 있는 Principal 객체를 파라미터로 받을 수 있음
@@ -64,5 +77,7 @@ public class MyPageController {
 		
 		return "redirect:/myPage/myPageList";
 	}
+	
+	
 	
 }
