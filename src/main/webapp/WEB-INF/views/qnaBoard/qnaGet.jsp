@@ -83,6 +83,8 @@
 <section class="bg-light p-5">
 	<div class="container" >
 			<h1>문의보기</h1>
+
+	<div id="box">		
 		
 		<select id="qnaCategory"class="form-select" aria-label="Disabled select example" disabled> 
 	  		<c:choose>
@@ -113,18 +115,19 @@
 		  <label for="floatingTextarea">문의 내용</label>
 		</div>
 		
-		
 		<%-- <input readonly type="text" value="${member_userId }" name="member_userId"> --%>
 		<%-- <c:if test="${qna.member_userId == username}"> </c:if>--%>
-
-		
+			<sec:authentication property="name" var="username"/>
+			
+			<c:if test="${qna.member_userId == member.userId }">
 				<c:url value="/qnaBoard/delete" var="deleteLink"/>
 				<form id="deleteForm" action="${deleteLink }" method="post">
 					<input type="hidden" name="qnaId" value="${qna.qnaId }">
-				</form>				
-			<div id="button1">	
-				<button id="deleteSubmit" class="btn btn-outline">삭제</button>					
-			</div>
+				</form>		
+				<div id="button1">	
+					<button id="deleteSubmit" class="btn btn-outline">삭제</button>					
+				</div>
+			</c:if>			
 
 			<div class="button2">
 				<c:url value="/main/list" var="listLink"/>
@@ -133,7 +136,7 @@
 				</a>
 			</div>
 	</div>
-	
+</div>
 <%--댓글 작성 --%>
 <br>
 <br>
@@ -142,6 +145,8 @@
 <sec:authorize access="isAuthenticated()"></sec:authorize> 관리자권한만 확인-->
 <!-- 댓글 입력 -->
 <hr>
+
+<c:if test="${member.auth == 0 }">
 <div class="container">
 	<div class="form-floating mb-3">
 		  <input type="text" class="form-control" id="qnaReplyInput" placeholder="답변쓰기" >
@@ -151,10 +156,11 @@
 		<button id="qnaReplySend"class="btn btn-outline">작성</button>	
 	</div>
 </div>
+</c:if>
 <br>
 <br>
 
-<input type="hidden" id="memberAuth"value="${member.auth }" />
+<%-- <input type="hidden" id="memberAuth"value="${member.auth }" /> --%>
 <div class="container" >
 	<div  id="replyListContainer"></div>
 </div>			
@@ -219,9 +225,7 @@ function listReply(){
 		const deleteButton = `<button  class="btn btn-outline " data-bs-toggle="modal" data-bs-target="#deleteReplyConfirmModal" 
 		data-reply-id="\${item.qnaReplyId}" id="\${deleteReplyButtonId}"
 		style="background-color: #DCC1B0; margin: 0 0 0 70px;">삭제</button>`
-		
-		const memberAuth = document.querySelector("#memberAuth").value;
-		
+
 		
 		//const editReplyButtonId = `editReplyButton\${item.qnaReplyId}`;
 		//const editButton = `<button data-bs-toggle="modal" data-bs-target="#editReplyConfirmModal" data-reply-id="\${item.qnaReplyId}" id="\${editReplyButtonId}">수정</button>`
