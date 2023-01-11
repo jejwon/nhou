@@ -9,12 +9,12 @@ import lombok.Data;
 
 @Data
 public class QnAReplyDto {
-	public int qnaReplyId;
-	public String content;
-	public String writer;
-	public int qna_qnaId;
+	private int qnaReplyId;
+	private String content;
+	private String writer;
+	private int qna_qnaId;
 	
 	@JsonFormat(shape = Shape.STRING)
-	public LocalDateTime insertDatetime; //댓글 fetch 리스트 유지하기 -> stringify 형식변환!!
+	private LocalDateTime insertDatetime; //댓글 fetch 리스트 유지하기 -> stringify 형식변환!!
 	
 }

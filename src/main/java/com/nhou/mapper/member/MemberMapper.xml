@@ -20,7 +20,8 @@
 		email, 
 		birthDate, 
 		address, 
-		phone
+		phone,
+		auth
 	FROM
 		member 
 	WHERE
@@ -36,9 +37,7 @@
 		<result column="birthDate" property="birthDate"/>
 		<result column="address" property="address"/>
 		<result column="phone" property="phone"/>
-		<!-- <collection property="auth" ofType="string">
-			<result column="auth" property="auth"/>
-		</collection> -->
+		<result column="auth" property="auth"/>
 	</resultMap>
 	
 	<select id="selectAll" resultType="com.nhou.domain.member.MemberDto">
@@ -48,6 +47,7 @@
 		'숨김' password, 
 		nickName, 
 		email,
+		auth,
 		insertDatetime
 	FROM
 		member 

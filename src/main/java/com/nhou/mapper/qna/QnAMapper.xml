@@ -5,8 +5,8 @@
  <mapper namespace="com.nhou.mapper.qna.QnAMapper">
  
  <insert id="insert">
-INSERT qna (qnaCategory, title, content, status, member_userId)
-VALUES (#{qnaCategory}, #{title}, #{content}, 0, #{member_userId})
+INSERT qna (qnaCategory, title, content, member_userId)
+VALUES (#{qnaCategory}, #{title}, #{content}, #{member_userId})
  </insert>
  
  <select id="list" resultMap="listMap">
@@ -15,12 +15,14 @@ VALUES (#{qnaCategory}, #{title}, #{content}, 0, #{member_userId})
  		q.qnaCategory,
  		q.title, 
  		q.content, 
- 		q.status,
  		q.insertDatetime,
  		q.member_userId,
  		m.nickName,
- 		m.userId
+ 		m.userId,
+ 		COUNT (r.qnaReplyId) countReply
  FROM qna q LEFT JOIN member m ON q.member_userId = m.userId
+			LEFT JOIN qnaReply r ON q.qnaId = r.qna_qnaId
+ GROUP BY q.qnaId
  ORDER BY q.qnaId DESC
  LIMIT #{offset}, #{records}	
  </select>
@@ -30,7 +32,6 @@ VALUES (#{qnaCategory}, #{title}, #{content}, 0, #{member_userId})
  	<result column="qnaCategory" property="qnaCategory"/>
 	<result column="title" property="title"/>
 	<result column="content" property="content"/>
-	<result column="status" property="status"/>
 	<result column="insertDatetime" property="insertDatetime"/>
 	<result column="member_userId" property="member_userId"/>
 	<result column="nickName" property="nickName"/>
@@ -46,7 +47,6 @@ VALUES (#{qnaCategory}, #{title}, #{content}, 0, #{member_userId})
  		q.qnaCategory,
  		q.title, 
  		q.content, 
- 		q.status,
  		q.insertDatetime,
  		q.member_userId,
  		m.nickName,
@@ -60,7 +60,6 @@ VALUES (#{qnaCategory}, #{title}, #{content}, 0, #{member_userId})
  	<result column="qnaCategory" property="qnaCategory"/>
 	<result column="title" property="title"/>
 	<result column="content" property="content"/>
-	<result column="status" property="status"/>
 	<result column="insertDatetime" property="insertDatetime"/>
 	<result column="member_userId" property="member_userId"/>
 	<result column="nickName" property="nickName"/>

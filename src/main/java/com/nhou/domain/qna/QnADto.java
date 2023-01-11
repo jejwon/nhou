@@ -12,20 +12,20 @@ import lombok.Data;
 @Data
 public class QnADto {
 	
-	public int qnaId;
-	public int qnaCategory;
-	public int status;
+	private int qnaId;
+	private int qnaCategory;
+	private int status;
 	
-	public String title;
-	public String content;
+	private String title;
+	private String content;
 	
-	public String writer;
-	public String member_userId;
+	private String writer;
+	private String member_userId;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-	public LocalDateTime insertDatetime;
+	private LocalDateTime insertDatetime;
 	
+	private String nickName;
 	
-	
-	public String nickName;
+	private int countReply;
 }

@@ -23,7 +23,7 @@ public class MemberDto {
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date birthDate;
-	private int auth; //admin: 0/ user: 1/ seller: 2
+	private int auth; //admin: 0/ user: 1/ seller: 2/ user+black: 8/ seller + black: 9
 	
 	private String role; //ROLE_USER, ROLE_ADMIN
 
