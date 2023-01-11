@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhou.domain.board.BoardDto;
 import com.nhou.domain.board.PageInfo;
+import com.nhou.domain.member.MemberDto;
 import com.nhou.service.board.BoardService;
 
 @Controller
@@ -84,11 +85,12 @@ public class BoardController {
 		if (auth != null) {
 			member_userId = auth.getName();
 		}
+		
+		// 조회수
+		boardService.updateViewCount(boardId);
 			
 		BoardDto board = boardService.get(boardId, member_userId);
-			
 		model.addAttribute("board", board);
-				
 			
 	}
 	
@@ -152,11 +154,11 @@ public class BoardController {
 		
 		System.out.println(req);
 		
-		String boardId = req.get("boardId");
+		Map<String, Object> result = boardService.updateLike(req.get("board_boardId"), auth.getName());
 		
-		Map<String, Object> result = boardService.updateLike(boardId, auth.getName());
 		
 		return result;
+		
 	}
 
 }

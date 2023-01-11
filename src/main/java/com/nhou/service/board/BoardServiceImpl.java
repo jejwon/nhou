@@ -195,31 +195,35 @@ public class BoardServiceImpl implements BoardService {
 		// 게시글 지울때
 		return boardMapper.delete(boardId); // mapper에서 사용할 명명
 		
-		
-		
-		
 	}
 	
-	// 좋아요
-		public Map<String, Object> updateLike(String boardId, String member_userId) {
+		// 좋아요
+		@Override
+		public Map<String, Object> updateLike(String board_boardId, String member_userId) {
 			Map<String, Object> map = new HashMap<>();
 			
-			int cnt = boardMapper.getLikeByBoardIdAndUserId(boardId, member_userId);
+			int cnt = boardMapper.getLikeByBoardIdAndUserId(board_boardId, member_userId);
 			
 			if (cnt == 1) {
 				// 좋아요 있으면 삭제
-				boardMapper.deleteLike(boardId, member_userId);
+				boardMapper.deleteLike(board_boardId, member_userId);
 				map.put("current", "not liked");
 			} else {
 				// 없으면 좋아요 누르기 보이기
-				boardMapper.insertLike(boardId, member_userId);
+				boardMapper.insertLike(board_boardId, member_userId);
 				map.put("current", "liked");
 			}
 			
 			// 좋아요 카운트 갯수
-			int countAll = boardMapper.countLikeByBoardId(boardId);
+			int countAll = boardMapper.countLikeByBoardId(board_boardId);
 			map.put("count", countAll);
 			
 			return map;
+		}
+		
+		// 조회수
+		@Override
+		public int updateViewCount(int boardId) {
+			return boardMapper.updateViewCount(boardId);
 		}
  }

@@ -96,7 +96,7 @@
 	<form action="/board/boardInsert" method="post" enctype="multipart/form-data">
 		<div class="categorySelectBox">
 		<div>
-			<input type="text" name="member_userId" disabled="disabled">
+			<input type="hidden" name="member_userId" disabled="disabled">
 		</div>
 			<p>카테고리</p>
 			

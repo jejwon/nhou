@@ -316,22 +316,6 @@ input[type="text"] {
 					<input class="w-btn w-btn-gray" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
 				</div>
 			</c:if>
-			
-				<!-- 작성자 == 로그인한 아이디 확인 -->
-				<%-- <sec:authentication property="name" var="member_userId"/>
-				<c:if test="${board.member_userId == member_userId }">
-					<!-- 삭제 버튼 -->
-					<c:url value="/board/boardRemove" var="removeLink"></c:url>
-					<form  id="removeForm" action="${removeLink }" method="post">
-						<input type="hidden" disabled="disabled" name="boardId" value="${board.boardId }">
-					</form>
-					<input class="btn btn-danger" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal">
-					<!-- 수정 버튼 -->
-					<c:url value="/board/boardModify" var="modifyLink">
-						<c:param name="boardId" value="${board.boardId }"></c:param>
-					</c:url>
-					<a class="btn btn-primary" href="${modifyLink }">수정</a>
-				</c:if> --%>
 		</div>
 		
 <!-- 본문 -->
@@ -342,12 +326,20 @@ input[type="text"] {
 				<thead>
 				<tr class="table-active">
 					<th class="thTop" style="width: 50%">
-						<span>${board.title }</span><br />
-						<span>${board.nickName }</span><br>
-						<span>${board.boardCategory }</span><br>
+						<span style="color: #070504;">[${board.boardCategory }] &nbsp;</span>
+						<span>${board.title }</span><br>
+						<span style="vertical-align: middle; font-size: 20px;"><i class="fa-solid fa-circle-user"></i>
+							${board.nickName }</span><br>
+						<%-- <span>${board.boardCategory }</span><br> --%>
 					</th> 
-					<th class="thbuttom" style="width: 40%">좋아요 : ${board.likeCount } <br />
-										 ${board.ago }</th>
+					<th class="thbuttom" style="width: 40%">
+						<span><i class="fa-solid fa-heart"></i>
+								${board.likeCount }
+						</span>
+						<span><i class="fa-regular fa-eye"></i>
+								${board.viewCount }</span><br />
+					 	<span>${board.ago }</span>
+					</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -373,7 +365,8 @@ input[type="text"] {
 <div class="imgBox">
 	<c:forEach items="${board.boardFileName }" var="fileName">
 		<div class="img">
-			<img class="img-fluid img-thumbnail" alt="" src="/imagePath/${board.boardId }/${fileName}">
+			<img class="img-fluid img-thumbnail" alt="" src="/imagePath/${board.boardId }/${fileName}"
+				 width="500px" height="400px">
 		</div>
 	</c:forEach>
 </div>
@@ -500,9 +493,10 @@ document.querySelector("#removeConfirmButton").addEventListener("click", functio
 	document.querySelector("#removeForm").submit();
 });
 
-// 좋아요
+// 좋아요 버튼 클릭시 
 document.querySelector("#likeBtn").addEventListener("click", function() {
 	const board_boardId = document.querySelector("#board_boardId").value;
+
 	
 	fetch(`\${ctx}/board/boardLike`, {
 		method : "put",
@@ -512,6 +506,7 @@ document.querySelector("#likeBtn").addEventListener("click", function() {
 		body : JSON.stringify({board_boardId})
 	})
 	.then(res => res.json())
+	/* .then(data => console.log(data)); */
 	.then(data => {
 		if (data.current == 'liked') {
 			document.querySelector("#likeBtn").innerHTML = `<i class="fa-solid fa-heart"></i>`;

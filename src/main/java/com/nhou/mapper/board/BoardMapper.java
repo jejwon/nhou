@@ -35,16 +35,16 @@ public interface BoardMapper {
 
 	
 	// 좋아요 누른 아이디 구하기
-	int getLikeByBoardIdAndUserId(String boardId, String member_userId);
+	int getLikeByBoardIdAndUserId(String board_boardId, String member_userId);
 
 	// 좋아요 삭제하기
-	int deleteLike(String boardId, String member_userId);
+	int deleteLike(String board_boardId, String member_userId);
 
 	// 좋아요 누르기
-	int insertLike(String boardId, String member_userId);
+	int insertLike(String board_boardId, String member_userId);
 
 	// 좋아요 카운트
-	int countLikeByBoardId(String boardId);
+	int countLikeByBoardId(String board_boardId);
 
 	// 게시글 삭제할때 좋아요 같이 삭제
 	int deleteLikeByBoardId(int boardId);
@@ -55,4 +55,6 @@ public interface BoardMapper {
 	// File table에 해당파일명 지우기
 	int deleteFileBoardIdAndFileName(int board_boardId, String boardFileName);
 
+	// 좋아요 카운트
+	int updateViewCount(int boardId);
 }
