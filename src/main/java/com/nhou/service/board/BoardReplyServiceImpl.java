@@ -28,8 +28,8 @@ public class BoardReplyServiceImpl implements BoardReplyService {
 	
 	// 댓글 리스트
 	@Override
-	public List<BoardReplyDto> listReplyByBoardId(int board_boardId, String userName) {
-		return boardReplyMapper.listReplyByBoardId(board_boardId, userName);
+	public List<BoardReplyDto> listReplyByBoardId(int board_boardId, String username) {
+		return boardReplyMapper.listReplyByBoardId(board_boardId, username);
 	}
 	
 	// 댓글 가져오기

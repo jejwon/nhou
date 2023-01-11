@@ -15,7 +15,7 @@ public interface BoardReplyMapper {
 	int deleteById(int boardReplyId);
 
 	// 댓글 리스트
-	List<BoardReplyDto> listReplyByBoardId(int board_boardId, String userName);
+	List<BoardReplyDto> listReplyByBoardId(int board_boardId, String username);
 
 	// 댓글 가져오기
 	BoardReplyDto selectById(int boardReplyId);

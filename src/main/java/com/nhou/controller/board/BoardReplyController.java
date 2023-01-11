@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,7 @@ public class BoardReplyController {
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()") // 로그인 했을때만 작동하도록
 	public Map<String, Object> add(@RequestBody BoardReplyDto reply,
-			org.springframework.security.core.Authentication auth) { // 로그인한 정보 들어있음
+			Authentication auth) { // 로그인한 정보 들어있음
 		
 		if (auth != null) {
 			reply.setMember_userId(auth.getName());
@@ -54,20 +55,21 @@ public class BoardReplyController {
 	@GetMapping("list/{board_boardId}")
 	@ResponseBody
 	public List<BoardReplyDto> list(@PathVariable int board_boardId,
-			org.springframework.security.core.Authentication auth) {
+			Authentication auth) {
 		
-		String userName = "";
+		String username = "";
 		
 		// 로그인한 상태일때
 		if (auth != null) {
-			userName = auth.getName(); // 로그인한 아이디 얻어오기
+			username = auth.getName(); // 로그인한 아이디 얻어오기
 		}
-		return boardReplyService.listReplyByBoardId(board_boardId, userName);
+		return boardReplyService.listReplyByBoardId(board_boardId, username);
 	}
 	
 	// 댓글 삭제하기
 	@DeleteMapping("delete/{boardReplyId}")
 	@ResponseBody
+	@PreAuthorize("@boardReplySecurity.checkWriter(authentication.name, #boardReplyId)")
 	public Map<String, Object> delete(@PathVariable int boardReplyId) {
 		Map<String, Object> map = new HashMap<>();
 
@@ -92,6 +94,8 @@ public class BoardReplyController {
 	
 	// 댓글 수정하기
 	@PutMapping("modify")
+	@ResponseBody
+	@PreAuthorize("@boardReplySecurity.checkWriter(authentication.name, #reply.boardReplyId)")
 	public Map<String, Object> modify(@RequestBody BoardReplyDto reply) {
 		Map<String, Object> map = new HashMap<>();
 		
