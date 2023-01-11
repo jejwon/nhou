@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhou.domain.store.StoreDto;
 import com.nhou.service.store.StoreService;
@@ -19,36 +20,100 @@ public class StoreController {
 	@Autowired
 	private StoreService service;
 	
-	@GetMapping("register")
+	@GetMapping("storeRegister")
+	// forward to view
 	public void register() {
 		
 	}
 	
-	@PostMapping("register")
-	public String register(StoreDto store) {
+	@PostMapping("storeRegister")
+	public String register(StoreDto store, RedirectAttributes rttr) {
 	
-//		System.out.println("controller ==========> "+store);
+		/*
+		 * Request param 수집/가공 
+		 * System.out.println("controller ==========> "+store);
+		 */		 
 		
-		service.register(store);
+		//Business logic
+		int cnt = service.register(store);
 		
-		return "redirect:/store/list";
-	}
-	
-	/*
-	 * @GetMapping("list") public void list(Model model) {
-	 * 
-	 * // request param 수집
-	 * 
-	 * // business logic List<StoreDto> list = service.listStore(); List<StoreDto>
-	 * list = service.listStore(); // 모델에 add attr 넣고
-	 * model.addAttribute("storeList", list); model.addAttribute("productList",
-	 * list); // forward
-	 * 
-	 * }
-	 */
-	
-	@GetMapping("list") public void list() {
+		if (cnt == 1) {
+			rttr.addFlashAttribute("message", "새 게시물이 등록되었습니다.");
+		} else {
+			rttr.addFlashAttribute("message", "새 게시물이 등록되지 않았습니다.");
+		}
+		 
+		//Redirect to list
+		return "redirect:/store/storeList";
 		
 	}
+	
+	
+	
+	  @GetMapping("storeList") 
+	  public void list(Model model) { 
+		  // Request param 수집
+
+		  //business logic 
+		  
+		  List<StoreDto> list = service.listStore();
+		  
+		  //add attr to model 
+		  
+		  model.addAttribute("storeList", list);
+		  
+		  // forward
+	  }
+	  
+	  
+	  @GetMapping("storeGet") 
+	  public void get(int productId, Model model) { 
+		  // Request param 생략가능
+	  
+		  // Business logic 
+		  StoreDto store = service.get(productId);
+	  
+		  //System.out.println(store);
+	  
+		  //add attr to model 
+		  model.addAttribute("store", store);
+	  
+		  // forward
+	  }
+	  
+	  @GetMapping("storeModify")
+	  public void modify(int productId, Model model) {
+		  StoreDto store = service.get(productId);  
+		  model.addAttribute("store", store);
+	  }
+	  
+	  @PostMapping("storeModify")
+	  public String modify(StoreDto store, RedirectAttributes rttr) {
+		  int cnt = service.update(store);
+		  
+		  if (cnt==1) {
+			  rttr.addFlashAttribute("message", "게시물이 수정되었습니다.");
+		  } else {
+			  rttr.addFlashAttribute("message", "게시물이 수정되지 않았습니다.");
+		  }
+		  
+		  
+		  return "redirect:/store/storeList";
+	  }
+	  
+	  @PostMapping("storeRemove")
+	  public String remove(int productId, RedirectAttributes rttr) {
+		  int cnt = service.remove(productId);
+		  
+		  if (cnt == 1) {
+			  rttr.addFlashAttribute("message", productId + "번 게시물이 삭제되었습니다.");
+		  } else {
+			  rttr.addFlashAttribute("message", productId + "번 게시물이 삭제되지 않았습니다.");
+		  }
+		  
+		  return "redirect:/store/storeList";
+	  }
+	 
+	
 	
 }

@@ -5,34 +5,67 @@
   
 <mapper namespace="com.nhou.mapper.store.StoreMapper">
 
-<!-- 	<insert id="insert">
-		INSERT ALL 
-			INTO product (productName, price, stock, product_content)
-			VALUES (#{productName}, #{price}, #{stock}, #{product_content})
-		
-			INTO productCategory (categoryName)
-			VALUES (#{categoryName})
-		
-			INTO productFile (productImage)
-			VALUES (#{productImage})
-			
-			??? +구글링
-
-	</insert> -->
+	<insert id="insert">
+	INSERT INTO product (productId, productName, price, stock)
+	VALUES (#{productId}, #{productName}, #{price}, #{stock})
+	</insert>
 	
-<!-- 	<select id="list" resultType="com.nhou.domain.store.StoreDto">
-		SELECT
-			productId,
-			productName,
-			price,
-		FROM 
-			Product,  
-		JOIN productFile,
-			ON
-		JOINproductReply
-			ON
-		ORDER BY id DESC
+<!-- 	<insert id="insertFile">
+	INSERT INTO productFile (productFileId, productFileName)
+	VALUES (#{productFileId}, #{productFileName})
+	</insert>
+	
+	<insert id="insertCategory">		
+	INSERT INTO productCategory (categoryId, categoryName)
+	VALUES (#{categoryId}, #{categoryName})
+	</insert>
 		
+	<insert id="insertInfo">
+	INSERT INTO productInfo (productInfoId, productContents, color, size)
+	VALUES (#{productInfoId}, #{productContents}, #{color}, #{size})
+	</insert> -->
+
+	<select id="list" resultType="com.nhou.domain.store.StoreDto">
+	SELECT
+		productId,
+		productName,
+		price
+	FROM product
+	ORDER BY productId DESC;	
+	</select>
+	
+<!-- 	<select id="Replylist">
+	SELECT
+		productReplyId,
+		star
+	FROM product
+	ORDER BY productReplyId DESC;	
 	</select> -->
+	
+	<select id="select" resultType="com.nhou.domain.store.StoreDto">
+	SELECT
+		productId,
+		productName,
+		price
+	FROM product
+	WHERE
+		productId = #{productId}	
+	</select>
+	
+	<update id="update">
+	UPDATE product
+	SET
+		productId = #{productId}, 
+		productName = #{productName}, 
+		price = #{price}, 
+		stock = #{stock}
+	WHERE
+		productId = #{productId}
+	</update>
+	
+	<delete id="delete">
+	DELETE FROM product
+	WHERE productId = #{productId}
+	</delete>
 
 </mapper>

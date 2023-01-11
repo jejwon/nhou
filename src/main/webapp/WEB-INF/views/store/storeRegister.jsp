@@ -6,18 +6,44 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품등록</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- 옵션 -->
+
+    <script>
+        const add_textbox1 = () => {
+            const box = document.getElementById("box1");
+            const newP = document.createElement('p');
+            newP.innerHTML = "<input type='text'> <input type='button' value='삭제' onclick='remove1(this)'>";
+            box.appendChild(newP);
+        }
+        
+        const add_textbox2 = () => {
+            const box = document.getElementById("box2");
+            const newP = document.createElement('p');
+            newP.innerHTML = "<input type='text'> <input type='button' value='삭제' onclick='remove2(this)'>";
+            box.appendChild(newP);
+        }        
+        
+        const remove1 = (obj) => {
+            document.getElementById('box1').removeChild(obj.parentNode);
+        }
+        
+        const remove2 = (obj) => {
+            document.getElementById('box2').removeChild(obj.parentNode);
+        }
+    </script>
+    
 </head>
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
-<h1> 게시물 수정 </h1>
+<h1> 상품등록 페이지 </h1>
 
 	<!-- 카테고리명 선택 -->
 	<div class="container">
-		<form id="modifyForm" action="" method="post">
-		<input type="hidden" name="productId" value="${store.productId }">
+		<form action="" method="post">
 			<div class="categorySelectBox">
 				<label for="categoryName">CategoryName</label>
 				<select class="form-select" name="categoryName">
@@ -90,78 +116,14 @@
 			  <input type="text" class="form-control" name="stock" aria-label="EA">
 			  <span class="input-group-text">ea</span>
 			</div>
+		
+		<br>
 			
+		<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+			<button class="btn btn-secondary" type="submit">Submit</button>
+		</div>
 		</form>
-		
-	<!-- Modify Button -->
-		<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="float: right;">
-			<button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modifyModal" type="submit">수정</button>
-		</div>
-		
-	<!-- Delete Button -->	
-		<c:url value="/store/storeRemove" var="removeLink" />
-		<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="float: right;">
-			<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#removeModal"  type="submit">
-				삭제
-			</button>
-		</div>
-		
-		<form id="removeForm" action="${removeLink }" method="post">
-		<input type="hidden" name="productId" value="${store.productId }">
-		</form>	
-		
-	</div>
-
-	<!-- Modify Modal -->
-	<div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">수정 확인</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        수정 하시겠습니까?
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <button type="modifyConfirmButton" class="btn btn-primary">Save</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	
-	<!-- remove Modal -->
-	<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        정말로 삭제 하시겠습니까?
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <button type="removeConfirmButton" class="btn btn-primary">Delete</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-
-
+	</div>		
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-<script>
-	//수정확인 버튼 클릭하면 수정 form 전송
-	document.querySelector("#modifyConfirmButton").addEventListener("click", function() {
-		document.querySelector("#modifyForm").submit();
-	});
-	
-	//삭제확인 버튼 클릭하면 수정 form 전송
-		document.querySelector("#removeConfirmButton").addEventListener("click", function() {
-		document.querySelector("#removeForm").submit();
-	});		
-</script>
 </body>
 </html>
