@@ -21,7 +21,7 @@ public interface BoardService {
 	public BoardDto get(int boardId);
 
 	// 게시글 수정하기
-	public int update(BoardDto board);
+	public int update(BoardDto board, MultipartFile[] files, List<String> removeFiles);
 
 	// 게시글 삭제하기
 	public int remove(int boardId);

@@ -294,24 +294,29 @@ input[type="text"] {
 					</a>
 			</div>
 			
-			<div class="editBtn">
-				<!-- 수정페이지로 -->
-				<c:url value="/board/boardModify" var="modifyLink">
-					<c:param name="boardId" value="${board.boardId }"></c:param>
-				</c:url>
-					<a href="${modifyLink }">
-						<input class="w-btn w-btn-green" type="button" value="수정">
-					</a>
-			</div>
-				
-			<div class="deleteBtn">
-				<!-- 삭제하기 -->
-				<c:url value="/board/boardRemove" var="removeLink"></c:url>
-				<form action="${removeLink }" id="removeForm" method="post">
-					<input type="hidden" name="boardId" value="${board.boardId }">
-				</form>
-				<input class="w-btn w-btn-gray" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
-				
+			<sec:authentication property="name" var="username"/>
+			<!-- 작성자와 authentication.namedl 같아야 보여줌 -->
+			<c:if test="${board.member_userId == username}">
+				<div class="editBtn">
+					<!-- 수정페이지로 -->
+					<c:url value="/board/boardModify" var="modifyLink">
+						<c:param name="boardId" value="${board.boardId }"></c:param>
+					</c:url>
+						<a href="${modifyLink }">
+							<input class="w-btn w-btn-green" type="button" value="수정">
+						</a>
+				</div>
+					
+				<div class="deleteBtn">
+					<!-- 삭제하기 -->
+					<c:url value="/board/boardRemove" var="removeLink"></c:url>
+					<form action="${removeLink }" id="removeForm" method="post">
+						<input type="hidden" name="boardId" value="${board.boardId }">
+					</form>
+					<input class="w-btn w-btn-gray" type="submit" value="삭제" data-bs-toggle="modal" data-bs-target="#removeModal"/>
+				</div>
+			</c:if>
+			
 				<!-- 작성자 == 로그인한 아이디 확인 -->
 				<%-- <sec:authentication property="name" var="member_userId"/>
 				<c:if test="${board.member_userId == member_userId }">
@@ -327,7 +332,6 @@ input[type="text"] {
 					</c:url>
 					<a class="btn btn-primary" href="${modifyLink }">수정</a>
 				</c:if> --%>
-				</div>
 		</div>
 		
 <!-- 본문 -->
@@ -366,11 +370,10 @@ input[type="text"] {
 
 
 <!-- 파일 -->
-<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <div class="imgBox">
 	<c:forEach items="${board.boardFileName }" var="fileName">
 		<div class="img">
-			<img class="img-fluid img-thumbnail" alt="" src="${ctx }/board/${board.boardId}/${fileName}">
+			<img class="img-fluid img-thumbnail" alt="" src="/imagePath/${board.boardId }/${fileName}">
 		</div>
 	</c:forEach>
 </div>
