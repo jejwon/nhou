@@ -48,5 +48,11 @@ public interface BoardMapper {
 
 	// 게시글 삭제할때 좋아요 같이 삭제
 	int deleteLikeByBoardId(int boardId);
+	
+	// db파일에서 파일첨부 지우기
+	int deleteFileByBoardId(int boardId);
+	
+	// File table에 해당파일명 지우기
+	int deleteFileBoardIdAndFileName(int board_boardId, String boardFileName);
 
 }

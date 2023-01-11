@@ -144,6 +144,21 @@ DELETE FROM board
 WHERE boardId = #{boardId}
 </delete>
 
+<!-- db파일에서 파일첨부 지우기 -->
+<delete id="deleteFileByBoardId">
+DELETE FROM boardFile
+WHERE board_boardId = #{board_boardId}
+</delete>
+
+<!-- 실제 저장소에 파일첨부 지우기 -->
+<delete id="deleteFileBoardIdAndFileName">
+DELETE FROM boardFile
+WHERE 
+	board_boardId = #{board_boardId}
+AND
+	boardFileName = #{boardFileName}
+</delete>
+
 <!-- 좋아요 존재유무 -->
 <select id="getLikeByBoardIdAndUserId" resultType="int">
 SELECT COUNT(*) FROM boardLike

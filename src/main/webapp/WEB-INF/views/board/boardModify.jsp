@@ -8,6 +8,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+.custom-check.form-check-input:checked {
+    background-color: var(--bs-red);
+    border-color: var(--bs-red);
+}
+
 .container-sm { 
 	letter-spacing: -1px;
 	font-size: 16px;
@@ -28,7 +33,7 @@
 
 .categoryBox .categorySelect {
 	display: inline-block;
-	width : 100px;
+	width : 200px;
 	height: 40px;
 	border: 0;
 	outline:none;
@@ -182,16 +187,16 @@ dl, ol, ul {
 <div class="container-sm">
 
 <div id="boardWrap">
-	<form id="modifyForm" action="" method="post">
+	<form id="modifyForm" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="boardId" value="${board.boardId }" readonly="readonly"> <br>
 		<input type="hidden" name="member_userId" value="${board.member_userId }" readonly="readonly"> <br>
 		
 		<div class="categoryBox">
 			<p>카테고리</p>
 			<select class="categorySelect" name="boardCategory" id="">
-				<option name="houses" value="1">집들이		
-				<option name="tip" value="2">꿀팁전수		
-				<option name="chat" value="3">잡담	
+				<option name="houses">인테리어 자랑	
+				<option name="tip">꿀팁 방출	
+				<option name="chat">잡담	
 			</select>
 		</div>
 		
@@ -213,7 +218,7 @@ dl, ol, ul {
 				</dl>
 				
 				<div class="content">
-					<textarea class="">${board.content }</textarea>
+					<textarea name="content" class="">${board.content }</textarea>
 				</div>
 				
 				
@@ -223,31 +228,27 @@ dl, ol, ul {
 					<c:forEach items="${board.boardFileName }" var="fileName">
 					<%-- 삭제 여부 체크박스 --%>
 					<div class="form-check form-switch text-danger">
-						<input name="removeFiles" value="${name }" class="custom-check form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked${status.count }" >
+						<input name="removeFiles" value="${fileName }" class="custom-check form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked${status.count }" >
 						<label class="form-check-label" for="flexSwitchCheckChecked${status.count }"><i class="fa-regular fa-trash-can"></i></label>
 					</div>
 					
-					<div class="img">
-						<img class="img-fluid img-thumbnail" alt="" src="${ctx }/board/${board.boardId}/${fileName}">
+					<div class="mb-3">
+						<img class="img-fluid img-thumbnail" alt="" src="/imagePath/${board.boardId }/${fileName}">
 					</div>
 					</c:forEach>
+					
+					<%-- 파일 추가하기 --%>
 					<div class="mb-3">
 						<label class="form-label">파일 추가</label>
-						<input multiple type="file" accept="${ctx }" class="form-control" name="fileName">
+						<input multiple type="file" accept="image/*" class="form-control" name="files">
+						<div class="form-text" id="addFileInputText"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<input class="w-btn w-btn-green" type="submit" value="수정완료" data-bs-target="#modifyModal">
+		</div>
 	</form>
-
-	<!-- 삭제버튼 -->
-	<%-- <c:url value="/board/boardRemove" var="removeLink"></c:url>
-		<form id="removeForm" action="${removeLink }" method="post">
-		</form>
-			<input class="w-btn w-btn-gray"  type="submit" value="삭제" data-bs-target="#removeModal">
-		</div> --%>
-		
 	</div>
 </div> <!-- 전체 컨테이너 -->
 
@@ -270,24 +271,6 @@ dl, ol, ul {
 	  </div>
 	</div>
 
-<!-- 		삭제 모달
-	<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        삭제하시겠습니까?
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-	        <button id="removeConfirmBtn" type="button" class="btn btn-primary">삭제</button>
-	      </div>
-	    </div>
-	  </div>
-	</div> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript">
 // 수정 버튼 누르면 수정하도록 form으로 전송
@@ -295,40 +278,37 @@ document.querySelector("#modifyConfirmBtn").addEventListener("click", function()
 	document.querySelector("#modifyForm").submit();
 });
 
-/* // 삭제 버튼 누르면 삭제하도록 form으로 전송
-document.querySelector("#removeConfirmBtn").addEventListener("click", function() {
-	document.querySelector("#removeForm").submit();
-}); */
-
-// 파일추가수정할때 중복검사
+// 파일 중복검사
 document.querySelector(`#modifyForm input[name="files"]`).addEventListener("change", function() {
 	const textDiv = document.querySelector("#addFileInputText");
-	textDiv.innerText = "";
+	textDiv.innerText =  "";
 	
-	// 검증해서
+	// 검증 선언
 	let ok = false;
 	
-	// input:file 에서 선택한 파일명들
+	// input[name="files"]에서 선택한 파일명들
 	const files = document.querySelector(`#modifyForm input[name="files"]`).files;
 	console.log(files);
 	
-	// #modifyForm input[name="removeFiles"] 의 value들
+	// #modifyForm input[name="removeFiles"]의 값들과
 	const removeFileChecks = document.querySelectorAll(`#modifyForm input[name="removeFiles"]`);
 	
-	ok = Array.from(removeFileChecks).every((check) => Array.from(files).every((file) => file.name != check.value))
-	/*
-	for (const removeFileCheck of removeFileChecks) {
+	ok = Array.from(removeFileChecks)
+			  .every((check) => Array.from(files)
+			  .every((file) => file.name != check.value))
+			  
+	/* for (const removeFileCheck of removeFileChecks) {
 		console.log(removeFileCheck.value);
-	}
-	*/
+	} */
 	
-	// 과 비교해서 중복되는 게 있으면 ok = false
+	// 과 비교해서 중복되는게 있으면 ok = false
 	// 그렇지 않으면 true
 	
 	if (!ok) {
-		textDiv.innerText = "중복된 파일명이 있습니다.";
+		textDiv.innerText =  "중복된 파일명이 있습니다.";
 	}
-});
+})
+
 </script>
 </body>
 </html>

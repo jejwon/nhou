@@ -117,6 +117,10 @@
 			<textarea class="form-control" name="content" style="resize: none; height: 150px;"></textarea>
 		</div>
 		
+		<div class="form-floating" style="padding-bottom: 10px;">
+			<input class="form-control" value="<sec:authentication property="name"/>" type="hidden" name="nickName" readonly="readonly">
+		</div>
+		
 		<div class="mb-3">
 			<label class="form-label">파일</label>
 			<input multiple type="file" accept="image/*" class="form-control" name="files">

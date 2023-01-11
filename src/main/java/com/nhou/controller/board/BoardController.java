@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -88,16 +89,12 @@ public class BoardController {
 			
 		model.addAttribute("board", board);
 				
-			/*
-			 * BoardDto board = boardService.get(boardId);
-			 * 
-			 * model.addAttribute("board", board);
-			 */
 			
 	}
 	
 	// 게시글 수정하기(이전에 쓴 글 가져오기)
 	@GetMapping("boardModify") // @은 외부 빈, #은 메소드의 파라미터
+	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #boardId)")
 	public void modify(@RequestParam(name="boardId") int boardId,
 			Model model) {
 		
@@ -107,14 +104,24 @@ public class BoardController {
 	}
 	
 	// 게시글 수정해서 다시 등록하기
-	@PostMapping("boardModify")
-	public String modify(BoardDto board, RedirectAttributes rttr) {
-		int cnt = boardService.update(board); // service에 update를 사용
+	@PostMapping("boardModify")                                   // BoardDto board를 앞에 붙임
+	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #board.boardId)")
+	public String modify(BoardDto board, 
+						 @RequestParam("files") MultipartFile[] files,
+						 @RequestParam(name="removeFiles", required = false) List<String> removeFiles,
+						 RedirectAttributes rttr) {
+		
+		/*
+		 * if (files != null) { System.out.println(files.length); for (MultipartFile
+		 * file : files) { System.out.println(file.getOriginalFilename()); }
+		 */
+		
+		int cnt = boardService.update(board, files, removeFiles); // service에 update를 사용
 
 		if (cnt == 1) {
-			rttr.addFlashAttribute("message", "새 게시물이 수정되었습니다.");
+			rttr.addFlashAttribute("message", board.getBoardId() + "새 게시물이 수정되었습니다.");
 		} else {
-			rttr.addFlashAttribute("message", "새 게시물이 수정되지 않았습니다.");
+			rttr.addFlashAttribute("message", board.getBoardId() + "새 게시물이 수정되지 않았습니다.");
 		}
 		
 		return "redirect:/board/boardList";

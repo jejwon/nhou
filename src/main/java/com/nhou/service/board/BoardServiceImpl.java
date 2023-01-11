@@ -120,18 +120,83 @@ public class BoardServiceImpl implements BoardService {
 	
 	// 가져온 게시물 수정하고 등록하기
 	@Override
-	public int update(BoardDto board) { 	// service에 사용한 명명
+	public int update(BoardDto board, MultipartFile[] files, List<String> removeFiles) { 	// service에 사용한 명명
+		int boardId = board.getBoardId();
+		
+		// 수정 페이지에서 파일 삭제
+		if (removeFiles != null) {
+			for (String boardFileName : removeFiles) {
+				// 1. File 테이블에서 record 지우기
+				boardMapper.deleteFileBoardIdAndFileName(boardId, boardFileName);
+				// 2. 저장소에 실제 파일 지우기
+				String path = "C:\\Users\\sj\\Desktop\\study\\upload\\nhou\\board\\" + boardId + boardFileName;
+				File file = new File(path);
+				
+				file.delete();
+			}
+			
+		}
+		
+		// 수정 페이지에서 새 파일첨부
+		for (MultipartFile file : files) {
+			
+			if (file != null && file.getSize() > 0) {
+				
+				String boardFileName = file.getOriginalFilename();
+				
+				// File table에 해당파일명 덮어씌우기 위해 지우기
+				boardMapper.deleteFileBoardIdAndFileName(boardId, boardFileName);
+				
+				// boardFile table에 파일명 추가
+				boardMapper.insertFile(boardId, boardFileName);
+				
+				// 저장소에 실제 파일 추가
+				File folder = new File("C:\\Users\\sj\\Desktop\\study\\upload\\nhou\\board\\"
+						+ board.getBoardId());
+				folder.mkdirs();
+				
+				File dest = new File(folder, boardFileName);
+				
+				try {
+					// 받은 파일을 목적지로 전송 transferTo
+					file.transferTo(dest);
+				} catch (Exception e) {
+					// @Transactional은 RuntiemExecption에서만 rollback됨 
+					e.printStackTrace();
+					throw new RuntimeException(e);
+				}
+			}
+		}
+		
 		return boardMapper.update(board);	// mapper에서 사용할 명명
 	}
 	
 	// 게시물 삭제하기
 	@Override
 	public int remove(int boardId) {		// service에 사용한 명명
+		// 파일 실제 저장소 지우기(로컬 저장소이므로 각자 pc파일폴더 만들어서 사용)
+		String path = "C:\\Users\\sj\\Desktop\\study\\upload\\nhou\\board\\" + boardId;
+		File folder = new File(path);
+		
+		File[] listFiles = folder.listFiles();
+		
+		for (File file : listFiles) {
+			file.delete();
+		}
+		
+		folder.delete();
+		
+		// db 파일 records 지우기
+		boardMapper.deleteFileByBoardId(boardId);
+		
 		// 게시글에 달린 댓글 지우기
 		boardReplyMapper.deleteByBoardId(boardId); // boardReplyMapper로
 		
 		// 게시글 지울때
 		return boardMapper.delete(boardId); // mapper에서 사용할 명명
+		
+		
+		
 		
 	}
 	
