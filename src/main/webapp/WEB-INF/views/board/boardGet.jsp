@@ -403,13 +403,13 @@ input[type="text"] {
 <div class="replyInsertBox container">
 	
 	<!-- 로그인 했을때 -->
-	<sec:authorize access="isAuthenticated()">
 		<!-- 댓글 입력하기 -->
+	<sec:authorize access="isAuthenticated()">
 		<div class="row">
 			<input id="content" class="row replyContentInput" type="text" placeholder="댓글을 입력하세요."/>
 			<br />
-		</div>
 		<button class="insertBtn" id="replyBtn1"><i class="fa-solid fa-pen-to-square"></i></button>
+		</div>
 	</sec:authorize>
 	
 		<!-- 로그인 안했을때 -->
@@ -574,6 +574,14 @@ function listReply() {
 				const modifyReplyBtnId = `modifyReplyBtn\${item.boardReplyId}`;
 				const removeReplyBtnId = `removeReplyBtn\${item.boardReplyId}`;
 				// console.log(item.boardReplyId);
+				
+				// 작성자와 로그인한 id가 같을때 버튼 나오도록
+				const editBtn = `
+					<div class="editBtns">
+						<button class="modiBtn" data-bs-toggle="modal" data-bs-target="#modifyReplyFormModal" data-reply-id="\${item.boardReplyId}" id="\${modifyReplyBtnId}">수정</button>
+						<button class="remoBtn" data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.boardReplyId}" id="\${removeReplyBtnId}">삭제</button>
+					</div>`
+				
 				const replyDiv = 
 					`<div id="comentBox">
 						<div class="nickName">\${item.nickName}</div>
@@ -582,37 +590,38 @@ function listReply() {
 							<i class="fa-regular fa-clock"></i>
 							\${item.ago}
 						</div>
-						<div class="editBtns">
-							<button class="modiBtn" data-bs-toggle="modal" data-bs-target="#modifyReplyFormModal" data-reply-id="\${item.boardReplyId}" id="\${modifyReplyBtnId}">수정</button>
-							<button class="remoBtn" data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.boardReplyId}" id="\${removeReplyBtnId}">삭제</button>
-						</div>
-					  
+						
+						\${item.editable ? editBtn : ''}
 						
 					</div>`;
+						/* // 작성자와 로그인한 id가 같을때 버튼 나오도록 판별하는 함수
+						// 같으면 editBtn나오고, 아니면 빈string으로  */
 					/* data-reply-id라는 attribute 통해 버튼마다 id값 부여 */
 				replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
-
-				// 수정 폼 모달에 덧글 수정하기
-				document.querySelector("#" + modifyReplyBtnId)
-					.addEventListener("click", function() {
-						document.querySelector("#modifyFormModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
-						readReplyAndSetModalForm(this.dataset.replyId); /* db에서 댓글 내용을 가지고와 넣기 */
 					
-					});
-					
-					
-					
-				// 삭제확인 모달 이벤트	
-				document.querySelector("#" + removeReplyBtnId)
-					.addEventListener("click", function() {
-						/* console.log(this.id + "삭제버튼"); */
-						/* this.id는 removeReplyBtnId */
-						console.log(this.dataset.replyId + "번 댓글 삭제, 모달");
-						/* removeReply(this.dataset.replyId); */
-						/* 여기서 this는 document.querySelector("#" + removeReplyBtnId)의 참조값 */
-						document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
-						/* data-reply-id의 값을 this.dataset.replyId으로 넘긴다 */
-					});
+				if (item.editable) {
+					// 수정 폼 모달에 덧글 수정하기
+					document.querySelector("#" + modifyReplyBtnId)
+						.addEventListener("click", function() {
+							document.querySelector("#modifyFormModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
+							readReplyAndSetModalForm(this.dataset.replyId); /* db에서 댓글 내용을 가지고와 넣기 */
+						
+						});
+						
+						
+						
+					// 삭제확인 모달 이벤트	
+					document.querySelector("#" + removeReplyBtnId)
+						.addEventListener("click", function() {
+							/* console.log(this.id + "삭제버튼"); */
+							/* this.id는 removeReplyBtnId */
+							console.log(this.dataset.replyId + "번 댓글 삭제, 모달");
+							/* removeReply(this.dataset.replyId); */
+							/* 여기서 this는 document.querySelector("#" + removeReplyBtnId)의 참조값 */
+							document.querySelector("#removeConfirmModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
+							/* data-reply-id의 값을 this.dataset.replyId으로 넘긴다 */
+						});
+				}
 			}
 		});
 }

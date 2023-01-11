@@ -13,7 +13,7 @@ public class BoardReplySecurity {
 	private BoardReplyMapper boardReplyMapper;
 	
 	// 댓글 권한체크
-	public boolean checkUserId(String userName, int boardReplyId) {
+	public boolean checkWriter(String userName, int boardReplyId) {
 		BoardReplyDto reply = boardReplyMapper.selectById(boardReplyId);
 		
 		return reply.getMember_userId().equals(userName);
