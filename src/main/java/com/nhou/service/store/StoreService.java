@@ -15,15 +15,32 @@ public class StoreService {
 	@Autowired
 	private StoreMapper mapper;
 	
-	public void register(StoreDto store) {
-		mapper.insert(store);
-	//	System.out.println("service =============> "+store);
+	public int register(StoreDto store) {	
+		return mapper.insert(store);
+//		System.out.println("service =============> "+store);
 	}
 
-	/*
-	 * public List<StoreDto> listStore() {
-	 * 
-	 * return mapper.list(); }
-	 */
+
+	public List<StoreDto> listStore() {
+		return mapper.list(); 	
+	}
+
+
+	public StoreDto get(int productId) {
+		return mapper.select(productId);
+	}
+
+
+	public int update(StoreDto store) {
+		return mapper.update(store);
+		
+	}
+
+
+	public int remove(int productId) {
+		return mapper.delete(productId);
+		
+	}
+
 
 }
