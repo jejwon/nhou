@@ -39,10 +39,10 @@
 		<tbody>
 		<c:forEach items="${memberList }" var="member"><!-- 받는 객체 동일하게 -->
 			<tr> <%-- 펼쳐지게 설정--%>
-				<td><a href="/admin/manageMember">${member.userId }</a></td>
+				<td><a href="/myPage/myPageModify?userId=${member.userId }">${member.userId }</a></td>
 				<td>${member.password }</td>
 				<td>${member.email }</td>
-				<td>${member.nickName }</td>
+				<td>${member.nickName } ${member.auth }</td>
 				<td>${member.insertDatetime }</td>
 			</tr>
 		</c:forEach>

@@ -117,12 +117,12 @@
 </head>
 <body>
 	<sec:authorize access="isAuthenticated()">
-		<h1>로그인됨!</h1>
+		<h1>${member.userId } 로그인됨!</h1>
 	</sec:authorize>
 	
 	<!-- 로그인시 보이는 메뉴 설정 -->
 	<sec:authorize access="isAuthenticated()" var="loggedIn"/>
-	
+	<sec:authentication property="name" var="username"/>
 	<div id="wrap">
 		<div id="header">
 			<div id="loginBar">
@@ -140,11 +140,12 @@
 					<li><a href="/member/logout" >LOGOUT</a></li>
 				</c:if>	
 					<li><a href="/qnaBoard/qnaList">QnABoard</a></li>
-					<!-- 관리자만 보이게 권한설정하기 -->
-					<li><a href="/admin/memberInfo">MEMBER INFO</a></li>
+				<c:if test="${member.auth == 0 }">
+					<li><a href="/admin/memberInfo">MEMBER_INFO</a></li>
+				</c:if>
 				</ul>
 			</div>
-				
+			
 				
 			<nav id="nav3">
 				<div class="home">

@@ -41,6 +41,26 @@
 		<h1>개인정보 수정</h1>
 		<form id="editForm"action="" method="post">
 		<div id="whole">
+		<select name="auth"  class="form-select" aria-label="Default select example"style="width: 200px; margin: 0 10px;">
+ 			<c:choose>
+ 				<c:when test="${member.auth == 0  }">
+		 			<option selected>관리자</option>	
+ 				</c:when>
+ 				<c:when test="${member.auth == 1  }">
+		 			<option selected>일반회원</option>	
+ 				</c:when>
+ 				<c:when test="${member.auth == 2  }">
+		 			<option selected>판매자</option>	
+ 				</c:when>
+ 			</c:choose>
+  			<option value="1">일반회원 변경</option>
+  			<option value="2">판매자 등록</option>
+ 			<c:if test="${member.auth == 0 }"> 
+ 			<option value="8">일반회원 + 블랙</option>
+ 			<option value="9">판매자 + 블랙</option>
+ 			 </c:if>
+		</select>
+		
 		<div class="form-floating" style="margin: 10px;">
 			<input type="text" readonly class="form-control" value="${member.userId }"id="userId"placeholder="ID"name="userId"> 
 			<label for="ID">아이디</label>
@@ -74,23 +94,7 @@
 			<label for="phone">전화번호</label>
 		</div>
 		</div>
-		<c:if test="${member.auth != 2}">
-		<div class="form-check">
-			  <input class="form-check-input" type="checkbox" value="2" id="auth" name="auth">
-			  <label class="form-check-label" for="auth">
-			   판매자 등록
-	  		  </label>			 
-		</div>
 		
-		</c:if>
-		<c:if test="${member.auth != 1}">
-		<div class="form-check">
-			  <input class="form-check-input" type="checkbox" value="2" id="auth" name="auth">
-			  <label class="form-check-label" for="auth">
-			   일반회원 변경
-	  		  </label>			 
-		</div>
-		</c:if>
 		
 		<div id="button1">		
 			<button id="modifyBtn"class="btn btn-outline">수정하기</button>			

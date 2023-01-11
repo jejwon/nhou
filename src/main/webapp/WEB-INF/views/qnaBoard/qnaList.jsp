@@ -63,7 +63,9 @@
 		<div class="title">
 			<h1>고객 문의</h1>
 		</div>
-	
+		<sec:authorize access="isAuthenticated()"/>
+		<sec:authentication property="name" var="username"/>
+		
 					
 	<div id="tableList">
 		<table class="table bg-white">
@@ -103,10 +105,10 @@
 					
 					</td>				
 					<c:choose>
-					<c:when test="${qna.status == 0 }">
+					<c:when test="${qna.countReply == 0}">
 					<td>답변대기</td>
 					</c:when>
-					<c:when test="${qna.status == 1 }">
+					<c:when test="${qna.countReply == 1 }">
 					<td>답변완료</td>
 					</c:when>				
 					</c:choose>				

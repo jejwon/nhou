@@ -29,7 +29,7 @@ public class QnAReplyController {
 	@Autowired
 	private QnAReplyService qnaReplyService;
 	
-	@PreAuthorize("@qnAReplySecurity.checkWriter(authentication.name, #qnaReplyId)")
+	//@PreAuthorize("@qnAReplySecurity.checkWriter(authentication.name, #qnaReplyId)")
 	@PostMapping("insert")
 	@ResponseBody
 	public Map<String, Object> insert(@RequestBody QnAReplyDto qnaReply, Principal principal, MemberDto member){
@@ -55,7 +55,7 @@ public class QnAReplyController {
 	public QnAReplyDto get(@PathVariable int qnaReplyId) {
 		return qnaReplyService.getByQnAReplyId(qnaReplyId);
 	}
-	@PreAuthorize("@qnAReplySecurity.checkWriter(authentication.name, #qnaReplyId)")
+	//@PreAuthorize("@qnAReplySecurity.checkWriter(authentication.name, #qnaReplyId)")
 	@DeleteMapping("delete/{qnaReplyId}")
 	@ResponseBody
 	public void delete(@PathVariable int qnaReplyId, Principal principal, Model model) {
@@ -63,7 +63,7 @@ public class QnAReplyController {
 		model.addAttribute("member", loginId);
 		qnaReplyService.deleteByQnAReplyId(qnaReplyId);
 	}
-	@PreAuthorize("@qnAReplySecurity.checkWriter(authentication.name, #qnaReplyId)")
+	//@PreAuthorize("@qnAReplySecurity.checkWriter(authentication.name, #qnaReplyId)")
 	@PutMapping("edit")
 	@ResponseBody
 	public QnAReplyDto edit(@RequestBody QnAReplyDto qnaReply, Principal principal, MemberDto member) {

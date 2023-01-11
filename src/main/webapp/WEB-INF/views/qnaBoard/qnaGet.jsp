@@ -99,8 +99,7 @@
 			</c:when>
 			</c:choose>
 		</select>
-
-
+		
 		<div  id="nickName" class="input-group input-group-sm mb-3">
 		  <span class="input-group-text" id="inputGroup-sizing-sm">작성자</span>
 		  <input type="text"  value="${qna.nickName }" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"readonly>
@@ -125,7 +124,7 @@
 					<input type="hidden" name="qnaId" value="${qna.qnaId }">
 				</form>		
 				<div id="button1">	
-					<button id="deleteSubmit" class="btn btn-outline">삭제</button>					
+					<button id="deleteSubmit" class="btn btn-outline"  data-bs-toggle="modal" data-bs-target="#deleteQnAModal" data-reply-id="${qna.qnaId}"  >삭제</button>					
 				</div>
 			</c:if>			
 
@@ -137,6 +136,26 @@
 			</div>
 	</div>
 </div>
+
+<%-- 댓글 삭제 확인 모달 --%>
+	<!-- Modal -->
+	<div class="modal fade" id="deleteQnAModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">문의 삭제 확인</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        문의를 삭제하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" data-bs-dismiss="modal" id="deleteQnASubmit" class="btn btn-danger">삭제</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 <%--댓글 작성 --%>
 <br>
 <br>
@@ -147,15 +166,15 @@
 <hr>
 
 <c:if test="${member.auth == 0 }">
-<div class="container">
-	<div class="form-floating mb-3">
-		  <input type="text" class="form-control" id="qnaReplyInput" placeholder="답변쓰기" >
-		  <label for="floatingInput"></label>
+	<div class="container">
+		<div class="form-floating mb-3">
+			  <input type="text" class="form-control" id="qnaReplyInput" placeholder="답변쓰기" >
+			  <label for="floatingInput"></label>
+		</div>
+		<div id="replySubmit">
+			<button id="qnaReplySend"class="btn btn-outline">작성</button>	
+		</div>
 	</div>
-	<div id="replySubmit">
-		<button id="qnaReplySend"class="btn btn-outline">작성</button>	
-	</div>
-</div>
 </c:if>
 <br>
 <br>
@@ -233,14 +252,16 @@ function listReply(){
 		const replyDiv = ` 
 							<label for="qnaAnswer" class="form-label"></label>							
 							<textarea class="form-control" id="qnaAnswer" rows="3" style="resize: none; height:150px;" readonly>
-							\${item.writer} 관리자 답변
+							<관리자 답변>
 							\${item.content}</textarea>						
 							<div class="time">
 							 \${item.insertDatetime}
 							</div>
+							<c:if test="${member.auth == 0 }">
 							<div id="button3">
 							\${deleteButton} 								
 							</div>
+							</c:if>
 						`;
 							replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
 							
@@ -278,11 +299,10 @@ document.querySelector("#qnaReplySend").addEventListener("click", function(){
 	})
 	.then(() => listReply());
 });
-
-//삭제 버튼 클릭하면 삭제 form 전송
-document.querySelector("#deleteSubmit").addEventListener("click", function(){
-	document.querySelector("#deleteForm").submit();
-});
+//삭제 모달 버튼 클릭하면 삭제 form 전송
+	document.querySelector("#deleteQnASubmit").addEventListener("click", function(){
+		document.querySelector("#deleteForm").submit();
+});	
 </script>
 </body>
 </html>
