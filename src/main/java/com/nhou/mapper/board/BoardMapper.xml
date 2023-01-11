@@ -15,12 +15,6 @@ INSERT INTO boardFile (board_boardId, boardFileName)
 VALUES (#{board_boardId}, #{boardFileName})
 </insert>
 
-
-<!-- 닉네임 가져오기 
-<select id="selectNick" resultType="java.lang.String">
-SELECT nickName FROM member WHERE userId = #{userId}
-</select> -->
-
 <!-- 글 목록 list는 mapper에서 사용한 명명 -->
 <select id="list" resultType="com.nhou.domain.board.BoardDto">
 <!-- <![CDATA[
@@ -42,12 +36,14 @@ SELECT
 	b.boardCategory,
     b.title,
     b.insertDatetime,
+    b.member_userId,
+    b.viewCount,
     m.nickName,
     COUNT(DISTINCT r.boardReplyId) replyCount,
     COUNT(DISTINCT l.member_userId) likeCount
 FROM board b LEFT JOIN member m ON b.member_userId = m.userId
 			 LEFT JOIN boardReply r ON b.boardId = r.board_boardId
-             LEFT JOIN boardLike l ON l.member_userId = m.userId
+             LEFT JOIN boardLike l ON b.boardId = l.board_boardId
 WHERE
 	<if test="category !=null and category != ''">
 		b.boardCategory = #{category} AND
@@ -101,15 +97,17 @@ SELECT
 	b.content,
 	b.insertDatetime,
 	b.member_userId,
+	b.viewCount,
 	m.nickName,
  	(SELECT COUNT(*) FROM boardLike WHERE board_boardId = b.boardId AND member_userId = #{member_userId}) liked,
  	(SELECT COUNT(*) FROM boardLike WHERE board_boardId = b.boardId) likeCount,
  	f.boardFileName,
  	f.boardFileId
 FROM
- 		board b LEFT JOIN member m ON b.member_userId = m.userId
+ 	board b LEFT JOIN member m ON b.member_userId = m.userId
  				LEFT JOIN boardFile f ON f.board_boardId = b.boardId
-WHERE boardId = #{boardId}
+WHERE 
+	boardId = #{boardId}
 </select>
 <resultMap type="com.nhou.domain.board.BoardDto" id="boardMap">
 	<id column="boardId" property="boardId"></id>
@@ -119,6 +117,7 @@ WHERE boardId = #{boardId}
 	<result column="boardCategory" property="boardCategory"/>
 	<result column="insertDatetime" property="insertDatetime"/>
 	<result column="likeCount" property="likeCount"/>
+	<result column="viewCount" property="viewCount"/>
 	<result column="nickName" property="nickName"/>
 	<result column="liked" property="liked"/>
 	<result column="member_userId" property="member_userId"/>
@@ -188,4 +187,11 @@ WHERE board_boardId = #{board_boardId}
 DELETE FROM boardLike
 WHERE board_boardId = #{board_boardId}
 </delete>
+
+<!-- 조회수 카운트 -->
+<update id="updateViewCount">
+UPDATE board
+SET viewCount = viewCount + 1
+WHERE boardId = #{boardId}
+</update>
 </mapper>

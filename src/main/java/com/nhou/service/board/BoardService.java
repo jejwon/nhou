@@ -30,5 +30,8 @@ public interface BoardService {
 	public int insertFile(BoardDto board, MultipartFile[] files);
 
 	// 좋아요 카운트
-	public Map<String, Object> updateLike(String boardId, String member_userId);
+	public Map<String, Object> updateLike(String board_boardId, String member_userId);
+
+	// 조회수
+	public int updateViewCount(int boardId);
 }

@@ -131,6 +131,11 @@ input[type="submit"] {
 	height: 60px;
 	vertical-align: middle;
 }
+
+a:link {
+	text-decoration: none;
+	color: black;
+}
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -190,6 +195,7 @@ input[type="submit"] {
 					<th style="width: 800px;">제목</th>
 					<th>작성자</th>
 					<th>날짜</th>
+					<th>좋아요</th>
 					<th>조회수</th>
 				</tr>
 			</thead>
@@ -216,6 +222,8 @@ input[type="submit"] {
 						<td>${board.nickName }</td>
 						<td>${board.ago }</td>
 						<td>${board.likeCount }</td>
+						<!-- 조회수 -->
+						<td>${board.viewCount}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
