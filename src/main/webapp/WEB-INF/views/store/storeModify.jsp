@@ -56,7 +56,7 @@
 		<!-- 상품상세 -->
 			<div class="mb-3">
 			  <label for="productContents">Textarea</label>
-			  <textarea class="form-control" id="Contents" rows="3" name="productContents"></textarea>
+			  <textarea class="form-control" id="productContents" rows="3" name="productContents"></textarea>
 			</div>
 		
 			
@@ -125,7 +125,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <button type="modifyConfirmButton" class="btn btn-primary">Save</button>
+	        <button id="modifyConfirmButton" class="btn btn-primary">Save</button>
 	      </div>
 	    </div>
 	  </div>
@@ -144,7 +144,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <button type="removeConfirmButton" class="btn btn-primary">Delete</button>
+	        <button id="removeConfirmButton" class="btn btn-primary">Delete</button>
 	      </div>
 	    </div>
 	  </div>

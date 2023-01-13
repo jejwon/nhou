@@ -6,8 +6,22 @@
 <mapper namespace="com.nhou.mapper.store.StoreReviewMapper">
 
 	<insert id="insert">
-	INSERT INTO productReply (product_productId, content)
-	VALUES (#{replproduct_productIdyId}, #{content})
+	INSERT INTO productReply (productReplyId, product_productId, writer, content)
+	VALUES (#{productReplyId}, #{product_productId}, #{writer}, #{content})
 	</insert>
+	
+	<select id="selectReviewByproduct_productId" resultType="com.nhou.domain.store.ReviewDto">
+	SELECT
+		productReplyId,
+		product_productId,
+		writer,
+		content
+	FROM
+		productReply
+	WHERE
+		product_productId = #{product_productId}
+	ORDER BY
+		productReplyId DESC
+	</select>
 
 </mapper>
