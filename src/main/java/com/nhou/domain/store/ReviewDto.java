@@ -5,6 +5,12 @@ import lombok.Data;
 @Data
 public class ReviewDto {
 	
-	private int productId;
+	private int productReplyId;
+	private int product_productId;
+//	private int member_userId;
+	private String writer;
 	private String content;
+//	private int star;
+
+
 }
