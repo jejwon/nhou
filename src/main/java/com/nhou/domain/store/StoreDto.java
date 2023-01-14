@@ -6,7 +6,6 @@ import lombok.Data;
 public class StoreDto {
 	private int productId;
 	private int productInfoId;
-	private int product_productId;
 	private int productFileId;
 	private int productReplyId;
 	private int categoryId;
