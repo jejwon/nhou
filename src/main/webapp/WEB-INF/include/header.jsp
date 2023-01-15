@@ -134,7 +134,7 @@
 				<c:if test="${loggedIn }">
 					<li><a href="/myPage/myPageList">MYPAGE</a></li>
 				</c:if>	
-					<li><a href="#">CART</a></li>
+					<li><a href="/cart/cartList">CART</a></li>
 					<li><a href="/board/boardList">COMMUNITY</a></li>
 				<c:if test="${loggedIn }">
 					<li><a href="/member/logout" >LOGOUT</a></li>
