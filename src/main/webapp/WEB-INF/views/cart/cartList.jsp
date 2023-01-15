@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>장바구니 결제창</title>
+<title>장바구니 담기(수량)</title>
 <style type="text/css">
 
 </style>
@@ -18,7 +18,7 @@
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 
 <div class="container">
-
+	
 </div> <!-- 전체 컨테이너 -->
 </body>
 </html>
