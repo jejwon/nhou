@@ -70,13 +70,10 @@
 					<button type="button" class="btn btn-outline-primary btn-lg" style="width: 250px; height: 55px;">장바구니</button>
 					<button type="button" class="btn btn-primary btn-lg" style="width: 250px; height: 55px;">바로구매</button>
 		
+					</div>					
+				</div>					
+		</form>
 		
-					</div>
-					
-				</div>
-		
-				<br>
-				
 				<nav id="navbar-example2" class="navbar navbar-expand-lg bg-body-tertiary px-3 mb-3" style="background-color: #e6cc88;">
 					<div class="navbar-brand">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -94,51 +91,83 @@
 					<h4 id="scrollspyHeading1">상세정보</h4>
 					<p>${store.productContents }</p>
 					<h4 id="scrollspyHeading2">리뷰 ${store.productReplyId }</h4>
-						<div class="container-md">
-							<div class="row">
-								<div class="col">
-									<input type="hidden" id="productId" value="${store.productId}"> <!-- 소정언니꺼 비교 -->
-									<input type="text" id="replyInput1">
-									<button id="replySendButton1">댓글쓰기</button>
-								</div>
-							</div>
-						</div>
+					<p>따뜻해요!</p>
 				  </div>
-				
 				</div>		
 			</div>
 		
+			<!-- 수정 버튼 -->
 			<c:url value="/store/storeModify" var="modifyLink">
 				<c:param name="productId" value="${store.productId }"></c:param>
 			</c:url>
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 				<a class="btn btn-warning" href="${modifyLink }">수정</a>
+			</div>			
+
+			<hr>
+			<div id="reviewMessage1"></div>
+
+			<!-- 댓글 입력 -->	
+			<div class="container-md">
+				<div class="row">
+					<div class="col">
+						<input type="hidden" id="product_productId" value="${store.productId }"> 
+						<input type="text" id="reviewInput1">
+						<button id="reviewSendButton1">댓글쓰기</button>
+					</div>
+				</div>
 			</div>
 			
-		</form>
-	</div>
+			<!-- 댓글 리스트 -->
+			<div class="row">
+				<div class="col">
+					<div id="reviewListContainer">
+					
+					</div>
+				</div>
+			</div>
+		
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 const ctx = "${pageContext.request.contextPath}";
 
-document.querySelector("#replySendButton1").addEventListner("click", function() {
-	const productId = document.querySelector("#product_productId").value;
-	const content = document.querySelector("#replyInput1").value;
+listReview();
+
+// 댓글 list view
+function listReview() {
+	const product_productId = document.querySelector("#product_productId").value;
+	fetch(`\${ctx}/storeReview/list/\${product_productId}`)
+	.then(res => res.json())
+	.then(list => {
+		for (const item of list) {
+			// console.log(item.productReplyId);
+			const reviewDto = `<div>\${item.content}</div>`;
+			document.querySelector("#reviewListContainer").insertAdjacentHTML("beforeend", reviewDiv);
+		}
+	});
+}
+
+// 댓글의 data 전송 버튼
+document.querySelector("#reviewSendButton1").addEventListener("click", function() {
+	const product_productId = document.querySelector("#product_productId").value;
+	const content = document.querySelector("#reviewInput1").value;
 	
 	const data = {
 			product_productId,
 			content
 	};
 	
-	// content insert 안 되어 있음
-	
-	fetch(`\${ctx}/storeReview/readd`, {
+	fetch(`\${ctx}/storeReview/add`, {
 		method : "post",
 		headers : {
 			"Content-Type" : "application/json"
 		},
 		body : JSON.stringify(data)
 	})
+	.then(res => res.json())
+	.then(data => {
+		document.querySelector("reviewMessage1").innerText = data.message;
+	});
 });
 
 </script>
