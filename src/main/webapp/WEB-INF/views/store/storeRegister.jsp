@@ -43,17 +43,16 @@
 
 	<!-- 카테고리명 선택 -->
 	<div class="container">
-		<form action="" method="post">
+		<form action="/store/storeRegister" method="post">
 			<div class="categorySelectBox">
 				<label for="categoryName">CategoryName</label>
-				<select class="form-select" name="categoryName">
-					 <option selected>Select Category</option>
-					 <option name="furniture">Furniture</option>
-					 <option name="bedding">Bedding</option>
-					 <option name="living">Living</option>
-					 <option name="fabric">Fabric</option>
-					 <option name="kitchen">Kitchen</option>
-					 <option name="pets">Pets</option>
+				<select class="form-select" name="productCategory_categoryId" id="productCategory_categoryId">
+					 <option value="1" name="furniture">Furniture</option>
+					 <option value="2" name="bedding">Bedding</option>
+					 <option value="3" name="living">Living</option>
+					 <option value="4" name="fabric">Fabric</option>
+					 <option value="5" name="kitchen">Kitchen</option>
+					 <option value="6" name="pets">Pets</option>
 				</select>
 			</div>
 				
@@ -125,5 +124,8 @@
 		</form>
 	</div>		
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+</script>
 </body>
 </html>

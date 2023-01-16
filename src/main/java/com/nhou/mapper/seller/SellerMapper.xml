@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.nhou.mapper.seller.SellerMapper">
+ <!-- 판매자 계정의 판매아이템 목록 -->
+ <select id="list" resultType="com.nhou.domain.seller.SellerDto">
+SELECT 
+	 ol.orderDate,
+     ol.orderListId,
+     od.payment,
+     od.count,
+     m.userId,
+     ol.orderStatus,
+     p.productId,
+     p.productName
+FROM 
+	orderList ol LEFT JOIN orderDetail od ON ol.orderDetail_orderDetailId = od.orderDetailId
+				 LEFT JOIN member m ON ol.member_userId = m.userId
+                 LEFT JOIN product p ON ol.product_productId = p.productId
+WHERE
+	(
+	<trim prefixOverrides="OR">
+		<if test="type == 'all' or type == 'orderStatus'">
+			ol.orderStatus LIKE #{keyword}
+		</if>
+		
+		<if test="type == 'all' or type == 'productId'">
+			OR p.productId LIKE #{keyword}
+		</if>
+
+	</trim>
+	)
+GROUP BY ol.orderListId
+ORDER BY ol.orderListId DESC
+LIMIT #{offset}, #{records}              
+ </select>
+ 
+<!-- 판매현황 총 카운트 -->
+<select id="countAll" resultType="int">
+SELECT 
+	COUNT(*) 
+FROM 
+	orderList ol LEFT JOIN product p ON ol.product_productId = p.productId
+WHERE
+	<trim prefixOverrides="OR">
+		<if test="type == 'all' or type == 'orderStatus'">
+			ol.orderStatus LIKE #{keyword}
+		</if>
+		
+		<if test="type == 'all' or type == 'productId'">
+			OR p.productId LIKE #{keyword}
+		</if>
+
+	</trim>
+</select>
+ </mapper>
