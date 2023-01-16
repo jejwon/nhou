@@ -6,8 +6,8 @@
 <mapper namespace="com.nhou.mapper.store.StoreMapper">
 
 	<insert id="insert">
-	INSERT INTO product (productId, productName, price, stock)
-	VALUES (#{productId}, #{productName}, #{price}, #{stock})
+	INSERT INTO product (productName, price, stock, member_userId, productCategory_categoryId)
+	VALUES (#{productName}, #{price}, #{stock}, #{member_userId}, #{productCategory_categoryId})
 	</insert>
 	
 <!-- 	<insert id="insertFile">
@@ -27,12 +27,26 @@
 
 	<select id="list" resultType="com.nhou.domain.store.StoreDto">
 	SELECT
+		p.productId,
+		p.productName,
+		p.price,
+		p.member_userId,
+        p.productCategory_categoryId,
+        pc.categoryName
+	FROM 
+		product p LEFT JOIN member m ON p.member_userId = m.userId
+				  LEFT JOIN productCategory pc ON p.productCategory_categoryId = pc.categoryId
+	ORDER BY productId DESC;	
+	</select>
+	
+	<!-- <select id="list" resultType="com.nhou.domain.store.StoreDto">
+	SELECT
 		productId,
 		productName,
 		price
 	FROM product
 	ORDER BY productId DESC;	
-	</select>
+	</select> -->
 	
 <!-- 	<select id="Replylist">
 	SELECT

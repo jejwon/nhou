@@ -15,6 +15,7 @@ public interface MemberService {
 
 	int update(MemberDto member);
 
-	
+	// 판매자 판매목록 가져오기
+	MemberDto getUserSellList(String userId);
 
 }

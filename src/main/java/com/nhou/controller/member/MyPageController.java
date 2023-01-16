@@ -1,10 +1,8 @@
 package com.nhou.controller.member;
-import java.lang.ProcessBuilder.Redirect;
 import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,6 +76,14 @@ public class MyPageController {
 		return "redirect:/myPage/myPageList";
 	}
 	
-	
-	
+	// 판매자 계정의 판매목록 가져오기
+	@GetMapping("mySellerList")
+	public void getMySellerList(@RequestParam("userId") String userId, Model model) {
+		
+		MemberDto mySellerListByUserId = memberService.getUserSellList(userId);
+		System.out.println("판매자 리스트" + mySellerListByUserId);
+		
+		model.addAttribute("sellerList", mySellerListByUserId);
+	}
+		
 }

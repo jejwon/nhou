@@ -32,10 +32,36 @@
 					<a href="${getLink}">
 						<img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/165888771016524175.jpg?gif=1&w=360&h=360&c=c&q=0.8&webp=1"  class="card-img-top">			
 					</a>
-				
+					
 					<div class="card-body">
 						<h5 class="card-title">${store.productName }</h5>
 						<span class="product_item_price">${store.price } 원</span>
+						
+						<!-- 카테고리 -->
+						<div class="productCategory">
+								<c:choose>
+									<c:when test="${store.productCategory_categoryId eq 1 }">
+									 	FURNITURE
+									</c:when>
+									<c:when test="${store.productCategory_categoryId eq 2 }">
+									 	BEDDING
+									</c:when>
+									<c:when test="${store.productCategory_categoryId eq 3 }">
+									 	LIVING FABRIC
+									</c:when>
+									<c:when test="${store.productCategory_categoryId eq 4 }">
+									 	KITCHEN
+									</c:when>
+									<c:when test="${store.productCategory_categoryId eq 5 }">
+									 	DECO
+									</c:when>
+									<c:when test="${store.productCategory_categoryId eq 6 }">
+									 	PETS
+									</c:when>
+								</c:choose>
+							</div>
+
+						
 						<p class="review">
 							<strong class="avg">⭐${productReply.star }</strong> 
 						    		리뷰${productReply.productReplyId }

@@ -107,6 +107,19 @@
 			</div>
 		</div>
 		
+		<div id="button4">		
+			<div class="mySellerList">
+				<c:url value="/myPage/mySellerList" var="mySellerListLink">
+					<c:param name="userId" value="${member.userId }"></c:param>
+				</c:url>
+				<a href="${mySellerListLink }">
+				<button id="mySellerBtn"class="btn btn-outline">
+				<i class="fa-solid fa-headset"></i><br>
+				나의 판매목록</button>
+				</a>			
+			</div>
+		</div>
+		
 		</div>
 	</div>
 </section>
