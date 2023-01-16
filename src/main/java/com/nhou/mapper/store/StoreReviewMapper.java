@@ -18,5 +18,4 @@ public interface StoreReviewMapper {
 
 	int deleteByReviewId(int product_productId);
 
-
 }

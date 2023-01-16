@@ -41,6 +41,7 @@
 	WHERE productReplyId = #{productReplyId}
 	</delete>
 	
+
 	<select id="selectReviewByproduct_productId" resultType="com.nhou.domain.store.ReviewDto">
 	SELECT
 		productReplyId,

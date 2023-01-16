@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nhou.domain.member.MemberDto;
 import com.nhou.mapper.member.MemberMapper;
 @Service
+@Transactional
 public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberMapper memberMapper;
@@ -39,4 +41,12 @@ public class MemberServiceImpl implements MemberService{
 	public int update(MemberDto member) {
 		return memberMapper.update(member);
 	}
+	
+	//판매자 판매목록 가져오기
+	@Override
+	public MemberDto getUserSellList(String userId) {
+		return memberMapper.getUserSellList(userId);
+	}
+	
+	
 }

@@ -41,7 +41,7 @@ public class StoreReviewService {
 	public int modify(ReviewDto review) {
 		
 		return mapper.update(review);
-	}
+
 
 
 }

@@ -69,4 +69,37 @@
 		userId = #{userId}	
 		
 	</update>
+
+<!-- 판매자 판매목록 가져오기 -->
+<select id="getUserSellList" resultMap="userSellerMap">
+SELECT
+	m.userId,
+	m.nickName,
+	p.productId,
+	p.productName,
+	p.insertDatetime,
+	p.stock,
+	p.price
+	<!-- date_format(p.insertDatetime, '%Y-%m-%d') -->
+FROM member m LEFT JOIN product p ON m.userId = p.member_userId
+WHERE
+	m.userId = #{userId}
+ORDER BY
+	p.productId DESC
+</select>
+
+<resultMap type="com.nhou.domain.member.MemberDto" id="userSellerMap">
+	<id column="userId" property="userId"/>
+	<result column="nickName" property="nickName"/>
+	<collection property="userSellList" resultMap="userSellList"></collection>
+</resultMap>
+
+<resultMap type="com.nhou.domain.store.StoreDto" id="userSellList">
+	<result column="productId" property="productId"/>
+	<result column="productName" property="productName"/>
+	<result column="insertDatetime" property="insertDatetime"/>
+	<result column="stock" property="stock"/>
+	<result column="price" property="price"/>
+</resultMap>
+
  </mapper>

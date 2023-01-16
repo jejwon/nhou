@@ -242,6 +242,7 @@ function listReview() {
 	});
 }
 
+
 function removeReview(reviewId) {
 	// /review/remove/{productReplyId}, method:"delete"
 	fetch(ctx + "/review/remove/" + reviewId, {
@@ -275,6 +276,7 @@ document.querySelector("#reviewSendButton1").addEventListener("click", function(
 		document.querySelector("#reviewMessage1").innerText = data.message;
 	})
 	.then(() => listReview());
+
 });
 
 </script>
