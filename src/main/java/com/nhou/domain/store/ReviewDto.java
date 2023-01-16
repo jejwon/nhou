@@ -12,9 +12,6 @@ public class ReviewDto {
 	private String content;
 	private int star;
 //	private int member_userId;
-	private String writer;
-	private String content;
 //	private int star;
-
 
 }
