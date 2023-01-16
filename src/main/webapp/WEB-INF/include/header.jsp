@@ -154,7 +154,8 @@
 					</a>
 				</div>
 			   	<ul class="menu-bottom">
-				  	<li><a href="#">NEW</a></li>
+			   		<li><a href="/store/storeRegister">상품등록</a></li>
+				  	<li><a href="/store/storeList">NEW</a></li>
 					<li><a href="#">FURNITURE</a></li>
 					<li><a href="#">BEDDING</a></li>
 					<li><a href="#">LIVING FABRIC</a></li>
