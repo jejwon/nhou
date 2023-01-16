@@ -126,6 +126,46 @@
 					</div>
 				</div>
 			</div>
+			
+			<%-- 댓글 삭제 확인 모달 --%>
+			<!-- Modal -->
+			<div class="modal fade" id="removeReviewConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h1 class="modal-title fs-5" id="exampleModalLabel">댓글 삭제 확인</h1>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        댓글을 삭제하시겠습니까?
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			        <button type="button" data-bs-dismiss="modal" id="removeReviewConfirmModalSubmitButton" class="btn btn-primary">삭제</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			<%-- 댓글 수정 모달 --%>
+			<!-- Modal -->
+			<div class="modal fade" id="modifyReviewFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h1 class="modal-title fs-5">댓글 수정</h1>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        <input type="text" id="modifyReviewInput">
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			        <button type="button" data-bs-dismiss="modal" id="modifyFormModalSubmitButton" class="btn btn-primary">수정</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>						
 		
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
@@ -133,18 +173,83 @@ const ctx = "${pageContext.request.contextPath}";
 
 listReview();
 
+document.querySelector("#modifyFormModalSubmitButton").addEventListener("click", function() {
+	const content = document.querySelector("#modifyReviewInput").value;
+	const productReplyId = this.dataset.reviewId;
+	const data = {productReplyId, content}
+	
+	fetch(`\${ctx}/storeReview/modify`, {
+		method : "put",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify(data)
+	})
+	.then(res => res.json)
+	.then(data => document.querySelector("#reviewMessage1").innerText = data.message)
+	.then(() => listReview());
+});
+
+document.querySelector("#removeReviewConfirmModalSubmitButton").addEventListener("click", function() {
+	removeReview(this.dataset.reviewId);
+});
+
+function readReviewAndSetModalForm(productReplyId) {
+	fetch(`\${ctx}/storeReview/get/\${productReplyId}`)
+	.then(res => res.json())
+	.then(review => {
+		document.querySelector("#modifyReviewInput").value = review.content;
+	});
+}
+
 // 댓글 list view
 function listReview() {
 	const product_productId = document.querySelector("#product_productId").value;
 	fetch(`\${ctx}/storeReview/list/\${product_productId}`)
 	.then(res => res.json())
 	.then(list => {
+		const reviewListContainer = document.querySelector("#reviewListContainer")
+		reviewListContainer.innerHTML = "";
+		
 		for (const item of list) {
+			
+			const modifyReviewButtonId = `modifyReviewButton\${item.productReplyId}`;
+			const removeReviewButtonId = `removeReviewButton\${item.productReplyId}`;
 			// console.log(item.productReplyId);
-			const reviewDto = `<div>\${item.content}</div>`;
-			document.querySelector("#reviewListContainer").insertAdjacentHTML("beforeend", reviewDiv);
+			
+			const reviewDiv = `
+				<div>\${item.content}
+					 <button data-bs-toggle="modal" data-bs-target="#modifyReviewFormModal" id="\${modifyReviewButtonId}">수정</button>
+					 <button data-bs-toggle="modal" data-bs-target="#removeReviewConfirmModal" data-review-id="\${item.productReplyId}" productReplyId="\${removeReviewButtonId}">삭제</button>
+				</div>`;
+			reviewListContainer.insertAdjacentHTML("beforeend", reviewDiv);
+			// 수정 폼 모달에 수정 댓글 입력 
+			document.querySelector("#" + modifyReviewButtonId)
+				.addEventListener("click", function() {
+					document.querySelector("#modifyFormModalSubmitButton").setAttribute("data-review-id", this.dataset.reviewId);
+					readReviewAndSetModalForm(this.dataset.reviewId);
+				});
+			
+			// 삭제확인 버튼에 reviewId 옮기기
+			document.querySelector("#" + removeReviewButtonId)
+				.addEventListener("click", function() {
+					// console.log(this.productReplyId + "번 삭제버튼 클림 됨");
+					console.log(this.dataset.reviewId + "번 댓글 삭제할 예정", "모달 띄움")
+					document.querySelector("#removeReviewConfirmModalSubmitButton").setAttribute("data-review-id", this.dataset.reviewId);
+					// removeReview(this.dataset.reviewId);
+				});
 		}
 	});
+}
+
+function removeReview(reviewId) {
+	// /review/remove/{productReplyId}, method:"delete"
+	fetch(ctx + "/review/remove/" + reviewId, {
+		method: "delete"
+	})
+	.then(res => res.json())
+	.then(data => document.querySelector("#reviewMessage1").innerText = data.message)
+	.then(() => listReview());
 }
 
 // 댓글의 data 전송 버튼
@@ -166,8 +271,10 @@ document.querySelector("#reviewSendButton1").addEventListener("click", function(
 	})
 	.then(res => res.json())
 	.then(data => {
-		document.querySelector("reviewMessage1").innerText = data.message;
-	});
+		document.querySelector("#reviewInput1").value = "";
+		document.querySelector("#reviewMessage1").innerText = data.message;
+	})
+	.then(() => listReview());
 });
 
 </script>

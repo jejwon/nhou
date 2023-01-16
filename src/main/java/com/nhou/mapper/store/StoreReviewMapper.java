@@ -10,5 +10,13 @@ public interface StoreReviewMapper {
 
 	List<ReviewDto> selectReviewByproduct_productId(int product_productId);
 
+	int deleteByproductReplyId(int productReplyId);
+
+	ReviewDto selectById(int productReplyId);
+
+	int update(ReviewDto review);
+
+	int deleteByReviewId(int product_productId);
+
 
 }
