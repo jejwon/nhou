@@ -1,11 +1,11 @@
 package com.nhou.service.cart;
 
 
-import com.nhou.domain.cart.CartDetailDto;
+import com.nhou.domain.cart.CartDto;
 
 public interface CartService {
 	
-	int insert(CartDetailDto cart);
+	int insert(CartDto cart);
 
 
 }

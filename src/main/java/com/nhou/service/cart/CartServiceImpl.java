@@ -1,9 +1,10 @@
 package com.nhou.service.cart;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
-import com.nhou.domain.cart.CartDetailDto;
+import com.nhou.domain.cart.CartDto;
 import com.nhou.mapper.cart.CartMapper;
 
 @Service
@@ -13,7 +14,7 @@ public class CartServiceImpl implements CartService{
 	private CartMapper cartMapper;
 	
 	@Override
-	public int insert(CartDetailDto cart) {
+	public int insert(CartDto cart) {
 		return cartMapper.insert(cart);
 	}
 }

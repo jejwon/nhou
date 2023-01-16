@@ -1,11 +1,11 @@
 package com.nhou.mapper.cart;
 
 
-import com.nhou.domain.cart.CartDetailDto;
+import com.nhou.domain.cart.CartDto;
 
 public interface CartMapper {
 
-	int insert(CartDetailDto cart);
+	int insert(CartDto cart);
 
 
 }

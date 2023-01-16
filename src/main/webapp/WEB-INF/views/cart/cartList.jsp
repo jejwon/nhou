@@ -16,7 +16,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
-
+	
 <div class="container">
 	
 </div> <!-- 전체 컨테이너 -->
