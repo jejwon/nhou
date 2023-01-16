@@ -5,11 +5,43 @@
   
 <mapper namespace="com.nhou.mapper.store.StoreReviewMapper">
 
+	<delete id="deleteByReviewId">
+	DELETE FROM productReply
+	WHERE productReplyId = #{product_productId}
+	</delete>
+
+	
 	<insert id="insert">
-	INSERT INTO productReply (productReplyId, product_productId, writer, content)
-	VALUES (#{productReplyId}, #{product_productId}, #{writer}, #{content})
+	INSERT INTO productReply (productReplyId, product_productId, member_userId, writer, content, star)
+	VALUES (#{productReplyId}, #{product_productId}, #{member_userId}, #{writer}, #{content}, #{star})
 	</insert>
 	
+	<update id="update">
+	UPDATE productReply
+	SET
+		content = #{content}
+	WHERE
+		productReplyId =  #{productReplyId}
+	</update>
+	
+	<select id="selectById" resultType="com.nhou.domain.store.ReviewDto">
+	SELECT
+		productReplyId,
+		product_productId,
+		writer,
+		content
+	FROM
+		productReply
+	WHERE
+		productReplyId = #{productReplyId}
+	</select>
+	
+	<delete id="deleteByproductReplyId">
+	DELETE FROM productReply
+	WHERE productReplyId = #{productReplyId}
+	</delete>
+	
+
 	<select id="selectReviewByproduct_productId" resultType="com.nhou.domain.store.ReviewDto">
 	SELECT
 		productReplyId,
