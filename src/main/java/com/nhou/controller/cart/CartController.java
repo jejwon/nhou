@@ -1,6 +1,7 @@
 package com.nhou.controller.cart;
 
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,9 +35,9 @@ public class CartController {
 		
 	}
 	@PostMapping("cartInsert")
-	public void insert(CartDto cart) {
-		cartService.insert(cart);
-		
+	public String insert(CartDto cart) {
+		int result = cartService.insert(cart);
+		return result + "";
 	}
 	
 	@PostMapping("cartDelete")
@@ -58,10 +60,12 @@ public class CartController {
 		model.addAttribute("cart", cart);
 	}
 	
-	@GetMapping("cartList")
-	public void list(Model model) {
-		List<CartDto> list = cartService.list();
+	@GetMapping("/cartList/{member_userId}")
+	public void list(@PathVariable("member_userId") String member_userId, Model model, Principal principal) {
+		List<CartDto> list = cartService.list(member_userId);
 		model.addAttribute("cartList", list);
+		
+		//return "/cart"; String -> type 변경
 	}
 	
 	

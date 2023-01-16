@@ -15,5 +15,5 @@ public interface CartMapper {
 
 	CartDto getByCartId(int cartId);
 
-	List<CartDto> list();
+	List<CartDto> list(String member_userId);
 }

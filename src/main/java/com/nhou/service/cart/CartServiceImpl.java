@@ -36,7 +36,7 @@ public class CartServiceImpl implements CartService{
 	}
 	
 	@Override
-	public List<CartDto> list() {
-		return cartMapper.list();
+	public List<CartDto> list(String member_userId) {
+		return cartMapper.list(member_userId);
 	}
 }
