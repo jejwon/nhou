@@ -3,9 +3,58 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nhou.mapper.cart.CartMapper">
+	<!-- 장바구니 추가 -->
 	<insert id="insert">
-	INSERT INTO cartDetail (size, color, count, price, cart_cartId) 
-	VALUES (#{size}, #{color}, #{count}, #{price},#{cart_cartId})
+	INSERT INTO cart (product_productId, member_userId, count) 
+	VALUES (#{product_productId}, #{member_userId}, #{count})
 	</insert>
 	
+	<!-- 장바구니 삭제 -->
+	<delete id="delete">
+	DELETE FROM cart 
+	WHERE cartId = #{cartId}
+	</delete>
+	
+	<!-- 장바구니 수량 수정 -->
+	<update id="update">
+	UPDATE cart
+	SET count = #{count} where cartId = #{cartId}
+	</update>
+	
+	<!-- 장바구니 얻어오기 -->
+	<select id="getByCartId" resultType="com.nhou.domain.cart.CartDto">
+	SELECT 
+		c.cartId,
+		c.product_productId,
+		c.member_userId,
+		c.count,
+		p.productName,
+		p.price,
+		pi.size,
+		pi.color
+	FROM cart c
+			LEFT JOIN product p ON c.product_productId = p.productId
+			LEFT JOIN productInfo pi ON c.product_productId = pi.product_productId
+	</select>
+	
+	<!-- 카트 확인 -->
+	<!-- <select id="getByUserId" resultType="com.nhou.domain.cart.CartDto">
+		SELECT * FROM cart 
+		WHERE member_userId = #{member_userId} and cartId = #{cartId}		
+	</select> -->
+	
+	<select id="list" resultType="com.nhou.domain.cart.CartDto">
+	SELECT 
+		c.cartId,
+		c.product_productId,
+		c.member_userId,
+		c.count,
+		p.productName,
+		p.price,
+		pi.size,
+		pi.color
+	FROM cart c
+			LEFT JOIN product p ON c.product_productId = p.productId
+			LEFT JOIN productInfo pi ON c.product_productId = pi.product_productId
+	</select>
 </mapper>
