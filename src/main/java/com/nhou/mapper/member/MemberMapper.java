@@ -13,5 +13,8 @@ public interface MemberMapper {
 	List<MemberDto> selectAll();
 	//마이페이지 회원정보 수정
 	int update(MemberDto member);
+	// 판매자 판매목록 가져오기
+	MemberDto getUserSellList(String userId);
+	
 
 }

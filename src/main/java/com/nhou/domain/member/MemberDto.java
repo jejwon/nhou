@@ -2,9 +2,12 @@ package com.nhou.domain.member;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.nhou.domain.store.StoreDto;
 
 import lombok.Data;
 //JPA entity annotation 설정
@@ -28,4 +31,7 @@ public class MemberDto {
 	private String role; //ROLE_USER, ROLE_ADMIN
 
 	private LocalDateTime insertDatetime;
+	
+	// product 리스트 보기
+	private List<StoreDto> userSellList;
 }
