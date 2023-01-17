@@ -21,7 +21,6 @@
 	</c:if>
 	
 	<h1>상품목록</h1>
-
 	    <div class="container">	
 			<c:forEach items="${storeList}" var="store">
 			<c:url value="/store/storeGet" var="getLink">
@@ -30,7 +29,7 @@
 			<article class="card" style="width: 18rem;">
 				<div class="card-top" >
 					<a href="${getLink}">
-						<img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/165888771016524175.jpg?gif=1&w=360&h=360&c=c&q=0.8&webp=1"  class="card-img-top">			
+						<img src="/image/${store.productId}/${store.productImage}"  class="card-img-top">			
 					</a>
 					
 					<div class="card-body">
@@ -59,7 +58,7 @@
 									 	PETS
 									</c:when>
 								</c:choose>
-							</div>
+						</div>
 
 						
 						<p class="review">
@@ -71,7 +70,6 @@
 			</article>        			
 	    	</c:forEach>
 	    </div>
-	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
 </body>

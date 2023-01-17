@@ -7,8 +7,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
 
-	private String connectPath = "/imagePath/**";
-	private String resourcePath = "file:///C:\\Users\\sj\\Desktop\\study\\upload\\nhou\\board\\/";
+	private String connectPath = "/image/**";
+	private String resourcePath = "file:///C:\\Users\\user\\Desktop\\study\\upload\\nhou\\store\\/";
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

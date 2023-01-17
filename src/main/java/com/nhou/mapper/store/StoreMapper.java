@@ -24,5 +24,9 @@ public interface StoreMapper {
 
 	int delete(int productId);
 
+	int insertFile(int product_productId, String productImage);
+	
+	int insertFile2(int product_productId, String productFileName);
+
 
 }
