@@ -18,6 +18,8 @@
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 	
 	<h1> ${member.userId}의 장바구니</h1>
+	<!-- <form action="post" id="cartGoPay"> -->
+
 	<input type="hidden" name="member_userId" value="${member.userId}">
 	<input type="hidden" name="cartId" value="${cart.cartId }">
 	
@@ -30,61 +32,111 @@
 	
 	<!-- 장바구니 정보 -->
 	<div class="wholeCartCount">
-		<table class="table1">
-			<caption>표 제목</caption>
-			<tbody>
+		<table class="table">
+<%-- 			<caption>표 제목</caption> --%>
+			<thead>
 				<tr>
-					<th></th>
-					<th></th>
+					<th>#</th>
 					<th>상품명</th>
 					<th>가격</th>
 					<th>수량</th>
 					<th>합계</th>
 					<th>삭제</th>
 				</tr>
-			</tbody>
-		</table>
-		
-		<table class="table2">
-			<caption>표 내용</caption>
-			<tbody>
-				<c:forEach items="${cartList }" var="cart">
-							<tr>
-								<td>${cart.product_productId }      </td>
-								<td>${cart.cartId }         </td>
-								<td>${cart.productName}            </td>
-								<td>${cart.count}            </td>
-								
-								
-								<td >
-									판매가 :<span class="red_color" id="">${cart.price * cart.count }원</span><br>	
-								</td>
-							</tr>
+			</thead>
+<%-- 			<caption>표 내용</caption> --%>
+			<tbody id="itemContainer">
+			<c:set var="total" value="0"/>
+				<c:forEach items="${cartList }" var="cart" varStatus="status">
+					<tr>
+						<%-- <td>${cart.product_productId }      </td> --%>					
+						<td>${cart.cartId }  </td>
+						<td>${cart.productName}  </td>
+						<td>${cart.price}원</td>
+						<td>
+						<input id="countChange" type="number" min="1" max="100" value="${cart.count }"/>
+						<button id="countChangeBtn" data-cart-id="${cart.cartId}">변경</button></td> <!-- 수량 조절 -->
+						<td><span class="red_color" >${cart.price * cart.count} 원</span><br></td>
+						<td><button id="productDelete1"data-cart-id="${cart.cartId}">삭제</button></td>
+					</tr>
+					<c:set var="total" value="${total + (cart.price * cart.count)}"/>
 				</c:forEach>
 				<tr>
 				<td>
-				결제 금액: 
+				총결제금액
+				<c:out value="${total }"/>
 				</td>
 				</tr>
-					</tbody>
-				</table>
-								
-				<div id="inner"></div>
-				<c:forEach items="${cartList }" var="cart">
-				<div id="indiPrice">${cart.price * cart.count }</div>
-				</c:forEach>
+			</tbody>	
+
+		</table>
+		<!-- 수량 조정 form -->
+			<form action="/cart/cartModify" method="post" class="countChangeForm">
+				<input type="hidden" name="cartId" class="changeCartId">
+				<input type="hidden" name="count" class="changeCount">
+				<input type="hidden" name="userId" value="${member.userId}">
+			</form>
+			
+			<button class="btn">결제하기</button>	
 	</div>
 </div>
+<!-- </form> -->
 </body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
 const ctx = "${pageContext.request.contextPath}";
 
 <!--const 변수는 재할당 안됨-->
-var totalPrice = 0;
-var indiPrice = document.querySelector("#indiPrice").value;
+/* function listCart(){
+	const cartId = document.querySelector("#cartId").value();
+	
+	fetch(`\${ctx}/cart/cartList/\${cartId}`)
+	.then(res => res.json())
+	.then(list => {
+		const itemContainer = document.querySelector("#itemContainer");
+		itemContainer.innerHTML = "";
+	})
+}
 
-console.log(indiPrice);
 
-document.getElementById("inner").innerHTML="쓸 내용";
+//삭제 클릭 시 카트 속 아이템 하나 삭제
+document.querySelector("#productDelete1").addEventListener("click", function(){
+	deleteCart(this.dataset.cartId);
+})
+//삭제 버튼에 cartId 옮기기
+document.querySelector("#productDelete1").addEventListener("click", function(){
+	//console.log(this.dataset.replyId + "삭제버튼 클릭됨"); //data-reply-id : attribute 속성
+	document.querySelector("#productDelete1").setAttribute("data-cart-id", this.dataset.cartId);
+});	
+
+function deleteCart(cartId) {
+	fetch(ctx + "cart/cartDelete/" + cartId, {
+		method : "delete"
+	})
+	
+}
+ */
+
+//수량 처리
+/* 수량버튼 */
+$("#countChange").on("click", function(){
+	let quantity = $(this).parent("div").find("input").val();
+	$(this).parent("div").find("input").val(++quantity);
+});
+ $("#countChange").on("click", function(){
+	let quantity = $(this).parent("div").find("input").val();
+	if(quantity > 1){
+		$(this).parent("div").find("input").val(--quantity);		
+	}
+});
+ /* 수량 수정 버튼 */
+ $("countChangeBtn").on("click", function(){
+	 let cartId = $(this).data("cartId");
+		let count = $(this).parent("td").find("input").val();
+		$("#countChange").val(cartId);
+		$("#countChangeBtn").val(count);
+		$("#countChangeForm").submit();
+ 	
+ });
 </script>
 </html>
