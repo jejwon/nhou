@@ -20,7 +20,7 @@
 			<div class="card mb-3" style="max-width: 2000px;">
 				<div class="row g-0">
 				<div class="col-md-4">
-					<img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/162320350970392985.jpg?gif=1&w=640&h=640&c=c&webp=1" class="img-fluid rounded-start" alt="...">
+					<img src="/image/${store.productId}/${store.productImage}" class="img-fluid rounded-start" alt="...">
 				</div>
 				<div class="col-md-8">
 					<div class="card-body">
@@ -89,7 +89,12 @@
 		
 				  <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
 					<h4 id="scrollspyHeading1">상세정보</h4>
-					<p>${store.productContents }</p>
+						<c:forEach items="${store.productFileName}" var="file">
+						<div class="col-md-4">
+							<img src="/image/${store.productId}/${file}" class="img-fluid rounded-start" alt="...">
+							<p>${store.productContents }</p>
+						</div>
+						</c:forEach>
 					<h4 id="scrollspyHeading2">리뷰 ${store.productReplyId }</h4>
 					<p>따뜻해요!</p>
 				  </div>
