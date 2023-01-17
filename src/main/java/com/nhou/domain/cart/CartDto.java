@@ -20,4 +20,11 @@ public class CartDto {
 	
 	//추가
 	private int totalPrice;
+	
+	
+	/*
+	 * @Override public String toString() { return "cartDto [userId=" +
+	 * member_userId + ", productId=" + product_productId + ", productName=" +
+	 * productName + ", color=" + color + "]"; }
+	 */
 }
