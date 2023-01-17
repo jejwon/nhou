@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhou.domain.cart.CartDto;
+import com.nhou.domain.member.MemberDto;
 import com.nhou.service.cart.CartService;
 import com.nhou.service.member.MemberService;
 
@@ -35,9 +37,9 @@ public class CartController {
 		
 	}
 	@PostMapping("cartInsert")
-	public String insert(CartDto cart) {
-		int result = cartService.insert(cart);
-		return result + "";
+	public void insert(CartDto cart) {
+		cartService.insert(cart);
+
 	}
 	
 	@PostMapping("cartDelete")
@@ -55,14 +57,23 @@ public class CartController {
 	}
 	
 	@GetMapping("cartGet")
-	public void get(@RequestParam(name="cartId") int cartId, Model model) {
+	public void get(@RequestParam(name="cartId") int cartId, Model model, Principal principal, MemberDto member) {
+		String loginId = principal.getName();
 		CartDto cart = cartService.getByCartId(cartId);
+		
+		member.setUserId(loginId);
+		
+		model.addAttribute("member", member);
 		model.addAttribute("cart", cart);
 	}
 	
-	@GetMapping("/cartList/{member_userId}")
-	public void list(@PathVariable("member_userId") String member_userId, Model model, Principal principal) {
-		List<CartDto> list = cartService.list(member_userId);
+	@GetMapping("cartList")//"/{member_userId}") @RequestParam(name="member_userId") String member_userId, 
+	public void list(Model model, Principal principal) {
+		String loginId = principal.getName();	
+		MemberDto  member = memberService.getById(loginId);
+		
+		List<CartDto> list = cartService.list(loginId);
+		model.addAttribute("member", member);
 		model.addAttribute("cartList", list);
 		
 		//return "/cart"; String -> type 변경
