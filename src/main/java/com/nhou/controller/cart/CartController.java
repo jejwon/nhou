@@ -59,7 +59,7 @@ public class CartController {
 	@GetMapping("cartGet")
 	public void get(@RequestParam(name="cartId") int cartId, Model model, Principal principal, MemberDto member) {
 		String loginId = principal.getName();
-		CartDto cart = cartService.getByCartId(cartId);
+		CartDto cart = cartService.getByCartId(cartId);		
 		
 		member.setUserId(loginId);
 		
@@ -74,9 +74,10 @@ public class CartController {
 		
 		List<CartDto> list = cartService.list(loginId);
 		model.addAttribute("member", member);
+	 
 		model.addAttribute("cartList", list);
 		
-		//return "/cart"; String -> type 변경
+
 	}
 	
 	
