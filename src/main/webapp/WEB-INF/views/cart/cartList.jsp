@@ -18,14 +18,82 @@
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 	
 	<h1> ${member.userId}의 장바구니</h1>
-	<!-- <form action="post" id="cartGoPay"> -->
 
+<%-- 
 	<input type="hidden" name="member_userId" value="${member.userId}">
 	<input type="hidden" name="cartId" value="${cart.cartId }">
-	
+	 --%>
+	 
+
+<form name="cartListForm" action="" id="cartListForm" method="post" >
 <div class="container">
-	
+	<input type="hidden" name="cartId" value="${cart.cartId }">
+	<div class="cartDiv" id="cart">
+		<div class="rowHead">
+			<div class="subHead">
+				<div class="check">선택</div>
+				<div class="productName">상품명</div>
+			</div>
+			<div class="subHead">
+				<div class="cartPrice">가격</div>
+				<div class="count">수량</div>
+				<div class="sum">합계</div>
+			</div>
+			<div class="subHead">
+				<div class="cartDelete">삭제</div>
+			</div>
+			<div class="split"></div>
+		</div>
+		
+		<div class="cartItem">
+			<div class="subBody">
+				<div class="check"><input type="checkbox" name="buy" value="" checked="" onclick="javascript:cart.checkItem();">&nbsp;</div>
+				<div class="productName">
+					<span>${cart.productName }</span>
+				</div>
+			</div>
+		</div>
+		 <div class="subBody">
+         	<div class="cartPrice"><input type="hidden" name="price" id="price1" class="price1" value="">${cart.price }</div>
+                        <div class="num">
+                            <div class="updown">
+                                <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="2" onkeyup="javascript:basket.changePNum(1);">
+                                <span onclick="javascript:basket.changePNum(1);"><i class="fas fa-arrow-alt-circle-up up"></i></span>
+                                <span onclick="javascript:basket.changePNum(1);"><i class="fas fa-arrow-alt-circle-down down"></i></span>
+                            </div>
+                        </div>
+                        <div class="sum"></div>
+                    </div>
+                    <div class="subdiv">
+                        <div class="basketcmd"><a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delItem();">삭제</a></div>
+                    </div>
+                </div>
+             </div>
+           
+            <div class="right-align basketrowcmd">
+                <a href="javascript:void(0)" class="abutton" onclick="javascript:cart.delCheckedItem();">선택상품삭제</a>
+                <a href="javascript:void(0)" class="abutton" onclick="javascript:cart.delAllItem();">장바구니비우기</a>
+            </div>
+    
+            <div class="bigtext right-align sumcount" id="productCount">상품갯수: ${cart.count }</div>
+            <div class="bigtext right-align box blue summoney" id="productSum">합계금액: ${cart.count * cart.price }</div>
+    
+            <div id="goorder" class="">
+                <div class="clear"></div>
+                <div class="buttongroup center-align cmd">
+                    <a href="javascript:void(0);">선택한 상품 주문</a>
+                </div>
+    </div><!-- 전체 컨테이너 -->
+</form>
+
+
+
+
+
+
+<form action="" id="cartGoPayForm" method="post">
 	<div class="wholeCartList"><span>장바구니</span></div> 
+	<input type="hidden" name="cartId" value="${cart.cartId }">
 	<!-- 장바구니 리스트 -->
 	<div class="wholeCartPrice"></div>
 	<!-- 장바구니 가격 합계 -->
@@ -70,22 +138,32 @@
 			</tbody>	
 
 		</table>
+
+
+				<input type="hidden" name="userId" value="${member.userId }">
+			<button class="btn btn-outline" id="cartGoPayButton">결제하기</button>	
+		</div>
+	</form>  
+
+
 		<!-- 수량 조정 form -->
-			<form action="/cart/cartModify" method="post" class="countChangeForm">
+			<%-- <form action="/cart/cartModify" method="post" class="countChangeForm">
 				<input type="hidden" name="cartId" class="changeCartId">
 				<input type="hidden" name="count" class="changeCount">
 				<input type="hidden" name="userId" value="${member.userId}">
-			</form>
-			
-			<button class="btn">결제하기</button>	
-	</div>
-</div>
-<!-- </form> -->
+			</form> --%>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
 const ctx = "${pageContext.request.contextPath}";
-
+//수량변경 같이 넘어가야됨 ㄱㄷ!!
+document.querySelector("#cartGoPayButton").addEventListener("click", function(){
+	document.querySelector("#cartGoPayForm").submit();
+})
+//이벤트 리스너 등록
+document.addEventListener("changeLoad", function(){
+	
+})
 <!--const 변수는 재할당 안됨-->
 /* function listCart(){
 	const cartId = document.querySelector("#cartId").value();
@@ -117,26 +195,5 @@ function deleteCart(cartId) {
 }
  */
 
-//수량 처리
-/* 수량버튼 */
-$("#countChange").on("click", function(){
-	let quantity = $(this).parent("div").find("input").val();
-	$(this).parent("div").find("input").val(++quantity);
-});
- $("#countChange").on("click", function(){
-	let quantity = $(this).parent("div").find("input").val();
-	if(quantity > 1){
-		$(this).parent("div").find("input").val(--quantity);		
-	}
-});
- /* 수량 수정 버튼 */
- $("countChangeBtn").on("click", function(){
-	 let cartId = $(this).data("cartId");
-		let count = $(this).parent("td").find("input").val();
-		$("#countChange").val(cartId);
-		$("#countChangeBtn").val(count);
-		$("#countChangeForm").submit();
- 	
- });
 </script>
 </html>

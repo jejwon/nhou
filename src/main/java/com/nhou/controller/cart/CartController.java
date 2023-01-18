@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -57,16 +58,19 @@ public class CartController {
 	}
 	
 	@GetMapping("cartGet")
-	public void get(@RequestParam(name="cartId") int cartId, Model model, Principal principal, MemberDto member) {
+	public void get(Model model, Principal principal) {
 		String loginId = principal.getName();
-		CartDto cart = cartService.getByCartId(cartId);		
+		MemberDto member = memberService.getById(loginId);	
 		
 		member.setUserId(loginId);
 		
 		model.addAttribute("member", member);
-		model.addAttribute("cart", cart);
+
 	}
-	
+
+	/*
+	 * @RequestMapping(value="/cartList", method = { RequestMethod.GET, RequestMethod.POST })
+	 */
 	@GetMapping("cartList")//"/{member_userId}") @RequestParam(name="member_userId") String member_userId, 
 	public void list(Model model, Principal principal) {
 		String loginId = principal.getName();	
@@ -76,9 +80,18 @@ public class CartController {
 		model.addAttribute("member", member);
 	 
 		model.addAttribute("cartList", list);
-		
 
 	}
 	
+	 @PostMapping("cartList")//"/{member_userId}") @RequestParam(name="member_userId") String member_userId, 
+	 public String modiFiedList(Model model, Principal principal) { 
+		 String loginId = principal.getName(); 
+		 MemberDto member = memberService.getById(loginId);
+		 List<CartDto> list = cartService.list(loginId); model.addAttribute("member", member);
+	     model.addAttribute("cartList", list);
+	 
+	return "redirect:/cart/cartGet";
+ 
+	 }
 	
 }

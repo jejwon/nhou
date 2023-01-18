@@ -47,10 +47,10 @@
 		 			<option selected>관리자</option>	
  				</c:when>
  				<c:when test="${member.auth == 1  }">
-		 			<option selected>일반회원</option>	
+		 			<option selected value="1">일반회원</option>	
  				</c:when>
  				<c:when test="${member.auth == 2  }">
-		 			<option selected>판매자</option>	
+		 			<option selected value="2">판매자</option>	
  				</c:when>
  			</c:choose>
   			<option value="1">일반회원 변경</option>
