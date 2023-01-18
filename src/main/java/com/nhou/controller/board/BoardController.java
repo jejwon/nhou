@@ -24,6 +24,7 @@ import com.nhou.domain.board.BoardDto;
 import com.nhou.domain.board.PageInfo;
 import com.nhou.domain.member.MemberDto;
 import com.nhou.service.board.BoardService;
+import com.nhou.service.member.MemberService;
 
 @Controller
 @RequestMapping("board")
@@ -31,6 +32,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private MemberService memberSeervice;
 	
 	@GetMapping("boardInsert")
 	public void insert() {
@@ -70,6 +74,7 @@ public class BoardController {
 					@RequestParam(name="q", defaultValue = "") String keyword, // 검색 키워드
 					@RequestParam(name = "category", defaultValue = "") String category, // 카테고리
 					PageInfo pageInfo, Model model) {
+		
 		List<BoardDto> list = boardService.listBoard(page, type, keyword, pageInfo, category); // service에 listBoard로 넘어감
 		
 		model.addAttribute("boardList", list); // boardList라는 곳에 list를 담겠다

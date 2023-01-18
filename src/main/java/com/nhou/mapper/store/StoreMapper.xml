@@ -32,7 +32,9 @@
 		p.price,
 		p.member_userId,
         p.productCategory_categoryId,
-        pc.categoryName
+        pc.categoryName,
+        m.nickName,
+        m.userId
 	FROM 
 		product p LEFT JOIN member m ON p.member_userId = m.userId
 				  LEFT JOIN productCategory pc ON p.productCategory_categoryId = pc.categoryId
