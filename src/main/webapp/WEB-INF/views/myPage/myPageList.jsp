@@ -61,6 +61,21 @@
 	right: 200px;
 	
 }
+
+/* 판매자 대시보드 */
+#button4 {
+	text-align: right;
+	position: relative;
+}
+
+#button4 .sellerBtn {
+	display: block;
+	background-color: #DCC1B0;
+	width: 200px;
+	height: 300px;
+	
+	
+} 
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -107,18 +122,18 @@
 			</div>
 		</div>
 		
-		<div id="button4">		
+		<%-- <div id="button4">		
 			<div class="mySellerList">
 				<c:url value="/myPage/mySellerList" var="mySellerListLink">
 					<c:param name="userId" value="${member.userId }"></c:param>
 				</c:url>
 				<a href="${mySellerListLink }">
-				<button id="mySellerBtn"class="btn btn-outline">
-				<i class="fa-solid fa-headset"></i><br>
+				<button id="mySellerBtn" class="btn btn-outline sellerBtn">
+				<i class="fa-solid fa-money-bill-trend-up"></i><br>
 				나의 판매목록</button>
 				</a>			
 			</div>
-		</div>
+		</div> --%>
 		
 		</div>
 	</div>

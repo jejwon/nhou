@@ -57,7 +57,35 @@
 		font-weight: bolder;
 	}
 	
-	#menu-top>li::after {
+	#menu-top > li > .qna::after {
+		content: "|";
+		padding-left: 5px;
+	}
+	#menu-top > li > .info::after {
+		content: "|";
+		padding-left: 5px;
+	}
+	#menu-top > li > .j::after {
+		content: "|";
+		padding-left: 5px;
+	}
+	#menu-top > li > .mp::after {
+		content: "|";
+		padding-left: 5px;
+	}
+	#menu-top > li > .c::after {
+		content: "|";
+		padding-left: 5px;
+	}
+	#menu-top > li > .co::after {
+		content: "|";
+		padding-left: 5px;
+	}
+	#menu-top > li > .lout::after {
+		content: "|";
+		padding-left: 5px;
+	}
+	#menu-top > li > .lin::after {
 		content: "|";
 		padding-left: 5px;
 	}
@@ -109,6 +137,10 @@
 		padding-bottom: 15px;
 	}
 	
+	#menu-top > li > .lout {
+		font-weight: bold;
+	}
+	
 	
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -128,20 +160,26 @@
 			<div id="loginBar">
 				<ul id="menu-top"  class="top">
 				<c:if test="${not loggedIn }">
-					<li><a href="/member/login" >LOGIN</a></li>
-					<li><a href="/member/join">JOIN</a></li>
+					<li><a class="lin" href="/member/login" >LOGIN</a></li>
+					<li><a class="j" href="/member/join">JOIN</a></li>
 				</c:if>
 				<c:if test="${loggedIn }">
-					<li><a href="/myPage/myPageList">MYPAGE</a></li>
+					<li><a class="mp" href="/myPage/myPageList">MYPAGE</a></li>
 				</c:if>	
-					<li><a href="/cart/cartList">CART</a></li>
-					<li><a href="/board/boardList">COMMUNITY</a></li>
+					<li><a class="lout" href="/member/logout" >LOGOUT</a></li>
+					<li><a class="c" href="/cart/cartList">CART</a></li>
+					<li><a class="co" href="/board/boardList">COMMUNITY</a></li>
 				<c:if test="${loggedIn }">
-					<li><a href="/member/logout" >LOGOUT</a></li>
 				</c:if>	
-					<li><a href="/qnaBoard/qnaList">QnABoard</a></li>
+					<li><a class="qna" href="/qnaBoard/qnaList">QnABOARD</a></li>
 				<c:if test="${member.auth == 0 }">
-					<li><a href="/admin/memberInfo">MEMBER_INFO</a></li>
+					<li><a class="info" href="/admin/memberInfo">MEMBER_INFO</a></li>
+				</c:if>
+				<c:if test="${member.auth == 1 }">
+					<c:url value="/myPage/mySellerList" var="mySellerListLink">
+						<c:param name="userId" value="${member.userId }"></c:param>
+					</c:url>
+					<li><a href="${mySellerListLink }">DASHBOARD</a></li>
 				</c:if>
 				</ul>
 			</div>

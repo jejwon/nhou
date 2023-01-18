@@ -15,8 +15,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.nhou.domain.member.MemberDto;
 import com.nhou.domain.qna.PageInfo;
 import com.nhou.domain.qna.QnADto;
+import com.nhou.domain.store.StoreDto;
 import com.nhou.service.member.MemberService;
 import com.nhou.service.qna.QnAService;
+import com.nhou.service.store.StoreService;
 
 @Controller
 @RequestMapping("myPage")
@@ -26,7 +28,9 @@ public class MyPageController {
 	private MemberService memberService;
 	@Autowired
 	private QnAService qnaService;
-		
+	@Autowired
+	private StoreService storeService;
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -78,12 +82,16 @@ public class MyPageController {
 	
 	// 판매자 계정의 판매목록 가져오기
 	@GetMapping("mySellerList")
-	public void getMySellerList(@RequestParam("userId") String userId, Model model) {
+	public void getMySellerList(@RequestParam("userId") String userId, Model model, Principal principal) {
+		
+		String loginId = principal.getName();
+		MemberDto member = memberService.getById(loginId);
 		
 		MemberDto mySellerListByUserId = memberService.getUserSellList(userId);
 		System.out.println("판매자 리스트" + mySellerListByUserId);
 		
 		model.addAttribute("sellerList", mySellerListByUserId);
+		model.addAttribute("member", member);
 	}
 		
 }
