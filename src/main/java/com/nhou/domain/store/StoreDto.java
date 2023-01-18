@@ -1,11 +1,11 @@
 package com.nhou.domain.store;
 
 import java.time.LocalDateTime;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+
 
 import lombok.Data;
 
@@ -17,7 +17,8 @@ public class StoreDto {
 	private int productReplyId;
 	private int categoryId;
 	private String productName;
-	private String productFileName;
+	private String productImage;
+	private List<String> productFileName;
 	private String categoryName;
 	private String productContents;  //DB에 새로 생성
 	private String color;

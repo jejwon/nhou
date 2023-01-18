@@ -5,25 +5,32 @@
   
 <mapper namespace="com.nhou.mapper.store.StoreMapper">
 
-	<insert id="insert">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="productId">
 	INSERT INTO product (productName, price, stock, member_userId, productCategory_categoryId)
 	VALUES (#{productName}, #{price}, #{stock}, #{member_userId}, #{productCategory_categoryId})
 	</insert>
 	
-<!-- 	<insert id="insertFile">
-	INSERT INTO productFile (productFileId, productFileName)
-	VALUES (#{productFileId}, #{productFileName})
+	<insert id="insertFile">
+	update product 
+ 	set 
+ 		productImage = #{productImage},
+ 	WHERE productId = #{product_productId}
 	</insert>
 	
-	<insert id="insertCategory">		
+	<insert id="insertFile2">
+	INSERT INTO productFile (product_productId, productFileName)
+	VALUES (#{product_productId}, #{productFileName})
+	</insert>	
+	
+<!--<insert id="insertCategory">		
 	INSERT INTO productCategory (categoryId, categoryName)
 	VALUES (#{categoryId}, #{categoryName})
 	</insert>
 		
-	<insert id="insertInfo">
+	insert id="insertInfo">
 	INSERT INTO productInfo (productInfoId, productContents, color, size)
 	VALUES (#{productInfoId}, #{productContents}, #{color}, #{size})
-	</insert> -->
+	</insert>-->
 
 	<select id="list" resultType="com.nhou.domain.store.StoreDto">
 	SELECT
@@ -35,6 +42,9 @@
         pc.categoryName,
         m.nickName,
         m.userId
+
+        p.productImage	
+
 	FROM 
 		product p LEFT JOIN member m ON p.member_userId = m.userId
 				  LEFT JOIN productCategory pc ON p.productCategory_categoryId = pc.categoryId
@@ -58,15 +68,28 @@
 	ORDER BY productReplyId DESC;	
 	</select> -->
 	
-	<select id="select" resultType="com.nhou.domain.store.StoreDto">
+	<select id="select" resultMap="getStore">
 	SELECT
-		productId,
-		productName,
-		price
-	FROM product
+		p.productId,
+		p.productName,
+		p.price,
+		pf.productFileName,
+		pf.productImage		
+	FROM 
+		product p LEFT JOIN productFile pf ON p.productId = pf.product_productId
 	WHERE
-		productId = #{productId}	
+		p.productId = #{productId}	
 	</select>
+	
+	<resultMap type="com.nhou.domain.store.StoreDto" id="getStore">
+		<result column="productId" property="productId"></result>
+		<result column="productName" property="productName"></result>
+		<result column="price" property="price"></result>
+		<result column="productImage" property="productImage"></result>
+		<collection property="productFileName" ofType="string" >
+			<result column="productFileName" property="productFileName"></result>
+		</collection>
+	</resultMap>
 	
 	<update id="update">
 	UPDATE product

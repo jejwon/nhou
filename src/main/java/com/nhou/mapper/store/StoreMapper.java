@@ -30,6 +30,10 @@ public interface StoreMapper {
 
 	public int getTotal();
 
+	int insertFile(int product_productId, String productImage);
+	
+	int insertFile2(int product_productId, String productFileName);
+
 
 
 }

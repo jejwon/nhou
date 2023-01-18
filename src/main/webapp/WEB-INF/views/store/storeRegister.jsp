@@ -43,15 +43,15 @@
 
 	<!-- 카테고리명 선택 -->
 	<div class="container">
-		<form action="/store/storeRegister" method="post">
+		<form action="/store/storeRegister" method="post" enctype="multipart/form-data">
 			<div class="categorySelectBox">
 				<label for="categoryName">CategoryName</label>
 				<select class="form-select" name="productCategory_categoryId" id="productCategory_categoryId">
 					 <option value="1" name="furniture">Furniture</option>
 					 <option value="2" name="bedding">Bedding</option>
-					 <option value="3" name="living">Living</option>
-					 <option value="4" name="fabric">Fabric</option>
-					 <option value="5" name="kitchen">Kitchen</option>
+					 <option value="3" name="Living&Fabric">Living&Fabric</option> 
+					 <option value="4" name="kitchen">Kitchen</option>
+					 <option value="5" name="deco">Deco</option>
 					 <option value="6" name="pets">Pets</option>
 				</select>
 			</div>
@@ -88,7 +88,7 @@
 		<!-- 상품대표이미지 -->
 			Thumbnail
 			<div class="input-group">
-			  <input type="file" class="form-control" name ="productFileName" id="inputGroupFile1" aria-describedby="inputGroupFileAddon1" aria-label="Upload">
+			  <input type="file" accept="image/*" class="form-control" name ="productFile1" id="inputGroupFile1" aria-describedby="inputGroupFileAddon1" aria-label="Upload">
 			  <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon">Upload</button>
 			</div>
 		
@@ -96,7 +96,7 @@
 		<!-- 상품이미지(추가) -->
 			Add Images
 			<div class="input-group">
-			  <input type="file" class="form-control" name ="productFileName" id="inputGroupFile2" aria-describedby="inputGroupFileAddon2" aria-label="Upload">
+			  <input multiple type="file" accept="image/*" class="form-control" name ="productFile2" id="inputGroupFile2" aria-describedby="inputGroupFileAddon2" aria-label="Upload">
 			  <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon1">Upload</button>
 			</div>
 		
