@@ -13,7 +13,7 @@
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 	
-	<h1> ${cart.member_userId}의 장바구니</h1>
+	<h1> ${member.userId}의 장바구니</h1>
 
 	<input type="hidden" name="cartId" value="${cart.cartId }">
 	

@@ -75,7 +75,7 @@ public class MyPageController {
 		memberService.update(member);
 		
 		rttr.addAttribute("userId", member.getUserId());
-		System.out.println(member);
+		//System.out.println(member);
 		
 		return "redirect:/myPage/myPageList";
 	}
