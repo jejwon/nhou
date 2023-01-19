@@ -43,17 +43,17 @@ public class MainController {
 	@Autowired
 	private MemberService memberService;
 	
-	// 메인 상품 리스트
-	@GetMapping("list")
-	public void list(Model model) {
-		
-		List<StoreDto> list = mainService.listBoard();
-
-		model.addAttribute("list", list);
-		System.out.println("상품 리스트 출력" + list);
-		
-
-		
-
-	}
-}
+	/*
+	 * // 메인 상품 리스트
+	 * 
+	 * @GetMapping("list") public void list(Model model) {
+	 * 
+	 * List<StoreDto> list = mainService.listBoard();
+	 * 
+	 * model.addAttribute("list", list); System.out.println("상품 리스트 출력" + list);
+	 * 
+	 * 
+	 * 
+	 * 
+	 * }
+	 */}
