@@ -20,6 +20,7 @@
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 
+
 <h1> ${member.userId}의 장바구니</h1>
 	
 	
@@ -68,8 +69,10 @@
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
 <script>
 const ctx = "${pageContext.request.contextPath}";
+
 
 
 	$(function(){
@@ -91,6 +94,7 @@ const ctx = "${pageContext.request.contextPath}";
 document.querySelector("#orderSubmit").addEventListener("click", function(){
 	document.querySelector("#orderForm").submit();
 })	 
+
 
 
 
