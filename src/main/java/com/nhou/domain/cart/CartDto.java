@@ -10,6 +10,7 @@ public class CartDto {
 	private int product_productId;
 	private String member_userId;
 	private int count;
+	private int sum;
 
 	//product
 	private String productName;
