@@ -51,13 +51,13 @@ public class CartController {
 		return "redirect:/cart/cartList";
 	}
 	
-	/*
-	 * @PostMapping("cartModify") public String modify(CartDto cart,
-	 * RedirectAttributes rttr) { System.out.println(cart);
-	 * cartService.update(cart);
-	 * 
-	 * return "redirect:/cart/cartList"; }
-	 */
+	
+	 @PostMapping("cartModify") 
+	 public String modify(CartDto cart) { 
+		 cartService.update(cart);
+		 return "redirect:/cart/cartList"; // + cart.getMember_userId(); 
+	  }
+
 	
 	@GetMapping("cartGet")
 	public void get(Model model, Principal principal, CartDto cart) {
@@ -88,10 +88,7 @@ public class CartController {
 
 	}
 	
-	@PostMapping("cartList")
-	public void listPost(  List<CartDto> cart) {
-		System.out.println(cart);
-	}
+	
 	
 	
 }

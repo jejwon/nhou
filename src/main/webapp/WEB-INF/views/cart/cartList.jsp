@@ -23,7 +23,7 @@
 
 <h1> ${member.userId}의 장바구니</h1>
 	
-	
+<form action="/cart/cartGet" id="orderForm">
 	<div class="container">
 				
 		<div class="wholeCartList"></div> 
@@ -33,7 +33,7 @@
 		<!-- 장바구니 가격 합계 -->
 	
 		<!-- 장바구니 정보 -->
-	<form action="/cart/cartList" id="orderForm" method="post">
+	
 		<div class="wholeCartCount">
 			<table>
 				<thead>
@@ -46,23 +46,52 @@
 						<th>삭제</th>
 					</tr>
 				</thead>
+			
 				<tbody id="itemContainer">
+				
 					<c:forEach items="${cartList }" var="cart" varStatus="status">
-						<tr class="tr">
-							<td><input name="cartId" type="text" value="${cart.cartId }"></td>
-							<td><div class="check"><input type="checkbox" >&nbsp;</div> </td>
-							<td>${cart.productName} </td>
-							<td><input type="text"   name="price" value="${cart.price}">원</td>
-							<td><input type="number" name="count" min="1" max="100" value="${cart.count }"> </td> <!-- 수량 조절 -->
-							<td><input type="text" name="sum" value="0" ></td>
-							<td><button id="checkedCartDelete" data-cart-id="${cart.cartId}">삭제</button> </td>
-						</tr>	
+					
+						<c:if test="${member.userId == cart.member_userId }">
+							<tr class="tr">
+								<td>	
+								<input name="userId" type="text" value="${cart.member_userId }">					
+								<input name="cartId" type="text" value="${cart.cartId }">
+								</td>
+								<td>${cart.productName}</td>
+								<td><input type="text"   name="price" value="${cart.price}">원</td>
+								<td>
+								<input type="number" name="count" min="1" max="100" value="${cart.count }"> 
+								<a class="countModifyButton" data-cart-id="${cart.cartId}">변경</a>
+								</td> <!-- 수량 조절 -->
+								<td>
+								<input type="text" name="sum" value="${cart.price * cart.count}" >
+								</td>
+								<td><a class="itemDeleteButton" data-cart-id="${cart.cartId}">삭제</a> </td>
+							</tr>	
+						</c:if>	
 					</c:forEach>
+
 				</tbody>	 
+		
 			</table>
 		</div>		
-	</form>
+
 </div>
+</form>
+<!-- 수량 변경 저장됨 -->
+<form action="/cart/cartModify" method="post" class="countModifyForm">
+	<input type="hidden" name="cartId" class="modifyCartId"/>
+	<input type="hidden" name="count" class="modifyCount"/>
+	<input type="hidden" name="userId" value="${cart.member_userId }"/>
+	
+</form>
+<!-- 상품 개별 삭제 -->
+<form action="/cart/cartDelete" method="post" class="itemDeleteForm">
+	<input type="hidden" name="cartId" class="deleteCartId"/>
+	<input type="hidden" name="userId" value="${cart.member_userId }"/>	
+</form>
+
+
 <div id="button1">
 	<button type="button" id="orderSubmit" class="btn btn-outline-primary">주문하기</button>
 </div>
@@ -73,8 +102,13 @@
 <script>
 const ctx = "${pageContext.request.contextPath}";
 
+// 전송
+document.querySelector("#orderSubmit").addEventListener("click", function(){
+	document.querySelector("#orderForm").submit();
+})	
 
 
+//수량 변경 input 클릭시 옆에 합계 변함
 	$(function(){
 		/* console.log( '${cart}' ); */
 		
@@ -90,13 +124,35 @@ const ctx = "${pageContext.request.contextPath}";
 		})
 	})
 
-// 전송
-document.querySelector("#orderSubmit").addEventListener("click", function(){
-	document.querySelector("#orderForm").submit();
-})	 
+//수량 변경 버튼
+$(function(){
+	$('.countModifyButton').on('click', function(){ //버튼은 수량변경 안됨
+	
+			const cartId = $(this).data('cartId');
+			const count = $(this).parent('td').find('input').val();
+		
+			$('.modifyCartId').val(cartId);
+			$('.modifyCount').val(count);
+			$('.countModifyForm').submit();
+			//console.log(cartId);
+	
+	})
+	
+})
 
-
-
+//상품 삭제 버튼
+$(function(){
+	$('.itemDeleteButton').on('click', function(){ 
+	
+			const cartId = $(this).data('cartId');
+		
+			$('.deleteCartId').val(cartId);
+			$('.itemDeleteForm').submit();
+			//console.log(cartId);
+	
+	})
+	
+})
 
 </script>	
 </html>
