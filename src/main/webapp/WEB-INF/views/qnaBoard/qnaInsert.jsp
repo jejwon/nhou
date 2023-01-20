@@ -57,7 +57,7 @@
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 <section class="bg-light p-5">
-	<div class="container" ">
+	<div class="container" >
 		<h3>문의작성</h3>
 		<form action="" method="post">
 		<div class="selectCategory">
