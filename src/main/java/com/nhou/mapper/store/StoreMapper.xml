@@ -9,11 +9,11 @@
 	INSERT INTO product (productName, price, stock, member_userId, productCategory_categoryId)
 	VALUES (#{productName}, #{price}, #{stock}, #{member_userId}, #{productCategory_categoryId})
 	</insert>
-	
+
 	<insert id="insertFile">
-	update product 
- 	set 
- 		productImage = #{productImage},
+	UPDATE product 
+ 	SET 
+ 		productImage = #{productImage}
  	WHERE productId = #{product_productId}
 	</insert>
 	
@@ -39,11 +39,10 @@
 		p.price,
 		p.member_userId,
         p.productCategory_categoryId,
+        p.productImage,	
         pc.categoryName,
         m.nickName,
-        m.userId,
-        p.productImage	
-
+        m.userId
 	FROM 
 		product p LEFT JOIN member m ON p.member_userId = m.userId
 				  LEFT JOIN productCategory pc ON p.productCategory_categoryId = pc.categoryId
@@ -72,10 +71,12 @@
 		p.productId,
 		p.productName,
 		p.price,
+		p.productImage,		
 		pf.productFileName,
-		pf.productImage		
+		pi.chooseOption
 	FROM 
 		product p LEFT JOIN productFile pf ON p.productId = pf.product_productId
+				  LEFT JOIN productInfo pi ON p.productId = pi.product_productId
 	WHERE
 		p.productId = #{productId}	
 	</select>
