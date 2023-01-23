@@ -38,7 +38,7 @@ public class StoreService {
 			
 //		파일 저장
 //		store id 이름의 새 폴더 만들기
-			File folder = new File("C:\\Users\\user\\Desktop\\Study\\upload\\nhou\\store\\" + store.getProductId());
+			File folder = new File("C:\\Users\\fgsfs\\Desktop\\Study\\upload\\nhou\\store\\" + store.getProductId());
 			folder.mkdirs();
 			File dest = new File(folder, productFile1.getOriginalFilename());
 			try {
@@ -59,7 +59,7 @@ public class StoreService {
 					
 	//			파일 저장
 	//			store id 이름의 새 폴더 만들기
-					File folder = new File("C:\\Users\\user\\Desktop\\Study\\upload\\nhou\\store\\" + store.getProductId());
+					File folder = new File("C:\\Users\\fgsfs\\Desktop\\Study\\upload\\nhou\\store\\" + store.getProductId());
 					folder.mkdirs();
 					File dest = new File(folder, file.getOriginalFilename());
 					try {
