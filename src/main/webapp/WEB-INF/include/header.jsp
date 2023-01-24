@@ -166,7 +166,6 @@
 				<c:if test="${loggedIn }">
 					<li><a class="mp" href="/myPage/myPageList">MYPAGE</a></li>
 					<li><a class="lout" href="/member/logout" >LOGOUT</a></li>
-				</c:if>	
 					<li><a class="c" href="/cart/cartList">CART</a></li>
 				</c:if>	
 					<li><a class="co" href="/board/boardList">COMMUNITY</a></li>
