@@ -26,6 +26,11 @@ import com.nhou.domain.member.MemberDto;
 @RequestMapping("main")
 public class MainController {
 
+	@Autowired
+	private MainService mainService;
+	
+	@Autowired
+	private MemberService memberService;
 
 	
 	@GetMapping("list")
@@ -37,24 +42,19 @@ public class MainController {
 		model.addAttribute("member", member);
 }
 	
-	@Autowired
-	private MainService mainService;
-	
-	@Autowired
-	private MemberService memberService;
 	
 
 	// 메인 상품 리스트
-	@GetMapping("list")
-	public void list(Model model) {
-		
-		List<StoreDto> list = mainService.list();
-
-		model.addAttribute("list", list);
-		System.out.println("상품 리스트 출력" + list);
-		
-		
-	}
+	/*
+	 * @GetMapping("list") public void list(Model model) {
+	 * 
+	 * List<StoreDto> list = mainService.list();
+	 * 
+	 * model.addAttribute("list", list); System.out.println("상품 리스트 출력" + list);
+	 * 
+	 * 
+	 * }
+	 */
 	
 }
 
