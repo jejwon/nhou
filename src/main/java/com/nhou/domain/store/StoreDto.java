@@ -25,6 +25,7 @@ public class StoreDto {
 	private String productContents;  //DB에 새로 생성
 	private String color;
 	private String size;
+	private String chooseOption;
 	private int price;
 	private int stock;
 	private int star;

@@ -70,6 +70,7 @@
 	 			 </c:if>
 			</select>
 		</sec:authorize>
+
 		
 		<div class="form-floating" style="margin: 10px;">
 			<input type="text" readonly class="form-control" value="${member.userId }" id="userId" placeholder="ID"name="userId"> 

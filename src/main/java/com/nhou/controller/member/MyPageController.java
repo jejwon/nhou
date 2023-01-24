@@ -121,7 +121,9 @@ public class MyPageController {
 			rttr.addFlashAttribute("message", "암호가 일치하지 않습니다.");
 			return "redirect:/myPage/myPageModify";
 		
+
 		}
+
 		
 	}
 	

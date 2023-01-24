@@ -9,11 +9,11 @@
 	INSERT INTO product (productName, price, stock, member_userId, productCategory_categoryId)
 	VALUES (#{productName}, #{price}, #{stock}, #{member_userId}, #{productCategory_categoryId})
 	</insert>
-	
+
 	<insert id="insertFile">
-	update product 
- 	set 
- 		productImage = #{productImage},
+	UPDATE product 
+ 	SET 
+ 		productImage = #{productImage}
  	WHERE productId = #{product_productId}
 	</insert>
 	
@@ -102,6 +102,7 @@ FROM product p
 	<include refid="criteria"></include>
 	</if>
 </select>
+
 	
 <!-- 	<select id="Replylist">
 	SELECT
@@ -116,6 +117,7 @@ FROM product p
 		p.productId,
 		p.productName,
 		p.price,
+		p.productImage,		
 		pf.productFileName,
 		pf.productImage,
 		pc.categoryId,
@@ -126,6 +128,12 @@ FROM product p
 		product p LEFT JOIN productFile pf ON p.productId = pf.product_productId
 				  LEFT JOIN productCategory pc ON p.productCategory_categoryId = pc.categoryId
 			      LEFT JOIN member m ON p.member_userId = m.userId
+
+		<!-- pi.chooseOption
+	FROM 
+		product p LEFT JOIN productFile pf ON p.productId = pf.product_productId
+				  LEFT JOIN productInfo pi ON p.productId = pi.product_productId -->
+
 	WHERE
 		p.productId = #{productId}	
 	</select>

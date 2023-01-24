@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -32,6 +33,7 @@ public class CartController {
 	@Autowired
 	private MemberService memberService;
 	
+	
 	@GetMapping("cartInsert")
 	public void insert() {
 		
@@ -49,26 +51,33 @@ public class CartController {
 		return "redirect:/cart/cartList";
 	}
 	
-	@PostMapping("cartModify")
-	public String modify(CartDto cart, RedirectAttributes rttr) {
-		cartService.update(cart);
-		
-		return "redirect:/cart/cartList";
-	}
+	
+	 @PostMapping("cartModify") 
+	 public String modify(CartDto cart) { 
+		 cartService.update(cart);
+		 return "redirect:/cart/cartList"; // + cart.getMember_userId(); 
+	  }
+
 	
 	@GetMapping("cartGet")
-	public void get(@RequestParam(name="cartId") int cartId, Model model, Principal principal, MemberDto member) {
+	public void get(Model model, Principal principal, CartDto cart) {
 		String loginId = principal.getName();
-		CartDto cart = cartService.getByCartId(cartId);		
+		MemberDto member = memberService.getById(loginId);	
 		
 		member.setUserId(loginId);
 		
 		model.addAttribute("member", member);
+		
 		model.addAttribute("cart", cart);
+		
+		System.out.println(cart);
+
 	}
+
 	
-	@GetMapping("cartList")//"/{member_userId}") @RequestParam(name="member_userId") String member_userId, 
+	@GetMapping("cartList")
 	public void list(Model model, Principal principal) {
+		
 		String loginId = principal.getName();	
 		MemberDto  member = memberService.getById(loginId);
 		
@@ -76,9 +85,10 @@ public class CartController {
 		model.addAttribute("member", member);
 	 
 		model.addAttribute("cartList", list);
-		
 
 	}
+	
+	
 	
 	
 }
