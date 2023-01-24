@@ -40,37 +40,21 @@
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 <h1> 상품등록 페이지 </h1>
-
 	<!-- 카테고리명 선택 -->
 	<div class="container">
 		<form action="/store/storeRegister" method="post" enctype="multipart/form-data">
 			<div class="categorySelectBox">
 				<label for="categoryName">CategoryName</label>
 				<select class="form-select" name="productCategory_categoryId" id="productCategory_categoryId">
-					 <option value="1" name="furniture">Furniture</option>
-					 <option value="2" name="bedding">Bedding</option>
-					 <option value="3" name="Living&Fabric">Living&Fabric</option> 
-					 <option value="4" name="kitchen">Kitchen</option>
-					 <option value="5" name="deco">Deco</option>
-					 <option value="6" name="pets">Pets</option>
+					 <option value="1" name="FURNITURE">FURNITURE</option>
+					 <option value="2" name="BEDDING">BEDDING</option>
+					 <option value="3" name="LIVING&FABRIC"">LIVING&FABRIC</option> 
+					 <option value="4" name="KITCHEN">KITCHEN</option>
+					 <option value="5" name="DECO">DECO</option>
+					 <option value="6" name="PETS">PETS</option>
 				</select>
 			</div>
 				
-					
-		<!-- 옵션 -->    	
-			
-			Option1    	
-	        <div id="box1">
-	            <input type="text" name="color"> <input type="button" value="추가" onclick="add_textbox1()">
-	        </div>
-	    	
-	    	
-	    	Option2   	
-	        <div id="box2">
-	            <input type="text" name="size"> <input type="button" value="추가" onclick="add_textbox2()">
-	        </div>
-	    	
-			
 		<!-- 상품명 -->
 			<div class="mb-3">
 			  <label for="productName">ProductName</label>

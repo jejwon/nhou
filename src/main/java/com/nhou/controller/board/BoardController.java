@@ -76,6 +76,7 @@ public class BoardController {
 					PageInfo pageInfo, Model model) {
 		
 		List<BoardDto> list = boardService.listBoard(page, type, keyword, pageInfo, category); // service에 listBoard로 넘어감
+		/* System.out.println("게시물" + list); */
 		
 		model.addAttribute("boardList", list); // boardList라는 곳에 list를 담겠다
 	}

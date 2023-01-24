@@ -21,7 +21,9 @@ public class MemberDto {
 	private String password;
 	private String email;
 	private String nickName;
-	private String address;
+	private String address1;
+	private String address2;
+	private String postal;
 	private String phone;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")

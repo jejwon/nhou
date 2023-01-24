@@ -165,8 +165,8 @@
 				</c:if>
 				<c:if test="${loggedIn }">
 					<li><a class="mp" href="/myPage/myPageList">MYPAGE</a></li>
-				</c:if>	
 					<li><a class="lout" href="/member/logout" >LOGOUT</a></li>
+				</c:if>	
 					<li><a class="c" href="/cart/cartList">CART</a></li>
 					<li><a class="co" href="/board/boardList">COMMUNITY</a></li>
 				<c:if test="${loggedIn }">
@@ -175,11 +175,11 @@
 				<c:if test="${member.auth == 0 }">
 					<li><a class="info" href="/admin/memberInfo">MEMBER_INFO</a></li>
 				</c:if>
-				<c:if test="${member.auth == 1 }">
+				<c:if test="${member.auth == 2 }">
 					<c:url value="/myPage/mySellerList" var="mySellerListLink">
 						<c:param name="userId" value="${member.userId }"></c:param>
 					</c:url>
-					<li><a href="${mySellerListLink }">DASHBOARD</a></li>
+					<li><a class="dash" href="${mySellerListLink }">DASHBOARD</a></li>
 				</c:if>
 				</ul>
 			</div>

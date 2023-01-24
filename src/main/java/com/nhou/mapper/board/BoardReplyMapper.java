@@ -3,6 +3,7 @@ package com.nhou.mapper.board;
 import java.util.List;
 
 import com.nhou.domain.board.BoardReplyDto;
+import com.nhou.domain.member.MemberDto;
 
 public interface BoardReplyMapper {
 
@@ -22,6 +23,9 @@ public interface BoardReplyMapper {
 
 	// 댓글 수정하기
 	int update(BoardReplyDto reply);
+
+	// 회원탈퇴하면서 댓글 삭제
+	int deleteByMemberId(String member_userId);
 
 	
 	

@@ -32,7 +32,7 @@ public class MainController {
 	@GetMapping("list")
 	public void list(Model model) {
 		
-		List<StoreDto> list = mainService.listBoard();
+		List<StoreDto> list = mainService.list();
 
 		model.addAttribute("list", list);
 		System.out.println("상품 리스트 출력" + list);
