@@ -12,11 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nhou.domain.store.StoreDto;
+import com.nhou.domain.store.Criteria;
 import com.nhou.mapper.store.StoreMapper;
 import com.nhou.mapper.store.StoreReviewMapper;
 
 
 @Service
+@Transactional
 public class StoreService {
 
 	@Autowired
@@ -25,7 +27,7 @@ public class StoreService {
 	@Autowired
 	private StoreReviewMapper storeReviewMapper;
 	
-	@Transactional
+	
 	public int register(StoreDto store, MultipartFile productFile1, MultipartFile[] productFile2) {
 //		db에 게시물 정보 저장
 //		System.out.println("service =============> "+store);
@@ -76,10 +78,36 @@ public class StoreService {
 
 	}
 
-
-	public List<StoreDto> listStore() {
-		return storeMapper.list(); 	
-	}
+	// 스토어 리스트 페이징 + 카테고리 분류
+	/*
+	 * public List<StoreDto> listStore(int page, String type, String keyword,
+	 * StorePageInfo StorePageInfo, String category) { int records = 5; // 글 갯수 int
+	 * offset = (page - 1) * records; // 페이지수
+	 * 
+	 * int countAll = storeMapper.countAll(type, "%" + keyword + "%"); // SELECT
+	 * Count(*) FROM product int lastPage = (countAll - 1) / records + 1;
+	 * 
+	 * int leftPageNum = (page - 1) / 5 * 5 + 1; int rightPageNum = leftPageNum + 4;
+	 * rightPageNum = Math.min(rightPageNum, lastPage);
+	 * 
+	 * // 이전버튼 유무 boolean hasPreBtn = page > 5; // 다음버튼 유무 boolean hasNextBtn = page
+	 * <= ((lastPage - 1) / 5 * 5);
+	 * 
+	 * // 이전버튼 눌렀을 때 가는 페이지 번호 int jumpPrePageNum = (page - 1) / 5 * 5 - 4; int
+	 * jumpNextPageNum = (page - 1) / 5 * 5 + 6;
+	 * 
+	 * StorePageInfo.setHasPreBtn(hasPreBtn);
+	 * StorePageInfo.setHasNextBtn(hasNextBtn);
+	 * StorePageInfo.setJumpNextPageNum(jumpNextPageNum);
+	 * StorePageInfo.setJumpPrePageNum(jumpPrePageNum);
+	 * StorePageInfo.setRightPageNum(rightPageNum);
+	 * StorePageInfo.setLeftPageNum(leftPageNum);
+	 * StorePageInfo.setCurrentPageNum(page);
+	 * StorePageInfo.setLastPageNum(lastPage);
+	 * 
+	 * return storeMapper.list(offset, records, type, "%" + keyword + "%",
+	 * category); }
+	 */
 
 
 	public StoreDto get(int productId) {
@@ -101,6 +129,32 @@ public class StoreService {
 		return storeMapper.delete(productId);
 		
 	}
+
+	/*
+	 * public List<StoreDto> listStore(String type, String keyword, String
+	 * categoryName) { // TODO Auto-generated method stub int counAll =
+	 * storeMapper.countAll(type, "%" + keyword + "%");
+	 * 
+	 * return storeMapper.list(type, "%" + keyword + "%", categoryName); }
+	 */
+
+	// 리스트
+	public List<StoreDto> listStore(Criteria cri, String category) {
+	
+		System.out.println("list Criteria" + cri);
+		
+		int offset = (cri.getPageNum() - 1) * cri.getAmount();
+		int records = cri.getAmount();
+		System.out.println(cri.getType());
+		
+		return storeMapper.getListWithPaging(cri, offset, records, category);
+	}
+
+	public int getTotal(Criteria cri) {
+		// TODO Auto-generated method stub
+		return storeMapper.getTotalCount(cri, 134);
+	}
+
 
 
 }

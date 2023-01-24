@@ -85,7 +85,9 @@
 	  </li>
 	
       <li>
-      	<c:url value="/seller/orderListByUser" var="orderListLink"></c:url>
+      	<c:url value="/seller/sellerList" var="orderListLink">
+      		<c:param name="s" value=""></c:param>
+      	</c:url>
       		<a href="${orderListLink }">
       			<span>판매 현황</span>
       		</a>

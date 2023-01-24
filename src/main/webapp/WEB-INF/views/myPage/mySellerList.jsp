@@ -47,7 +47,7 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${sellerList.userSellList }" var="sellList">
-						<c:url value="/store/storeList" var="getLink">
+						<c:url value="/store/storeGet" var="getLink">
 							<c:param name="productId" value="${sellList.productId }"></c:param>
 						</c:url>
 							<tr onclick="location.href='${getLink}'">

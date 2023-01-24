@@ -23,28 +23,31 @@
       		<h1 style="margin-bottom: 10px;">${member.userId }님의 판매 현황</h1>
 				<input type="text" name="userId" value="${member.userId }" readonly="readonly">    	</div>
     	
-    	<!-- 리스트 -->
+    	<!-- 주문 현황 리스트 -->
     	<div class="productList">
 			<table class="table table-hover container">
 				<thead>
 					<tr scope="row">
 						<th>#</th>
 						<th>상품명</th>
-						<th>수량</th>
+						<th>주문수량</th>
 						<th>가격</th>
-						<th>합계</th>
 						<th>배송상태</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${list.sellerByUserList }" var="orderList">
-						<c:url value="/myPage/mySellerList" var="getLink">
-							<c:param name="userId" value="${orderList.userId }"></c:param>
+					<c:forEach items="${sellerList}" var="list">
+						<c:url value="/store/storeGet" var="sellingList">
+							<c:param name="orderListId" value="${sellingList.orderListId }"></c:param>
 						</c:url>
-							<tr onclick="location.href='${getLink}'">
-							<td>${orderList.orderListId }</td>
-							</tr>
-					</c:forEach>
+						<tr>
+							<td>${list.orderListId }</td>
+							<td>${list.productName }</td>
+							<td>${list.count }</td>
+							<td>${list.payment }</td>
+							<td>${list.orderStatus }</td>
+						</tr>
+					</c:forEach>				
 				</tbody>
 			</table>
     	</div>
