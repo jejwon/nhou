@@ -5,8 +5,8 @@
 <mapper namespace="com.nhou.mapper.cart.CartMapper">
 	<!-- 장바구니 추가 -->
 	<insert id="insert">
-	INSERT INTO cart (product_productId, member_userId, count) 
-	VALUES (#{product_productId}, #{member_userId}, #{count})
+	INSERT INTO cart (product_productId, member_userId, count, option) 
+	VALUES (#{product_productId}, #{member_userId}, #{count}, #{option})
 	</insert>
 	
 	<!-- 장바구니 삭제 -->
@@ -35,7 +35,7 @@
 			LEFT JOIN productInfo pi ON c.product_productId = pi.product_productId
 	</select>
 	
-	<!-- 카트 확인 -->
+	<!-- 카트 중복 수량 확인 -->
 	<!-- <select id="getByUserId" resultType="com.nhou.domain.cart.CartDto">
 		SELECT * FROM cart 
 		WHERE member_userId = #{member_userId} and cartId = #{cartId}		
@@ -47,6 +47,7 @@
 		c.product_productId,
 		c.member_userId,
 		c.count,
+		c.option,
 		p.productName,
 		p.price
 	FROM cart c

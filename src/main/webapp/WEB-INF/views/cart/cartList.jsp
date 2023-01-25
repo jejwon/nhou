@@ -23,7 +23,7 @@
 
 <h1> ${member.userId}의 장바구니</h1>
 	
-<form action="/cart/cartGet" id="orderForm">
+<form action="/cart/pay" id="orderForm">
 	<div class="container">
 				
 		<div class="wholeCartList"></div> 

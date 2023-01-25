@@ -14,10 +14,11 @@ public class CartDto {
 
 	//product
 	private String productName;
-	private String color;
-	private String size;
+
 	private int price;
 	private int stock;
+	
+	private String option;
 	
 	//추가
 	private int totalPrice;
