@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,10 +35,8 @@ public class CartController {
 	private MemberService memberService;
 	
 	
-	@GetMapping("cartInsert")
-	public void insert() {
-		
-	}
+	
+	@ResponseBody//자바 객체를 HTTP 응답 본문의 객체로 변환
 	@PostMapping("cartInsert")
 	public void insert(CartDto cart) {
 		cartService.insert(cart);

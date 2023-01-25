@@ -6,8 +6,8 @@
 <mapper namespace="com.nhou.mapper.store.StoreMapper">
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="productId">
-	INSERT INTO product (productName, price, stock, member_userId, productCategory_categoryId)
-	VALUES (#{productName}, #{price}, #{stock}, #{member_userId}, #{productCategory_categoryId})
+	INSERT INTO product (productName, price, stock, member_userId, productCategory_categoryId, content)
+	VALUES (#{productName}, #{price}, #{stock}, #{member_userId}, #{productCategory_categoryId}, #{content})
 	</insert>
 
 	<insert id="insertFile">
@@ -117,7 +117,8 @@ FROM product p
 		p.productId,
 		p.productName,
 		p.price,
-		p.productImage,		
+		p.productImage,	
+		p.content,	
 		pf.productFileName,
 		pf.productImage,
 		pc.categoryId,
@@ -143,11 +144,15 @@ FROM product p
 		<result column="productName" property="productName"></result>
 		<result column="price" property="price"></result>
 		<result column="productImage" property="productImage"></result>
+
+		<result column="content" property="content"></result>
+
 		<result column="categoryId" property="categoryId"></result>
 		<result column="member_userId" property="member_userId"></result>
 		<result column="nickName" property="nickName"></result>
 		<result column="stock" property="stock"></result>
 		<result column="categoryName" property="categoryName"></result>
+
 		<collection property="productFileName" ofType="string" >
 			<result column="productFileName" property="productFileName"></result>
 		</collection>
@@ -159,6 +164,7 @@ FROM product p
 		productId = #{productId}, 
 		productName = #{productName}, 
 		price = #{price}, 
+		content = #{content},
 		stock = #{stock}
 	WHERE
 		productId = #{productId}

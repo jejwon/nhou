@@ -60,7 +60,7 @@
 								<td>${cart.productName}</td>
 								<td><input type="text"   name="price" value="${cart.price}">원</td>
 								<td>
-								<input type="number" name="count" min="1" max="100" value="${cart.count }"> 
+								<input type="number" name="count" min="1" max="10" value="${cart.count }"> 
 								<a class="countModifyButton" data-cart-id="${cart.cartId}">변경</a>
 								</td> <!-- 수량 조절 -->
 								<td>

@@ -36,6 +36,7 @@
 		
 					<br>
 		
+					<!-- 
 					옵션1
 					<select class="form-select" aria-label="Default select example">
 						<option selected>색상</option>
@@ -53,17 +54,39 @@
 						<option value="2">Two</option>
 						<option value="3">Three</option>
 					</select>
+					 -->
+					<br>
+					<div class="mb-3">
+					  <label for="productContents">Textarea</label>
+					  <textarea class="form-control" id="Contents" rows="3" name="content" readonly>${store.content }</textarea>
+					</div>
 					
 					<br>
+					수량
+					<select class="form-select" aria-label="Default select example" name="count">
+					  <option selected>수량 선택</option>
+					  <option value="1">1</option>
+					  <option value="2">2</option>
+					  <option value="3">3</option>
+					  <option value="4">4</option>
+					  <option value="5">5</option>
+					  <option value="6">6</option>
+					  <option value="7">7</option>
+					  <option value="8">8</option>
+					  <option value="9">9</option>
+					  <option value="10">10+ 문의 주세요</option>
+					</select>
 					
+					<br>				
 					<div class="mb-3">
 						<label for="chooseOption">Option</label>
   						<input type="text" class="form-control" name="chooseOption" id="chooseOption" placeholder="색상/사이즈" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 					</div>
 		
-		
+					
 					<br>
-		
+					<input type="text" name="price" value="${store.price }" readonly>
+					<input type="text" name="sum" value="${store.price }" readonly>
 					<h5 class="selling-price" readonly>
 						<span class="price_left" style="text-align-last: left;">주문금액</span>
 						<span class="price_right" style="text-align-last: right;">
@@ -73,9 +96,11 @@
 					</h5>
 		
 					<br>
-		
-					<button type="button" class="btn btn-outline-primary btn-lg" style="width: 250px; height: 55px;">장바구니</button>
-					<button type="button" class="btn btn-primary btn-lg" style="width: 250px; height: 55px;">바로구매</button>
+					<input type="hidden" value="${member.userId }" name="member_userId">
+					<input type="hidden" value="${store.productId }" name="product_productId">			
+					<button id="putCart" type="button" class="btn btn-outline-primary btn-lg" style="width: 250px; height: 55px;">장바구니</button>			
+					
+					<a href="/cart/pay"><button type="button" class="btn btn-primary btn-lg" style="width: 250px; height: 55px;">바로구매</button></a>
 		
 					</div>					
 				</div>					
@@ -106,7 +131,7 @@
 					<p>따뜻해요!</p>
 				  </div>
 				</div>		
-			</div>
+	
 		
 			<!-- 수정 버튼 -->
 			<c:url value="/store/storeModify" var="modifyLink">
@@ -180,8 +205,52 @@
 			</div>						
 		
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
 const ctx = "${pageContext.request.contextPath}";
+
+//장바구니 버튼 누르면 모달창 열림
+//document.querySelector("#putCart").addEventListener("click", function(){ })
+
+//장바구니에 들어갈 정보
+const cart = {
+		member_userId : $('input[name=member_userId]').val(),
+		product_productId : $('input[name=product_productId]').val(),
+		count : ''
+}
+//장바구니 버튼 누르고 담기
+$('#putCart').on('click', function(){
+	 //console.log(cart);
+	 cart.count = $('select[name=count]').val();
+//장바구니 추가를 요청하는 ajax 코드
+	$.ajax({
+		url: '/cart/cartInsert', //호출할 url 
+		dataType: 'JSON',
+		type: 'POST', //url 호출 할 방법(GET, POST, PATCH 등)
+		data: cart, //서버로 보낼 데이터
+		success: function(){
+			//서버가 요청을 성공적으로 수행했을 때 수행될 메소드, 파라미터는 서버가 반환한 값
+		}
+
+	})
+	
+}) 
+
+
+//수량 input 클릭시 옆에 합계 변함
+	$(function(){
+		
+		$('select[name=count]').on('click', function(){
+			const count = $('select[name=count]').val();
+			const price = $('input[name=price]').val();
+			const sum = count * price;
+			
+			$('input[name=sum]').prop('value', sum);
+			
+			
+		})
+	})
+
 
 listReview();
 

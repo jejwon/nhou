@@ -55,6 +55,23 @@
 				</select>
 			</div>
 				
+
+					
+		<!-- 옵션 -->    	
+		<!-- 
+			Option1    	
+	        <div id="box1">
+	            <input type="text" name="color"> <input type="button" value="추가" onclick="add_textbox1()">
+	        </div>
+	    	
+	    	
+	    	Option2   	
+	        <div id="box2">
+	            <input type="text" name="size"> <input type="button" value="추가" onclick="add_textbox2()">
+	        </div>
+	    	 -->	
+			
+
 		<!-- 상품명 -->
 			<div class="mb-3">
 			  <label for="productName">ProductName</label>
@@ -65,7 +82,7 @@
 		<!-- 상품상세 -->
 			<div class="mb-3">
 			  <label for="productContents">Textarea</label>
-			  <textarea class="form-control" id="Contents" rows="3" name="productContents"></textarea>
+			  <textarea class="form-control" id="Contents" rows="3" name="content"></textarea>
 			</div>
 		
 			
