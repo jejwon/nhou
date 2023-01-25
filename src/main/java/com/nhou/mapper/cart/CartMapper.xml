@@ -29,9 +29,7 @@
 		c.member_userId,
 		c.count,
 		p.productName,
-		p.price,
-		pi.size,
-		pi.color
+		p.price
 	FROM cart c
 			LEFT JOIN product p ON c.product_productId = p.productId
 			LEFT JOIN productInfo pi ON c.product_productId = pi.product_productId
@@ -50,9 +48,7 @@
 		c.member_userId,
 		c.count,
 		p.productName,
-		p.price,
-		pi.size,
-		pi.color
+		p.price
 	FROM cart c
 			LEFT JOIN product p ON c.product_productId = p.productId
 			LEFT JOIN productInfo pi ON c.product_productId = pi.product_productId

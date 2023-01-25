@@ -30,6 +30,8 @@ public class StoreDto {
 	private int stock;
 	private int star;
 	
+	private String content;
+	
 	private String member_userId;
 	private String nickName;
 	private String userId;

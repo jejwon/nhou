@@ -87,7 +87,10 @@ public class StoreController {
 	  
 	  
 	  @GetMapping("storeGet") 
-	  public void get(int productId, Model model) { 
+	  public void get(int productId, Model model, Principal principal, MemberDto member) { 
+		  String loginId = principal.getName();
+		  member.setUserId(loginId);
+		  
 		  // Request param 생략가능
 	  
 		  // Business logic 
@@ -97,6 +100,7 @@ public class StoreController {
 		  System.out.println(store);
 	  
 		  //add attr to model 
+		  model.addAttribute("member", member);
 		  model.addAttribute("store", store);
 	  
 		  // forward
