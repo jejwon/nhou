@@ -12,20 +12,12 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
-	<h1> ${member.userId}의 장바구니</h1>
 	
 	<div class="container">
-				
-		<div class="wholeCartList"></div> 
-		
-		<!-- 장바구니 리스트 -->
-		<div class="wholeCartPrice"></div>
-		<!-- 장바구니 가격 합계 -->
+	<h1> ${member.userId}의 장바구니</h1>
 	
-		<!-- 장바구니 정보 -->
-	
-		<div class="wholeCartCount">
-			<table>
+			<h1>주문 상품 정보</h1>
+			<table>			
 				<thead>
 					<tr>
 						<th>#</th>
@@ -38,7 +30,7 @@
 				</thead>
 			
 				<tbody id="itemContainer">
-				
+				<c:set var = "total" value = "0" />
 					<c:forEach items="${cartList }" var="cart" varStatus="status">
 					
 						<c:if test="${member.userId == cart.member_userId }">
@@ -55,18 +47,65 @@
 								<td>
 								<input type="text" name="sum" value="${cart.price * cart.count}" readonly>
 								</td>
-							
-							</tr>	
+								
+							</tr>
+							<c:set var= "total" value="${total + cart.price * cart.count}"/>	
 						</c:if>	
 					</c:forEach>
 
 				</tbody>	 
 		
 			</table>
+			
+			<h1>배송 정보</h1>
+			
+		<table>			
+				<tr>
+					<td>주문인</td>	
+					<td>${member.userName }</td>					
+				</tr>		
+				<tr>
+					<td>기본 배송지/변경 전 값</td>	
+					<td>
+					<input type="text" value="${member.postal}" name="postal">
+					<input type="text" value="${member.address1 }" name="address1">
+					<input type="text" value="${member.address2 }" name="address2">
+					</td>					
+				</tr>
+				<tr>
+					<td>배송지변경</td>	
+					<td>주소 api 넣어주세요</td>					
+				</tr>
+				
+				<tr>
+					<td>전화번호</td>	
+					<td><input type="text" value="${member.phone }" name="receivePhone"></td>					
+				</tr>
+				<tr>
+					<td>이메일</td>	
+					<td>${member.email }</td>					
+				</tr>		
+		</table>
+			
 		</div>		
 
-</div>
+		<h1>합계</h1>	
+			<div>
+				배송비: 무료배송
+			</div>
+			<div>
+				최종결제금액: <input type="text" name="payment" value="<c:out value="${total}"/>">
+			</div>
+
+	
+		<form action=""></form>
+		<a href="">주문하기</a>
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </body>
+<script>
+const ctx = "${pageContext.request.contextPath}";
+
+</script>
 </html>

@@ -4,6 +4,7 @@ package com.nhou.mapper.cart;
 import java.util.List;
 
 import com.nhou.domain.cart.CartDto;
+import com.nhou.domain.order.OrderDto;
 
 public interface CartMapper {
 
@@ -16,4 +17,6 @@ public interface CartMapper {
 	CartDto getByCartId(int cartId);
 
 	List<CartDto> list(String member_userId);
+
+	int payInsert(OrderDto order);
 }

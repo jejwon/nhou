@@ -9,7 +9,7 @@
 	VALUES (#{product_productId}, #{member_userId}, #{count}, #{option})
 	</insert>
 	
-	<!-- 장바구니 삭제 -->
+	<!-- 결제 이전 장바구니 개별 삭제 -->
 	<delete id="delete">
 	DELETE FROM cart 
 	WHERE cartId = #{cartId}
@@ -32,7 +32,6 @@
 		p.price
 	FROM cart c
 			LEFT JOIN product p ON c.product_productId = p.productId
-			LEFT JOIN productInfo pi ON c.product_productId = pi.product_productId
 	</select>
 	
 	<!-- 카트 중복 수량 확인 -->
@@ -52,6 +51,13 @@
 		p.price
 	FROM cart c
 			LEFT JOIN product p ON c.product_productId = p.productId
-			LEFT JOIN productInfo pi ON c.product_productId = pi.product_productId
 	</select>
+	
+	<!-- 결제 정보 담기 -->
+	<insert id="payInsert">
+	INSERT INTO order (orderDate, address1, address2, postal, receiverName, receiverPhone, payment, status, member_userId) 
+	VALUES (#{orderDate}, #{address1}, #{address2}, #{postal}, #{receiverName}, #{receiverPhone}, #{payment}, #{status}, #{member_userId})
+	</insert>
+	
+	
 </mapper>

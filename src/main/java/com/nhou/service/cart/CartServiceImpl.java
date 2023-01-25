@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nhou.domain.cart.CartDto;
+import com.nhou.domain.order.OrderDto;
 import com.nhou.mapper.cart.CartMapper;
 
 @Service
@@ -38,5 +39,10 @@ public class CartServiceImpl implements CartService{
 	@Override
 	public List<CartDto> list(String member_userId) {
 		return cartMapper.list(member_userId);
+	}
+	
+	@Override
+	public int payInsert(OrderDto order) {
+		return cartMapper.payInsert(order);
 	}
 }
