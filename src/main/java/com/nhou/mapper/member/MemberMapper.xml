@@ -6,9 +6,9 @@
  <!-- 회원가입 정보 저장 -->
  <insert id="insertMember">
  INSERT INTO member 
- (userId, userName, password, nickName, email, birthDate, address, phone)
+ (userId, userName, password, nickName, email, birthDate, address1, address2, postal, phone)
  VALUES
- (#{userId}, #{userName}, #{password}, #{nickName}, #{email}, #{birthDate}, #{address}, #{phone})
+ (#{userId}, #{userName}, #{password}, #{nickName}, #{email}, #{birthDate}, #{address1}, #{address2}, #{postal}, #{phone})
 </insert>
 <!--회원 목록 보기 -->
 <select id="selectById" resultMap="memberMap">
@@ -19,7 +19,9 @@
 		nickName, 
 		email, 
 		birthDate, 
-		address, 
+		address1,
+		address2,
+		postal,
 		phone,
 		auth
 	FROM
@@ -35,7 +37,9 @@
 		<result column="nickName" property="nickName"/>
 		<result column="email" property="email"/>
 		<result column="birthDate" property="birthDate"/>
-		<result column="address" property="address"/>
+		<result column="address1" property="address1"/>
+		<result column="address2" property="address2"/>
+		<result column="postal" property="postal"/>
 		<result column="phone" property="phone"/>
 		<result column="auth" property="auth"/>
 	</resultMap>
@@ -58,17 +62,32 @@
 	<update id="update">
 	UPDATE member
 	SET 
-		userName = #{userName}, 
-	<!-- 	password = #{password},  비밀번호 암호화 설정 --> 
+		userName = #{userName},
+		<!-- <if test="password != null">
+	    password = #{password}
+		</if>-->
 		nickName = #{nickName}, 
 		email = #{email}, 
-		address = #{address}, 
+		address1 = #{address1}, 
+		address2 = #{address2}, 
+		postal = #{postal}, 
 		phone = #{phone},
 		auth = #{auth}
 	WHERE 
 		userId = #{userId}	
 		
 	</update>
+	
+<!-- 회원탈퇴 -->
+<delete id="deleteById">
+DELETE 
+FROM 
+	member 
+WHERE 
+	userId = #{userId}
+AND
+	password = #{password}
+</delete>
 
 <!-- 판매자 판매목록 가져오기 -->
 <select id="getUserSellList" resultMap="userSellerMap">
@@ -101,5 +120,18 @@ ORDER BY
 	<result column="stock" property="stock"/>
 	<result column="price" property="price"/>
 </resultMap>
+
+<!-- 유저정보 중복검사 -->
+<select id="selectByuserId" resultType="com.nhou.domain.member.MemberDto">
+SELECT * FROM member WHERE userId = #{userId}
+</select>
+
+<select id="selectyByNickName" resultType="com.nhou.domain.member.MemberDto">
+SELECT * FROM member WHERE nickName = #{nickName}
+</select>
+
+<select id="selectByEmail" resultType="com.nhou.domain.member.MemberDto">
+SELECT * FROM member WHERE email  = #{email}
+</select>
 
  </mapper>

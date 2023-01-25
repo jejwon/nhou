@@ -4,81 +4,12 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nhou.mapper.main.MainMapper">
 
-<!-- <select id="listMainByCategoryId" resultMap="listByMap">
-SELECT *
-FROM 
-	product p LEFT JOIN productCategory pc ON p.productCategory_categoryId = pc.categoryId
-WHERE pc.categoryId = #{categoryId}
-ORDER BY p.productId DESC
-</select>
 
-<resultMap type="com.nhou.domain.main.MainDto" id="listByMap">
-	<id column="productId" property="productId"></id>
-	<result column="productCategory_categoryId"/>
-	<collection property="categoryMainList" resultMap="categoryMainList"></collection>
-</resultMap>
-
-<resultMap type="com.nhou.domain.store.StoreDto" id="categoryMainList">
-	<result column="categoryId" property="categoryId"/>
-	<result column="categoryName" property="categoryName"/>
-</resultMap>
- -->
-<select id="list" resultMap="listMap">
+<select id="list" resultType="com.nhou.domain.main.MainDto">
 SELECT
-	p.productId,
-    p.productName,
-    p.price,
-    p.insertDatetime,
-    p.member_userId,
-    pi.color,
-    pi.size,
-    pc.categoryId,
-    pc.categoryName
-FROM 
-	product p LEFT JOIN productCategory pc ON p.productCategory_categoryId = pc.categoryId
-			  LEFT JOIN productInfo pi ON p.productId = pi.product_productId
-WHERE pc.categoryId = #{categoryId}
-ORDER BY p.productId DESC
+	*
+FROM
+	product
 </select>
 
-<resultMap type="com.nhou.domain.main.MainDto" id="listMap">
-	<id column="productId" property="productId"></id>
-	<result column="productCategory_categoryId" property="productCategory_categoryId"/>
-	<result column="productName" property="productName"/>
-	<result column="price" property="price"/>
-	<result column="insertDatetime" property="insertDatetime"/>
-	<result column="member_userId" property="member_userId"/>
-	<result column="color" property="color"/>
-	<result column="size" property="size"/>
-	<result column="categoryId" property="categoryId"/>
-	<result column="categoryName" property="categoryName"/>
-</resultMap>
-
-<!-- 카테고리 리스트 -->
-<select id="cateList" resultType="com.nhou.domain.main.CategoryDto">
-SELECT * FROM productCategory
-</select>
-
-<!-- 상품 총개수 -->
-<select id="getTotal" resultType="int">
-SELECT COUNT(*) FROM product
-</select>
-
-<!-- -->
-<select id="listByCategoryId" resultType="com.nhou.domain.main.MainDto">
-SELECT
-	p.productId,
-    p.productName,
-    p.price,
-    p.insertDatetime,
-    p.member_userId,
-    pi.color,
-    pi.size,
-    pc.categoryId,
-    pc.categoryName
-FROM 
-	product p LEFT JOIN productCategory pc ON p.productCategory_categoryId = pc.categoryId
-			  LEFT JOIN productInfo pi ON p.productId = pi.product_productId
-WHERE pc.categoryId = #{categoryId}
-</select>
 </mapper>

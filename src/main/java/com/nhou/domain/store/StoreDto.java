@@ -35,7 +35,7 @@ public class StoreDto {
 	private String member_userId;
 	private String nickName;
 	private String userId;
-	private int orderStatus; // 0 주문완료 / 1 배송대기 / 2 배송완료
+	private int orderStatus; 
 	
 	private int productCategory_categoryId;
 	

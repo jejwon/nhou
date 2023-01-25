@@ -3,6 +3,7 @@ package com.nhou.mapper.board;
 import java.util.List;
 
 import com.nhou.domain.board.BoardDto;
+import com.nhou.domain.member.MemberDto;
 
 public interface BoardMapper {
 	
@@ -57,4 +58,8 @@ public interface BoardMapper {
 
 	// 좋아요 카운트
 	int updateViewCount(int boardId);
+	
+	// 회원탈퇴하면서 좋아요삭제
+	int deleteLikeByMemberId(String userId);
+	
 }

@@ -32,31 +32,77 @@
 	VALUES (#{productInfoId}, #{productContents}, #{color}, #{size})
 	</insert>-->
 
-	<select id="list" resultType="com.nhou.domain.store.StoreDto">
-	SELECT
-		p.productId,
-		p.productName,
-		p.price,
-		p.member_userId,
-        p.productCategory_categoryId,
-        p.productImage,	
-        pc.categoryName,
-        m.nickName,
-        m.userId
-	FROM 
-		product p LEFT JOIN member m ON p.member_userId = m.userId
-				  LEFT JOIN productCategory pc ON p.productCategory_categoryId = pc.categoryId
-	ORDER BY productId DESC;	
-	</select>
-	
-	<!-- <select id="list" resultType="com.nhou.domain.store.StoreDto">
-	SELECT
-		productId,
-		productName,
-		price
-	FROM product
-	ORDER BY productId DESC;	
-	</select> -->
+<!-- 리스트 목록 -->
+<select id="list" resultType="com.nhou.domain.store.StoreDto" >
+SELECT *
+FROM
+	product
+ORDER BY productId DESC
+</select>
+
+<!-- 검색 조건 -->
+<sql id="criteria">
+and
+	<trim prefix="(" suffix=")" prefixOverrides="OR">
+		<foreach item='type' collection="cri.typeArr">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'P'.toString()">
+						p.productName LIKE #{cri.keyword}
+					</when>
+					<when test="type == 'M'.toString()">
+						p.member_userId LIKE #{cri.keyword}
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+</sql>
+
+<!-- 페이지네이션 검색 카테고리 -->
+<select id="getListWithPaging" resultType="com.nhou.domain.store.StoreDto">
+SELECT
+	p.productId,
+	p.productName,
+	p.member_userId,
+	p.price,
+	p.stock,
+	p.insertDatetime,
+	p.productCategory_categoryId,
+	m.nickName,
+	pc.categoryName
+FROM 
+	product p LEFT JOIN member m ON p.member_userId = m.userId
+			  LEFT JOIN productCategory pc ON p.productCategory_categoryId = pc.categoryId
+WHERE 1=1
+<!-- 검색조건 -->
+<if test="cri.type!=null and cri.type!=''">
+	<include refid="criteria"></include>
+</if>
+<!-- 카테고리 필터링 -->
+<if test ="category !=null and category != ''">
+	and pc.categoryName = #{category}
+</if>
+
+GROUP BY p.productId
+ORDER BY p.productId DESC
+LIMIT #{offset}, #{records}	  
+</select>
+
+
+<!-- 전체 페이지 아이템수 -->
+<select id="getTotalCount" resultType="int">
+SELECT COUNT(*)
+FROM product p
+	<!-- 검색조건 호출 -->
+	WHERE 1=1
+	<if test="cri.type!=null and cri.type!=''">
+	<![CDATA[
+	]]>
+	<include refid="criteria"></include>
+	</if>
+</select>
+
 	
 <!-- 	<select id="Replylist">
 	SELECT
@@ -74,10 +120,21 @@
 		p.productImage,	
 		p.content,	
 		pf.productFileName,
-		pi.chooseOption
+		pf.productImage,
+		pc.categoryId,
+		pc.categoryName,
+		m.nickName,
+		p.stock
 	FROM 
 		product p LEFT JOIN productFile pf ON p.productId = pf.product_productId
-				  LEFT JOIN productInfo pi ON p.productId = pi.product_productId
+				  LEFT JOIN productCategory pc ON p.productCategory_categoryId = pc.categoryId
+			      LEFT JOIN member m ON p.member_userId = m.userId
+
+		<!-- pi.chooseOption
+	FROM 
+		product p LEFT JOIN productFile pf ON p.productId = pf.product_productId
+				  LEFT JOIN productInfo pi ON p.productId = pi.product_productId -->
+
 	WHERE
 		p.productId = #{productId}	
 	</select>
@@ -87,7 +144,15 @@
 		<result column="productName" property="productName"></result>
 		<result column="price" property="price"></result>
 		<result column="productImage" property="productImage"></result>
+
 		<result column="content" property="content"></result>
+
+		<result column="categoryId" property="categoryId"></result>
+		<result column="member_userId" property="member_userId"></result>
+		<result column="nickName" property="nickName"></result>
+		<result column="stock" property="stock"></result>
+		<result column="categoryName" property="categoryName"></result>
+
 		<collection property="productFileName" ofType="string" >
 			<result column="productFileName" property="productFileName"></result>
 		</collection>
@@ -109,5 +174,21 @@
 	DELETE FROM product
 	WHERE productId = #{productId}
 	</delete>
+
+<!-- 상품 리스트 총 갯수 -->
+<select id="countAll" resultType="int">
+SELECT COUNT(*) FROM product
+WHERE
+	<trim prefixOverrides="OR">
+		<if test="type == 'all' or type == 'productName'">
+			productName LIKE #{keyword}
+		</if>
+		
+		<if test="type == 'all' or type == 'nickName'">
+			OR member_userId LIKE #{keyword}
+		</if>
+	</trim>
+
+</select>
 
 </mapper>

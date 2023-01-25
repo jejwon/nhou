@@ -194,4 +194,14 @@ UPDATE board
 SET viewCount = viewCount + 1
 WHERE boardId = #{boardId}
 </update>
+
+<!-- 회원탈퇴하면서 좋아요 삭제 -->
+<delete id="deleteLikeByMemberId">
+DELETE 
+FROM 
+boardLike 
+WHERE member_userId = #{member_userId}
+</delete>
+
+
 </mapper>
