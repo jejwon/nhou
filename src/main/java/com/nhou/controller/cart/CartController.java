@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhou.domain.cart.CartDto;
 import com.nhou.domain.member.MemberDto;
+import com.nhou.domain.order.OrderDto;
 import com.nhou.service.cart.CartService;
 import com.nhou.service.member.MemberService;
 
@@ -82,8 +83,15 @@ public class CartController {
 	}
 	
 	@PostMapping("pay")
-	public void pay() {
+	public void pay(Model model, Principal principal, OrderDto order) {
+		String loginId = principal.getName();
+		MemberDto  member = memberService.getById(loginId);
 		
+		model.addAttribute("member", member);
+		
+		cartService.payInsert(order);
+		
+
 	}
 	
 }
