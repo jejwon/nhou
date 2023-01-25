@@ -79,8 +79,8 @@
 					
 					<br>				
 					<div class="mb-3">
-						<label for="chooseOption">Option</label>
-  						<input type="text" class="form-control" name="chooseOption" id="chooseOption" placeholder="색상/사이즈" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+						<label for="option">Option</label>
+  						<input type="text" class="form-control" name="option" id="option" placeholder="색상/사이즈" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 					</div>
 		
 					
@@ -216,12 +216,15 @@ const ctx = "${pageContext.request.contextPath}";
 const cart = {
 		member_userId : $('input[name=member_userId]').val(),
 		product_productId : $('input[name=product_productId]').val(),
+		option : '',
 		count : ''
+		
 }
 //장바구니 버튼 누르고 담기
 $('#putCart').on('click', function(){
 	 //console.log(cart);
 	 cart.count = $('select[name=count]').val();
+	 cart.option = $('input[name=option]').val();
 //장바구니 추가를 요청하는 ajax 코드
 	$.ajax({
 		url: '/cart/cartInsert', //호출할 url 

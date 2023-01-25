@@ -56,23 +56,6 @@ public class CartController {
 		 cartService.update(cart);
 		 return "redirect:/cart/cartList"; // + cart.getMember_userId(); 
 	  }
-
-	
-	@GetMapping("cartGet")
-	public void get(Model model, Principal principal, CartDto cart) {
-		String loginId = principal.getName();
-		MemberDto member = memberService.getById(loginId);	
-		
-		member.setUserId(loginId);
-		
-		model.addAttribute("member", member);
-		
-		model.addAttribute("cart", cart);
-		
-		System.out.println(cart);
-
-	}
-
 	
 	@GetMapping("cartList")
 	public void list(Model model, Principal principal) {
@@ -87,7 +70,20 @@ public class CartController {
 
 	}
 	
+	@GetMapping("pay")
+	public void getPay(Model model, Principal principal) {
+		String loginId = principal.getName();	
+		MemberDto  member = memberService.getById(loginId);
+		
+		List<CartDto> list = cartService.list(loginId);
+		model.addAttribute("member", member);
+	 
+		model.addAttribute("cartList", list);
+	}
 	
-	
+	@PostMapping("pay")
+	public void pay() {
+		
+	}
 	
 }
