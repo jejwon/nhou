@@ -51,6 +51,34 @@
 		p.price
 	FROM cart c
 			LEFT JOIN product p ON c.product_productId = p.productId
+
+	</select>
+	
+	<!-- 결제 정보 담기 -->
+	<insert id="payInsert">
+	INSERT INTO nhou_order (orderId, address1, address2, postal, receiverName, receiverPhone, payment, status, member_userId) 
+	VALUES (#{orderId}, #{address1}, #{address2}, #{postal}, #{receiverName}, #{receiverPhone}, #{payment}, '배송준비중', #{member_userId})
+	</insert>
+	
+	
+	<!-- 결제 상품 정보 담기 -->
+	<insert id="orderItemInsert">
+	INSERT INTO orderItem (product_productId, count, itemPrice, selectOption, nhou_order_orderId) 
+	VALUES (#{product_productId}, #{count}, #{itemPrice}, #{selectOption}, #{nhou_order_orderId})
+	</insert>
+	
+	<select id="getOrderInfo" resultType="com.nhou.domain.order.OrderDto">
+	SELECT 
+		address1, 
+		address2, 
+		postal, 
+		receiverName, 
+		receiverPhone, 
+		payment, 
+		status, 
+		member_userId
+	FROM nhou_order
+
 	</select>
 	
 	<!-- 결제 정보 담기 -->

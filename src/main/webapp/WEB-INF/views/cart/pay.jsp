@@ -92,6 +92,7 @@
 					<tr>
 						<th>#</th>
 						<th>상품명</th>
+						<th>옵션</th>
 						<th>가격</th>
 						<th>수량</th>
 						<th>합계</th>
@@ -106,10 +107,15 @@
 						<c:if test="${member.userId == cart.member_userId }">
 							<tr class="tr">
 								<td>	
-								<!--  <input name="userId" type="text" value="${cart.member_userId }" readonly>		-->			
+								
+								<input name="member_userId" type="hidden" value="${cart.member_userId }" readonly>				
 								<input name="cartId" type="text" value="${cart.cartId }" readonly>
 								</td>
-								<td>${cart.productName}</td>
+								<td>
+								<input type="hidden" name="product_productId" value="${cart.product_productId }">
+								${cart.productName}
+								</td>
+								<td><input type="text" name="option" value="${cart.option }"></td>
 								<td><input type="text"   name="price" value="${cart.price}" readonly>원</td>
 								<td>
 								<input type="number" name="count"  value="${cart.count }" readonly> 
@@ -126,75 +132,7 @@
 				</tbody>	 
 		
 			</table>
-			
-			<h1>배송 정보</h1>
-			<!-- 배송지 정보 -->
-			<div class="addressBox">
-				<div class="addressBtn_div">
-					<button class="address_btn addressBtn1" onclick="showAddress('1')" style="background-color: #3c3838;">기존 배송지</button>
-					<button class="address_btn addressBtn2" onclick="showAddress('2')">직접 입력</button>
-				</div>
-				
-				<div class="addressWrap">
-					<div class="addressInfo_div addressInfo_input1" style="display: block;">
-						<table>
-							<colgroup>
-								<col>
-								<col>
-							</colgroup>
-							<tbody>
-								<tr>
-									<td>이름</td>
-									<td>${member.userName }</td>
-								</tr>
-								<tr>
-									<td>주소</td>
-									<td>${postal} ${member.address1 } <br> ${member.address2 }</td>
-								</tr>
-								<tr>
-									<td>전화번호</td>
-									<td>${member.phone }</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					
-					<div class="addressInfo_div addressInfo_input2">
-						<table>
-							<colgroup>
-								<col width="25%">
-								<col width="*">
-							</colgroup>
-							<tbody>
-								<tr>
-									<td>이름</td>
-									<td>
-										<input class="form-control address_new">
-									</td>
-								</tr>
-								<tr>
-									<td>주소</td>
-									<td> 
-										<input class="form-control" size="2" type="text" id="sample6_postcode" name="postal" style="width: 300px; height: 40px; display: inline-block; margin-bottom: 5px;" placeholder="우편번호">
-										<input type="button" class="searchPostal" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-										<input class="form-control" style="width: 300px; height: 40px; vertical-align: middle;" type="text" id="sample6_address" name="address1" placeholder="주소">
-										<input class="form-control" style="width: 300px; height: 40px; margin-bottom: 3px; display: inline-block;" type="text" id="sample6_detailAddress" name="address2" placeholder="상세주소" >
-										<input class="form-control" style="width: 300px; height: 40px; margin-bottom: 3px; display: inline-block;" type="hidden" id="sample6_extraAddress" placeholder="참고항목">
-									</td>
-								</tr>
-								<tr>
-									<td>전화번호</td>
-									<td style="padding: 6px 10px;">
-										<input class="form-control phone_new">
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-			
-		<%-- <table>			
+
 				<tr>
 					<td>주문인</td>	
 					<td>${member.userName }</td>					
@@ -212,16 +150,12 @@
 					<td>주소 api 넣어주세요</td>					
 				</tr>
 				
-				<tr>
-					<td>전화번호</td>	
-					<td><input type="text" value="${member.phone }" name="receivePhone"></td>					
 				</tr>
 				<tr>
 					<td>이메일</td>	
 					<td>${member.email }</td>					
 				</tr>		
-		</table> --%>
-			
+
 		</div>		
 
 		<h1>합계</h1>	
@@ -233,12 +167,84 @@
 			</div>
 
 	
-		<form action=""></form>
-		<a href="">주문하기</a>
+
+		<button id="orderButton">주문하기</button>
+
 
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+</body>
+<script>
+const ctx = "${pageContext.request.contextPath}";
+var r = Math.floor(Math.random()*10000)+1; //1~10000
+
+//주문서에 들어갈 정보
+const order = {		
+		orderId : r, 
+		member_userId :  $('input[name=member_userId]').val(),
+		address1 : '',
+		address2 : '',
+		postal : '',
+		receiverName : '',
+		receiverPhone : '',
+		payment : $('input[name=payment]').val()	
+}
+
+//배열 담기
+const orderItem = {
+		nhou_order_orderId : order.orderId,
+		product_productId : $('input[name=product_productId]').val(),
+		count : $('input[name=count]').val(),
+		itemPrice : $('input[name=sum]').val(),
+		selectOption : $('input[name=option]').val()
+		
+	}
+console.log(order);
+console.log(orderItem);
+
+//주문하기
+$('#orderButton').on('click', function(){
+	order.address1 =  $('input[name=address1]').val();
+	order.address2 = $('input[name=address2]').val();
+	order.postal = $('input[name=postal]').val();
+	order.receiverName = $('input[name=receiverName]').val();
+	order.receiverPhone = $('input[name=receiverPhone]').val();	
+	
+//주문 요청 담기 //promise .then
+$.ajax({
+		url: '/cart/payInsert',
+		dataType: 'JSON',
+		//async의 값을 false로 주면 동기방식으로 전역변수에 셋팅
+		type: 'POST',
+		data: order,
+		success: function(res){	
+			//orderItem.nhou_order_orderId = order.orderId;
+			alert('1번 성공!'); //리턴 타입 void -> int로 
+		
+			$.ajax({	
+				url: '/cart/orderItemInsert',
+				dataType: 'JSON',
+				type: 'POST',
+				data: orderItem,
+				success: function(res){	
+					alert('성공');
+				}, fail: function(res){
+					alert('ㅠㅠ');
+				}	
+			
+			}) 
+
+		}
+	
+	})  
+	
+
+	
+
+});
+
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 다음주소 api -->
 </body>
 <script>
@@ -306,5 +312,6 @@ function sample6_execDaumPostcode() {
            }
        }).open();
    }
+
 </script>
 </html>
