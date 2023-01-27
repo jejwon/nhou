@@ -44,8 +44,8 @@ public class CartController {
 	
 	@ResponseBody//자바 객체를 HTTP 응답 본문의 객체로 변환
 	@PostMapping("cartInsert")
-	public void insert(CartDto cart) {
-		cartService.insert(cart);
+	public int insert(CartDto cart) {
+		return cartService.insert(cart);
 
 	}
 	

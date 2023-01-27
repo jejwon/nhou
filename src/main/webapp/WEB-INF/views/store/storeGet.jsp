@@ -233,7 +233,9 @@ $('#putCart').on('click', function(){
 		data: cart, //서버로 보낼 데이터
 		success: function(){
 			//서버가 요청을 성공적으로 수행했을 때 수행될 메소드, 파라미터는 서버가 반환한 값
-			// alert("장바구니에 담겼습니다.");
+			alert("장바구니에 담겼습니다.");
+		}, fail: function(){
+			alert("ㅠㅠ");
 		}
 
 	})
