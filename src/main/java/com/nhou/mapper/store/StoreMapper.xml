@@ -53,6 +53,9 @@ and
 					<when test="type == 'M'.toString()">
 						p.member_userId LIKE #{cri.keyword}
 					</when>
+					<when test="type == 'PCI'.toString()">
+						p.productCategory_categoryId LIKE #{cri.keyword}
+					</when>
 				</choose>
 			</trim>
 		</foreach>
@@ -187,8 +190,20 @@ WHERE
 		<if test="type == 'all' or type == 'nickName'">
 			OR member_userId LIKE #{keyword}
 		</if>
+
+		<if test="type == 'all' or type == 'productCategory_categoryId'">
+			OR productCategory_categoryId LIKE #{keyword}
+		</if>
 	</trim>
 
 </select>
-
+<!-- 카테고리 조회 -->
+<select id="getCateList" resultType="com.nhou.domain.store.CategoryDto">
+SELECT 
+	pc.categoryId,
+	pc.categoryName,
+	p.productCategory_categoryId
+FROM
+productCategory pc LEFT JOIN product p ON pc.categoryId = p.productCategory_categoryId
+</select>
 </mapper>

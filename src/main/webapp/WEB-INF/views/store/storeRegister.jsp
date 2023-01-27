@@ -9,7 +9,18 @@
 <title>상품등록</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+<style type="text/css">
+.form_section_content select {		/* 카테고리 css 설정 */
+    width: 92%;
+    height: 35px;
+    font-size: 20px;
+    text-align-last: center;
+    margin-left: 5px;
+}
+.cate_wrap:not(:first-child) {
+    margin-top: 20px;
+}
+</style>
 <!-- 옵션 -->
 
     <script>
@@ -45,14 +56,21 @@
 		<form action="/store/storeRegister" method="post" enctype="multipart/form-data">
 			<div class="categorySelectBox">
 				<label for="categoryName">CategoryName</label>
-				<select class="form-select" name="productCategory_categoryId" id="productCategory_categoryId">
-					 <option value="1" name="FURNITURE">FURNITURE</option>
-					 <option value="2" name="BEDDING">BEDDING</option>
-					 <option value="3" name="LIVING&FABRIC"">LIVING&FABRIC</option> 
-					 <option value="4" name="KITCHEN">KITCHEN</option>
-					 <option value="5" name="DECO">DECO</option>
-					 <option value="6" name="PETS">PETS</option>
-				</select>
+				
+				<div class="form-section_content">
+					<div class="cate_wrap">
+						<div class="cate1">
+							<select class="form-select" id="productCategory_categoryId" name="productCategory_categoryId">
+								<option selected="selected" value="1">FURNITURE
+								<option value="2">BEDDING
+								<option value="3">LIVING FABRIC
+								<option value="4">KITCHEN
+								<option value="5">DECO
+								<option value="6">PETS
+							</select>
+						</div>
+					</div>
+				</div>
 			</div>
 				
 
@@ -125,6 +143,7 @@
 		</form>
 	</div>		
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 
 </script>

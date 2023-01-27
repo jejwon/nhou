@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhou.domain.member.MemberDto;
 import com.nhou.domain.store.StoreDto;
+import com.nhou.domain.store.CategoryDto;
 import com.nhou.domain.store.Criteria;
 import com.nhou.domain.store.PageDto;
 import com.nhou.service.store.StoreService;
@@ -79,9 +80,10 @@ public class StoreController {
 		String keyword = cri.getKeyword();
 		cri.setKeyword("%" + cri.getKeyword() + "%");
 		List<StoreDto> list = service.listStore(cri, category);
+		List<CategoryDto> cateList = service.getCateList(cri);
 		
 		System.out.println(list);
-		System.out.println("category" + category);
+		System.out.println(cateList);
 		
 		model.addAttribute("storeList", list);
 		

@@ -109,12 +109,10 @@
 		<div class="container">
 			<div class="title">
 				<h1>ITEM LIST</h1>
-				<ul>
-					<li><a href="">1</a></li>
-					<li><a href="">2</a></li>
-					<li><a href="">3</a></li>
-					<li><a href="">4</a></li>
-				</ul>
+				<c:url value="/store/storeList" var="listLink"></c:url>
+				<form action="${listLink }">
+					<button  name="productCategory_categoryId" value="6">PETS</button>
+				</form>
 			</div>
 		
 		<c:forEach items="${storeList }" var="store">
@@ -173,7 +171,7 @@
 		<ul class="pagination" style="position: absolute; right: 50%;">
 			<c:if test="${pageMaker.prev }">
 				<li class="page-item">
-					<a class="page-link" href="${pageMaker.startPage -1 }" aria-label="Previous"> <i class="fa-solid fa-angles-left"></i></a>
+					<a class="page-link" href="${pageMaker.startPage -1 }" aria-label="Previous"> <i class="fa-solid fa-angle-left"></i></a>
 				</li>
 			</c:if>
 			
