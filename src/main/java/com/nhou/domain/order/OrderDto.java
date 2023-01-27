@@ -1,7 +1,9 @@
 package com.nhou.domain.order;
 
 import java.time.LocalDateTime;
+
 import java.util.List;
+
 
 import lombok.Data;
 
@@ -19,7 +21,19 @@ public class OrderDto {
 	private String status;
 	private String member_userId;
 	
+
 	
 	private List<OrderItemDto> orders;
+
+	//orderItem
+	private int orderItemId;
+	//private LocalDateTime orderDate;
+	private int product_productId;
+	private int count;
+	private int itemPrice;
+	private String selectOption;
+	private int nhou_order_orderId;
+	
+
 	
 }

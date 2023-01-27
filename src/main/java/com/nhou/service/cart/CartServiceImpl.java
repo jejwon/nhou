@@ -11,9 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.nhou.domain.cart.CartDto;
+
 import com.nhou.domain.member.MemberDto;
 import com.nhou.domain.order.OrderDto;
 import com.nhou.domain.order.OrderItemDto;
+
+import com.nhou.domain.order.OrderDto;
+
 import com.nhou.mapper.cart.CartMapper;
 import com.nhou.mapper.member.MemberMapper;
 
@@ -52,6 +56,7 @@ public class CartServiceImpl implements CartService{
 		return cartMapper.list(member_userId);
 	}
 	
+
 	@Override 
 	public OrderDto getOrderInfo(OrderDto order) {
 		return cartMapper.getOrderInfo(order);
@@ -71,4 +76,9 @@ public class CartServiceImpl implements CartService{
 	}
 
 	
+	@Override
+	public int payInsert(OrderDto order) {
+		return cartMapper.payInsert(order);
+	}
+
 }

@@ -9,6 +9,75 @@
 <title>결제페이지</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style type="text/css">
+.addressBox {
+	margin-top: 30px;
+}
+
+.addressWrap {
+	border-bottom: 1px solid #f3f3f3;
+	height: 260px;
+}
+
+.address_btn {
+	background-color: #555;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 50%;
+}
+
+.address_btn:hover {
+	background-color: #777;
+}
+
+.addressBtn_div::after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.addressInfo_div {
+	padding:12px;
+	text-align: left;
+	display: none;
+	line-height: 40px;
+}
+
+.addressInfo_div th {
+	border-color: transparent;
+	background-color: transparent;	
+}
+
+.addressInfo_div th {
+	padding : 12px 5px 12px 20px;
+	vertical-align: top;	
+}
+
+.addressInfo_div td {
+	padding : 8px 12px;	
+}
+
+.addressInfo_input2 {
+	padding: 6px 5px;
+}
+
+.address_search_btn{
+    vertical-align: middle;
+    display: inline-block;
+    border: 1px solid #aaa;
+    width: 90px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    color: #555;
+    cursor: pointer;
+}
+</style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
@@ -63,10 +132,7 @@
 				</tbody>	 
 		
 			</table>
-			
-			<h1>배송 정보</h1>
-			
-		<table>			
+
 				<tr>
 					<td>주문인</td>	
 					<td>${member.userName }</td>					
@@ -83,20 +149,13 @@
 					<td>배송지변경</td>	
 					<td>주소 api 넣어주세요</td>					
 				</tr>
-				<tr>
-					<td>배송자명</td>	
-					<td><input type="text" value="${member.userName }" name="receiverName"></td>					
-				</tr>
-				<tr>
-					<td>전화번호</td>	
-					<td><input type="text" value="${member.phone }" name="receiverPhone"></td>					
+				
 				</tr>
 				<tr>
 					<td>이메일</td>	
 					<td>${member.email }</td>					
 				</tr>		
-		</table>
-			
+
 		</div>		
 
 		<h1>합계</h1>	
@@ -108,11 +167,14 @@
 			</div>
 
 	
+
 		<button id="orderButton">주문하기</button>
+
 
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
 </body>
 <script>
 const ctx = "${pageContext.request.contextPath}";
@@ -178,21 +240,78 @@ $.ajax({
 	
 	})  
 	
-//주문 상품 담기	
-/*$.ajax({	
-		url: '/cart/orderItemInsert',
-		dataType: 'JSON',
-		type: 'POST',
-		data: orderItem,
-		success: function(){	
-			
-		}	
-		
-	}) 
 
-	*/
 	
 
 });
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 다음주소 api -->
+</body>
+<script>
+const ctx = "${pageContext.request.contextPath}";
+
+// 주소입력란 숨김, 등장
+function showAddress(className) {
+	// 모두 숨기기
+	$(".addressInfo_div").css('display', 'none');
+	// 컨텐츠 보이기
+	$(".addressInfo_input" + className).css('display', 'block');
+	
+	// 버튼색상 변경
+		// 모든 색상 동일
+			$(".address_btn").css('backgroundColor', '#555');
+		// 지정 색상 변경
+			$(".addressBtn" + className).css('backgroundColor', '#3c3838');
+}
+
+//다음 주소api
+function sample6_execDaumPostcode() {
+       new daum.Postcode({
+           oncomplete: function(data) {
+               // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+               // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+               // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+               var addr = ''; // 주소 변수
+               var extraAddr = ''; // 참고항목 변수
+
+               //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+               if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                   addr = data.roadAddress;
+               } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                   addr = data.jibunAddress;
+               }
+
+               // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+               if(data.userSelectedType === 'R'){
+                   // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                   // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                   if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                       extraAddr += data.bname;
+                   }
+                   // 건물명이 있고, 공동주택일 경우 추가한다.
+                   if(data.buildingName !== '' && data.apartment === 'Y'){
+                       extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                   }
+                   // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                   if(extraAddr !== ''){
+                       extraAddr = ' (' + extraAddr + ')';
+                   }
+                   // 조합된 참고항목을 해당 필드에 넣는다.
+                   document.getElementById("sample6_extraAddress").value = extraAddr;
+               
+               } else {
+                   document.getElementById("sample6_extraAddress").value = '';
+               }
+
+               // 우편번호와 주소 정보를 해당 필드에 넣는다.
+               document.getElementById('sample6_postcode').value = data.zonecode;
+               document.getElementById("sample6_address").value = addr;
+               // 커서를 상세주소 필드로 이동한다.
+               document.getElementById("sample6_detailAddress").focus();
+           }
+       }).open();
+   }
+
 </script>
 </html>

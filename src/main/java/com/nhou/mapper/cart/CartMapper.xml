@@ -51,6 +51,7 @@
 		p.price
 	FROM cart c
 			LEFT JOIN product p ON c.product_productId = p.productId
+
 	</select>
 	
 	<!-- 결제 정보 담기 -->
@@ -77,5 +78,14 @@
 		status, 
 		member_userId
 	FROM nhou_order
+
 	</select>
+	
+	<!-- 결제 정보 담기 -->
+	<insert id="payInsert">
+	INSERT INTO order (orderDate, address1, address2, postal, receiverName, receiverPhone, payment, status, member_userId) 
+	VALUES (#{orderDate}, #{address1}, #{address2}, #{postal}, #{receiverName}, #{receiverPhone}, #{payment}, #{status}, #{member_userId})
+	</insert>
+	
+	
 </mapper>
