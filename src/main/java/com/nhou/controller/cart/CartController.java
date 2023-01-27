@@ -111,21 +111,7 @@ public class CartController {
 		return cartService.payInsert(order);
 		
 		
-		
-	
-
-	@PostMapping("pay")
-	public void pay(Model model, Principal principal, OrderDto order) {
-		String loginId = principal.getName();
-		MemberDto  member = memberService.getById(loginId);
-		
-		model.addAttribute("member", member);
-		
-		cartService.payInsert(order);
-		
-
-
-	}
+	}		
 	
 	@ResponseBody
 	@PostMapping("orderItemInsert")
