@@ -133,7 +133,74 @@
 		
 			</table>
 
-				<tr>
+
+<div class="addressBox">
+				<div class="addressBtn_div">
+					<button class="address_btn addressBtn1" onclick="showAddress('1')" style="background-color: #3c3838;">기존 배송지</button>
+					<button class="address_btn addressBtn2" onclick="showAddress('2')">직접 입력</button>
+				</div>
+
+				<div class="addressWrap">
+					<div class="addressInfo_div addressInfo_input1" style="display: block;">
+						<table>
+							<colgroup>
+								<col>
+								<col>
+							</colgroup>
+							<tbody>
+								<tr>
+									<td>이름</td>
+									<td>${member.userName }</td>
+								</tr>
+								<tr>
+									<td>주소</td>
+									<td>${postal} ${member.address1 } <br> ${member.address2 }</td>
+								</tr>
+								<tr>
+									<td>전화번호</td>
+									<td>${member.phone }</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="addressInfo_div addressInfo_input2">
+						<table>
+							<colgroup>
+								<col width="25%">
+								<col width="*">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td>이름</td>
+									<td>
+										<input class="form-control address_new">
+									</td>
+								</tr>
+								<tr>
+									<td>주소</td>
+									<td> 
+										<input class="form-control" size="2" type="text" id="sample6_postcode" name="postal" style="width: 300px; height: 40px; display: inline-block; margin-bottom: 5px;" placeholder="우편번호">
+										<input type="button" class="searchPostal" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+										<input class="form-control" style="width: 300px; height: 40px; vertical-align: middle;" type="text" id="sample6_address" name="address1" placeholder="주소">
+										<input class="form-control" style="width: 300px; height: 40px; margin-bottom: 3px; display: inline-block;" type="text" id="sample6_detailAddress" name="address2" placeholder="상세주소" >
+										<input class="form-control" style="width: 300px; height: 40px; margin-bottom: 3px; display: inline-block;" type="hidden" id="sample6_extraAddress" placeholder="참고항목">
+									</td>
+								</tr>
+								<tr>
+									<td>전화번호</td>
+									<td style="padding: 6px 10px;">
+										<input class="form-control phone_new">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+			
+				<%-- <tr>
 					<td>주문인</td>	
 					<td>${member.userName }</td>					
 				</tr>		
@@ -154,7 +221,7 @@
 				<tr>
 					<td>이메일</td>	
 					<td>${member.email }</td>					
-				</tr>		
+				</tr>	 --%>	
 
 		</div>		
 
