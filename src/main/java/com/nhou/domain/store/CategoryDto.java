@@ -10,6 +10,7 @@ import lombok.ToString;
 public class CategoryDto {
 	private int categoryId;
 	private String categoryName;
+	private int productCategory_categoryId;
 	
 	public int getCateId() {
 		return categoryId;
@@ -25,5 +26,13 @@ public class CategoryDto {
 	
 	public void setCateName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+	
+	public int getProCateId() {
+		return productCategory_categoryId;
+	}
+	
+	public void setProCateId(int productCategory_categoryId) {
+		this.productCategory_categoryId = productCategory_categoryId;
 	}
 }

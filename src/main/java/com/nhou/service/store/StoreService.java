@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nhou.domain.store.StoreDto;
+import com.nhou.domain.store.CategoryDto;
 import com.nhou.domain.store.Criteria;
 import com.nhou.mapper.store.StoreMapper;
 import com.nhou.mapper.store.StoreReviewMapper;
@@ -154,7 +155,14 @@ public class StoreService {
 		// TODO Auto-generated method stub
 		return storeMapper.getTotalCount(cri, 134);
 	}
+	
+	public List<CategoryDto> getCategory() {
+		return storeMapper.getCategory();
+	}
 
-
+	public List<CategoryDto> getCateList(Criteria cri) {
+		// TODO Auto-generated method stub
+		return storeMapper.getCateList();
+	}
 
 }

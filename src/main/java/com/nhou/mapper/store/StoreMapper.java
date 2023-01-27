@@ -2,6 +2,7 @@ package com.nhou.mapper.store;
 
 import java.util.List;
 
+import com.nhou.domain.store.CategoryDto;
 import com.nhou.domain.store.Criteria;
 import com.nhou.domain.store.StoreDto;
 
@@ -42,6 +43,9 @@ public interface StoreMapper {
 	// 페이징 총 갯수
 	int getTotalCount(Criteria cri, int productId);
 
+	public List<CategoryDto> getCategory();
+
+	public List<CategoryDto> getCateList();
 
 
 }
