@@ -76,9 +76,4 @@ public class CartServiceImpl implements CartService{
 	}
 
 	
-	@Override
-	public int payInsert(OrderDto order) {
-		return cartMapper.payInsert(order);
-	}
-
 }
