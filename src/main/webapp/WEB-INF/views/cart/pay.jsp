@@ -154,8 +154,10 @@
 								</tr>
 								<tr>
 									<td>주소</td>
-									<td>${postal} ${member.address1 } <br> ${member.address2 }</td>
+									<td>${member.postal} ${member.address1 } <br> ${member.address2 }</td>
 								</tr>
+								
+						
 								<tr>
 									<td>전화번호</td>
 									<td>${member.phone }</td>
@@ -180,7 +182,7 @@
 								<tr>
 									<td>주소</td>
 									<td> 
-										<input class="form-control" size="2" type="text" id="sample6_postcode" name="postal" style="width: 300px; height: 40px; display: inline-block; margin-bottom: 5px;" placeholder="우편번호">
+										<input class="form-control" size="2" type="text" id="sample6_postcode" name="postal" style="width: 300px; height: 40px; display: inline-block; margin-bottom: 5px;" placeholder="우편번호" >
 										<input type="button" class="searchPostal" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 										<input class="form-control" style="width: 300px; height: 40px; vertical-align: middle;" type="text" id="sample6_address" name="address1" placeholder="주소">
 										<input class="form-control" style="width: 300px; height: 40px; margin-bottom: 3px; display: inline-block;" type="text" id="sample6_detailAddress" name="address2" placeholder="상세주소" >
@@ -190,7 +192,7 @@
 								<tr>
 									<td>전화번호</td>
 									<td style="padding: 6px 10px;">
-										<input class="form-control phone_new">
+										<input class="form-control phone_new" name="receiverPhone">
 									</td>
 								</tr>
 							</tbody>
@@ -224,6 +226,8 @@
 				</tr>	 --%>	
 
 		</div>		
+		
+		<input type="text" name="receiverName">
 
 		<h1>합계</h1>	
 			<div>
@@ -241,7 +245,7 @@
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> 
 </body>
 <script>
 const ctx = "${pageContext.request.contextPath}";
@@ -312,10 +316,8 @@ $.ajax({
 
 });
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 다음주소 api -->
-</body>
-<script>
-const ctx = "${pageContext.request.contextPath}";
+
+
 
 // 주소입력란 숨김, 등장
 function showAddress(className) {

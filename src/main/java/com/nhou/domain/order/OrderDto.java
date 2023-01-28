@@ -14,7 +14,7 @@ public class OrderDto {
 	private LocalDateTime orderDate;
 	private String address1;
 	private String address2;
-	private int postal;
+	private String postal;
 	private String receiverName;
 	private String receiverPhone;
 	private int payment;
