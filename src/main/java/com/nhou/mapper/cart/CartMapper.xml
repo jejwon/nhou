@@ -76,7 +76,8 @@
 		receiverPhone, 
 		payment, 
 		status, 
-		member_userId
+		member_userId,
+		orderId
 	FROM nhou_order
 
 	</select>
