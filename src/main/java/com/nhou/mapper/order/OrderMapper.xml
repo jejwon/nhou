@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.nhou.mapper.order.OrderMapper">
+ <select id="select" resultMap="getMap">
+SELECT
+	nh.orderId,
+    nh.payment,
+    nh.status,
+    oi.orderDate,
+    oi.product_productId,
+    nh.member_userId,
+    nh.postal,
+    nh.address1,
+    nh.address2,
+    nh.receiverName,
+    nh.receiverPhone
+FROM
+	nhou_order nh LEFT JOIN orderItem oi ON nh.orderId = oi.nhou_order_orderId
+ </select>
+ 
+ <resultMap type="com.nhou.domain.order.OrderDto" id="getMap">
+ <id column="orderId" property="orderId"></id>
+ <result column="payment" property="payment"/>
+ <result column="orderDate" property="orderDate"/>
+ <result column="product_productId" property="product_productId"/>
+ <result column="status" property="status"/>
+ <result column="member_userId" property="member_userId"/>
+ <result column="postal" property="postal"/>
+ <result column="address1" property="address1"/>
+ <result column="address2" property="address2"/>
+ <result column="receiverName" property="receiverName"/>
+ <result column="receiverPhone" property="receiverPhone"/>
+ </resultMap>
+ 
+<select id="getInfo" resultType="com.nhou.domain.order.OrderDto">
+SELECT
+	nh.orderId,
+    nh.address1,
+    nh.address2,
+    nh.payment,
+    nh.status,
+    oi.orderDate,
+    oi.product_productId,
+    nh.member_userId
+FROM
+	nhou_order nh LEFT JOIN orderItem oi ON nh.orderId = oi.nhou_order_orderId
+                  LEFT JOIN member m ON nh.member_userId = m.userId
+WHERE nh.orderId = #{sA}
+GROUP BY orderId
+ </select>
+ 
+<insert id="insertRes">
+INSERT INTO orderResult(orderId, member_userId)
+VALUES(#{orderId}, #{member_userId})
+</insert>
+ </mapper>

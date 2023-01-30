@@ -124,7 +124,7 @@ input:focus {
 								<input type="number" name="count"  value="${cart.count }" readonly> 
 								</td> <!-- 수량 조절 -->
 								<td>
-								<input type="text" name="sum" value="${cart.price * cart.count}" readonly>
+								<input type="text" name="amount" value="${cart.price * cart.count}" readonly>
 								</td>
 								
 							</tr>
@@ -144,6 +144,7 @@ input:focus {
 				</div>
 
 				<div class="addressWrap">
+					<!-- 기존 배송지 -->
 					<div class="addressInfo_div addressInfo_input1" style="display: block;">
 						<table>
 							<colgroup>
@@ -153,22 +154,25 @@ input:focus {
 							<tbody>
 								<tr>
 									<td>이름</td>
-									<td>${member.userName }</td>
+									<td><input type="text" name="receiverName" value="${member.userName }" style="border-style: none;" readonly="readonly"></td>
 								</tr>
 								<tr>
 									<td>주소</td>
+
 									<td>${member.address1 } <br> ${member.address2 } <${member.postal}> </td>
+
 								</tr>
 								
 						
 								<tr>
 									<td>전화번호</td>
-									<td>${member.phone }</td>
+									<td><input type="text" name="receiverPhone" value="${member.phone }" style="border-style: none;" readonly="readonly"></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 
+					<!-- 배송지 직접 입력 -->
 					<div class="addressInfo_div addressInfo_input2">
 						<table>
 							<colgroup>
@@ -179,7 +183,7 @@ input:focus {
 								<tr>
 									<td>이름</td>
 									<td>
-										<input class="form-control address_new">
+										<input name="receiverName" class="form-control address_new">
 									</td>
 								</tr>
 								<tr>
@@ -230,19 +234,22 @@ input:focus {
 
 		</div>		
 		
+
 		<input type="text" name="receiverName">
 
 		<h1>합계</h1>	
 			<div>
 				배송비: 무료배송
+				<input type="radio" name="cal_info" value="card" checked><label>&nbsp;카드 결제</label>
 			</div>
 			<div>
 				최종결제금액: <input type="text" name="payment" value="<c:out value="${total}"/>">
 			</div>
 
-	
-
-		<button id="orderButton">주문하기</button>
+		<c:url value="/payment/orderPage" var="orderLink"></c:url>
+		<a href="${orderLink }">
+			<button id="orderButton">주문하기</button>
+		</a>
 
 
 	
@@ -271,7 +278,7 @@ const orderItem = {
 		nhou_order_orderId : order.orderId,
 		product_productId : $('input[name=product_productId]').val(),
 		count : $('input[name=count]').val(),
-		itemPrice : $('input[name=sum]').val(),
+		itemPrice : $('input[name=amount]').val(),
 		selectOption : $('input[name=option]').val()
 		
 	}
@@ -384,6 +391,7 @@ function sample6_execDaumPostcode() {
            }
        }).open();
    }
+   
 
 </script>
 </html>
