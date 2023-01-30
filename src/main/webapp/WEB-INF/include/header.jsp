@@ -158,20 +158,22 @@
 			<div id="loginBar">
 				<ul id="menu-top"  class="top">
 				<c:if test="${not loggedIn }">
-					<li><a class="lin" href="/member/login" >LOGIN</a></li>
-					<li><a class="j" href="/member/join">JOIN</a></li>
+					<li><a class="lin" href="${pageContext.request.contextPath}/member/login" >LOGIN</a></li>
+					<li><a class="j" href="${pageContext.request.contextPath}/member/join">JOIN</a></li>
 				</c:if>
 				<c:if test="${loggedIn }">
-					<li><a class="mp" href="/myPage/myPageList">${member.userId }님의 MYPAGE</a></li>
-					<li><a class="lout" href="/member/logout" >LOGOUT</a></li>
-					<li><a class="c" href="/cart/cartList">CART</a></li>
+
+					<li><a class="mp" href="${pageContext.request.contextPath}/myPage/myPageList">${member.userId }님의 MYPAGE</a></li>
+					<li><a class="lout" href="${pageContext.request.contextPath}/member/logout" >LOGOUT</a></li>
+					<li><a class="c" href="${pageContext.request.contextPath}/cart/cartList">CART</a></li>
+
 				</c:if>	
-					<li><a class="co" href="/board/boardList">COMMUNITY</a></li>
+					<li><a class="co" href="${pageContext.request.contextPath}/board/boardList">COMMUNITY</a></li>
 				<c:if test="${loggedIn }">
 				</c:if>	
-					<li><a class="qna" href="/qnaBoard/qnaList">QnABOARD</a></li>
+					<li><a class="qna" href="${pageContext.request.contextPath}/qnaBoard/qnaList">QnABOARD</a></li>
 				<c:if test="${member.userId == 'admin' }">
-					<li><a class="info" href="/admin/memberInfo">MEMBER_INFO</a></li>
+					<li><a class="info" href="${pageContext.request.contextPath}/admin/memberInfo">MEMBER_INFO</a></li>
 				</c:if>
 				<c:if test="${member.auth == 2 }">
 					<c:url value="/myPage/mySellerList" var="mySellerListLink">
@@ -185,13 +187,13 @@
 				
 			<nav id="nav3">
 				<div class="home">
-					<a href="/main/list">
+					<a href="${pageContext.request.contextPath}/main/list">
 						<img src="https://ifh.cc/g/PQ7QMk.png" alt="">
 					</a>
 				</div>
 			   	<ul class="menu-bottom">
-			   		<li><a href="/store/storeRegister">상품등록</a></li>
-				  	<li><a href="/store/storeList">NEW</a></li>
+			   		<li><a href="${pageContext.request.contextPath}/store/storeRegister">상품등록</a></li>
+				  	<li><a href="${pageContext.request.contextPath}/store/storeList">NEW</a></li>
 					<li><a href="#">FURNITURE</a></li>
 					<li><a href="#">BEDDING</a></li>
 					<li><a href="#">LIVING FABRIC</a></li>
