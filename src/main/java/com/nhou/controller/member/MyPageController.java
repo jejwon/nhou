@@ -55,6 +55,7 @@ public class MyPageController {
 		model.addAttribute("member", member);
 	}
 	
+	// (회원용) 주문 내역 가져오기
 	@GetMapping("myPageOrderList")
 	public void listOrder(Principal principal, Model model, OrderDto order) {
 		String loginId = principal.getName();

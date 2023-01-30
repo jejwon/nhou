@@ -82,12 +82,37 @@
 
 	</select>
 	
-<select id="getMyOrder" resultType="com.nhou.domain.order.OrderDto">
-select 
+<select id="getMyOrder" resultMap="getMap">
+<!-- select 
 	 *
 from
-	nhou_order
+	nhou_order nh LEFT JOIN orderItem oi ON nh.orderId = oi.nhou_order_orderId -->
+select 
+	nh.member_userId,
+    nh.orderId,
+    nh.status,
+    oi.orderDate,
+    nh.payment,
+    p.productName,
+    oi.count,
+    p.productId,
+    oi.product_productId
+from orderItem oi LEFT JOIN nhou_order nh ON oi.nhou_order_orderId = nh.orderId
+				  LEFT JOIN product p ON oi.product_productId = p.productId
 </select>
+
+<resultMap type="com.nhou.domain.order.OrderDto" id="getMap">
+	<id column="orderItemId" property="orderItemId"></id>
+	<result column="member_userId" property="member_userId"/>
+	<result column="orderId" property="orderId"/>
+	<result column="status" property="status"/>
+	<result column="orderDate" property="orderDate"/>
+	<result column="payment" property="payment"/>
+	<result column="productName" property="productName"/>
+	<result column="count" property="count"/>
+	<result column="productId" property="productId"/>
+	<result column="product_productId" property="product_productId"/>
+</resultMap>
 	
 	
 </mapper>
