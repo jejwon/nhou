@@ -77,20 +77,26 @@
     color: #555;
     cursor: pointer;
 }
+input {
+	border:none;
+}
+input:focus {
+    outline: none;
+  }
+.container {
+	font-size: 20px;
+}
 </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 	
 	<div class="container">
-	<h1> ${member.userId}의 장바구니</h1>
-	
 
-			<h1>주문 상품 정보</h1>
-			<table>			
+			
+			<table class="table">			
 				<thead>
-					<tr>
-						<th>#</th>
+					<tr>						
 						<th>상품명</th>
 						<th>옵션</th>
 						<th>가격</th>
@@ -103,20 +109,17 @@
 				<tbody id="itemContainer">
 				<c:set var = "total" value = "0" />
 					<c:forEach items="${cartList }" var="cart" varStatus="status">
+					<input name="member_userId" type="hidden" value="${cart.member_userId }" readonly>				
+					<input name="cartId" type="hidden" value="${cart.cartId }" readonly>
 					
 						<c:if test="${member.userId == cart.member_userId }">
-							<tr class="tr">
-								<td>	
-								
-								<input name="member_userId" type="hidden" value="${cart.member_userId }" readonly>				
-								<input name="cartId" type="text" value="${cart.cartId }" readonly>
-								</td>
+							<tr class="tr">								
 								<td>
 								<input type="hidden" name="product_productId" value="${cart.product_productId }">
 								${cart.productName}
 								</td>
 								<td><input type="text" name="option" value="${cart.option }"></td>
-								<td><input type="text"   name="price" value="${cart.price}" readonly>원</td>
+								<td><input type="text"   name="price" value="${cart.price}" readonly>\</td>
 								<td>
 								<input type="number" name="count"  value="${cart.count }" readonly> 
 								</td> <!-- 수량 조절 -->
@@ -154,7 +157,7 @@
 								</tr>
 								<tr>
 									<td>주소</td>
-									<td>${member.postal} ${member.address1 } <br> ${member.address2 }</td>
+									<td>${member.address1 } <br> ${member.address2 } <${member.postal}> </td>
 								</tr>
 								
 						
