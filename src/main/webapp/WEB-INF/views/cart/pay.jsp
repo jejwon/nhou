@@ -124,7 +124,7 @@ input:focus {
 								<input type="number" name="count"  value="${cart.count }" readonly> 
 								</td> <!-- 수량 조절 -->
 								<td>
-								<input type="text" name="amount" value="${cart.price * cart.count}" readonly>
+								<input type="text" name="sum" value="${cart.price * cart.count}" readonly>
 								</td>
 								
 							</tr>
@@ -159,7 +159,8 @@ input:focus {
 								<tr>
 									<td>주소</td>
 
-									<td>${member.address1 } <br> ${member.address2 } <${member.postal}> </td>
+									<td> <input type="text" name="postal" value="${member.postal}" style="border-style: none;" readonly="readonly"> <input type="text" name="address1" value="${member.address1 }" style="border-style: none;" readonly="readonly"> <br> 
+										<input type="text" name="address2" value="${member.address2 }" style="border-style: none;" readonly="readonly"></td>
 
 								</tr>
 								
@@ -207,30 +208,6 @@ input:focus {
 					</div>
 				</div>
 			</div>
-			
-			
-				<%-- <tr>
-					<td>주문인</td>	
-					<td>${member.userName }</td>					
-				</tr>		
-				<tr>
-					<td>기본 배송지/변경 전 값</td>	
-					<td>
-					<input type="text" value="${member.postal}" name="postal">
-					<input type="text" value="${member.address1 }" name="address1">
-					<input type="text" value="${member.address2 }" name="address2">
-					</td>					
-				</tr>
-				<tr>
-					<td>배송지변경</td>	
-					<td>주소 api 넣어주세요</td>					
-				</tr>
-				
-				</tr>
-				<tr>
-					<td>이메일</td>	
-					<td>${member.email }</td>					
-				</tr>	 --%>	
 
 		</div>		
 		
@@ -278,7 +255,7 @@ const orderItem = {
 		nhou_order_orderId : order.orderId,
 		product_productId : $('input[name=product_productId]').val(),
 		count : $('input[name=count]').val(),
-		itemPrice : $('input[name=amount]').val(),
+		itemPrice : $('input[name=sum]').val(),
 		selectOption : $('input[name=option]').val()
 		
 	}

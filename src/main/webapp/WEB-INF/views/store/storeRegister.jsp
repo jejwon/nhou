@@ -53,7 +53,7 @@
 <h1> 상품등록 페이지 </h1>
 	<!-- 카테고리명 선택 -->
 	<div class="container">
-		<form action="/store/storeRegister" method="post" enctype="multipart/form-data">
+		<form action="${pageContext.request.contextPath}/store/storeRegister" method="post" enctype="multipart/form-data">
 			<div class="categorySelectBox">
 				<label for="categoryName">CategoryName</label>
 				

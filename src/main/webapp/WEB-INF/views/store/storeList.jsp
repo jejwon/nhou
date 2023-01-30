@@ -196,6 +196,7 @@
 </div> <!-- 전체컨테이너 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript">
+const ctx = "${pageContext.request.contextPath}";
 /* 페이징 버튼처리 */
 var actionForm = document.getElementById("actionForm");
 

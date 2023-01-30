@@ -93,7 +93,7 @@
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 <div class="container">
-	<form action="/board/boardInsert" method="post" enctype="multipart/form-data">
+	<form action="${pageContext.request.contextPath}/board/boardInsert" method="post" enctype="multipart/form-data">
 		<div class="categorySelectBox">
 		<div>
 			<input type="hidden" name="member_userId" disabled="disabled">

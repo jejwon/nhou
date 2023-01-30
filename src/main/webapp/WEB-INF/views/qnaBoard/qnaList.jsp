@@ -84,7 +84,7 @@
 			
 				<tr> <!-- 질문마다 전체 선택 가능하게 -->			
 					<td style="text-align: left; padding-left: 15px;">
-					<a href="/qnaBoard/qnaGet?qnaId=${qna.qnaId }">${qna.qnaId }</a>
+					<a href="${pageContext.request.contextPath}/qnaBoard/qnaGet?qnaId=${qna.qnaId }">${qna.qnaId }</a>
 					</td>
 					<c:choose>
 					<c:when test="${qna.qnaCategory == 0 }">
