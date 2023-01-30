@@ -254,7 +254,7 @@ const order = {
 		payment : $('input[name=payment]').val()	
 }
 
-//배열 담기
+
 const orderItem = {
 		nhou_order_orderId : order.orderId,
 		product_productId : $('input[name=product_productId]').val(),
@@ -265,9 +265,12 @@ const orderItem = {
 	}
 	
 
+const cart = {
+		cartId: $('input[name=cartId]').val()
+}
 console.log(order);
 console.log(orderItem);
-
+console.log(cart.cartId);
 
 
 //주문하기
@@ -277,8 +280,7 @@ $('#orderButton').on('click', function(){
 	order.postal = $('input[name=postal]').val();
 	order.receiverName = $('input[name=receiverName]').val();
 	order.receiverPhone = $('input[name=receiverPhone]').val();	
-	
-//주문 요청 담기 //promise .then
+
 $.ajax({
 		url: '/cart/payInsert',
 		dataType: 'JSON',
@@ -295,9 +297,16 @@ $.ajax({
 				type: 'POST',
 				data: orderItem,
 				success: function(res){	
-					alert('성공');
-				
+					alert('2번 성공');
 					
+					$.ajax({
+						url: '/cart/cartDeleteAll',
+						dataType: 'JSON',
+						type: 'POST',
+						data: cart,
+						success: function(res){
+							alert('삭제 성공');
+							
 						IMP.init('imp13488808');
 
 						IMP.request_pay({
@@ -324,22 +333,23 @@ $.ajax({
 								alert("결제 실패");
 							}
 						});
-					
-					
-					
+	
 					
 				}, fail: function(res){
 					alert('ㅠㅠ');
 				}	
 			
 			}) 
-
+				
+			}
+		
+		})			
+				
 		}
 	
-	})  
+	})
 	
-
-	
+		
 
 });
 

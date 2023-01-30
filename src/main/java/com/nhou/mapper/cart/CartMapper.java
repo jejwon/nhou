@@ -32,4 +32,6 @@ public interface CartMapper {
 
 	List<OrderDto> getMyOrder(OrderDto order);
 
+	int deleteAll(int cartId);
+
 }
