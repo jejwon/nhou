@@ -13,14 +13,50 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
-<input type="text" name="userId" value="${member.userId }">
+<input type="hidden" name="userId" value="${member.userId }">
 
-<c:forEach items="${list }" var="list">
-	<fmt:parseDate value="${list.orderDate }" pattern="yyyy-MM-dd'T'HH:mm" var="time"/>
-	<fmt:formatDate value="${time }" pattern="yyyy.MM.dd HH:mm"/>
-
-</c:forEach>
-
+<div class="container-fluid">
+	<div class="containerTitle">
+		<h1>${member.nickName }님의 주문 내역</h1>
+	</div>
+	
+	<!-- 리스트 -->
+	<div class="orderList">
+		<table class="table table-hover container" >
+			<thead>
+				<tr scope="row" style="background-color: #DCC1B0;">
+					<th style="width: 80px; vertical-align: middle;">주문번호</th>
+					<th style="vertical-align: middle; text-align: center;">상품명</th>
+					<th style="width: 50px; vertical-align: middle; text-align: center;">수량</th>
+					<th style="width: 70px; vertical-align: middle; text-align: center;">가격</th>
+					<th style="vertical-align: middle; text-align: center;">주문일자</th>
+					<th style="vertical-align: middle; text-align: center;">상태</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${list }" var="list">
+					<c:url value="/store/storeGet" var="getLink">
+						<c:param name="productId" value="${list.productId }"></c:param>
+					</c:url>
+					<tr onclick="location.href='${getLink}'">
+						<td style="vertical-align: middle; text-align: center;">${list.orderId }</td>
+						<td style="vertical-align: middle; text-align: center;" class="listTitle col-sm-6">
+							<a href="${getLink }">${list.productName }</a>
+						</td>
+						<td style="vertical-align: middle; text-align: center;">${list.count }</td>
+						<td style="vertical-align: middle; text-align: center;">${list.payment }</td>
+						<td style="vertical-align: middle; text-align: center;">
+						<fmt:parseDate value="${list.orderDate }" pattern="yyyy-MM-dd'T'HH:mm" var="time"/>
+						<fmt:formatDate value="${time }" pattern="yyyy.MM.dd HH:mm"/></td>
+						<td style="vertical-align: middle; text-align: center;">${list.status }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+	
+	
+</div> <!-- 전체 div -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>

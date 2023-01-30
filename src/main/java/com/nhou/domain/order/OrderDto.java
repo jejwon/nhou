@@ -26,6 +26,8 @@ public class OrderDto {
 
 	
 	private List<OrderItemDto> orders;
+	private String productName;
+	private int productId;
 
 	//orderItem
 	private int orderItemId;
@@ -35,9 +37,5 @@ public class OrderDto {
 	private int itemPrice;
 	private String selectOption;
 	private int nhou_order_orderId;
-	
-	// 아임포트
-	private String impUid = "";
-
 	
 }
