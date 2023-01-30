@@ -148,10 +148,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&family=Nunito:wght@200;300&display=swap" rel="stylesheet">
 </head>
 <body>
-	<sec:authorize access="isAuthenticated()">
-		<h1>${member.userId } 로그인됨!</h1>
-	</sec:authorize>
-	
+	<sec:authorize access="isAuthenticated()"/>
+
 	<!-- 로그인시 보이는 메뉴 설정 -->
 	<sec:authorize access="isAuthenticated()" var="loggedIn"/>
 	<sec:authentication property="name" var="username"/>
@@ -164,7 +162,7 @@
 					<li><a class="j" href="/member/join">JOIN</a></li>
 				</c:if>
 				<c:if test="${loggedIn }">
-					<li><a class="mp" href="/myPage/myPageList">MYPAGE</a></li>
+					<li><a class="mp" href="/myPage/myPageList"><${member.userId }>님의 MYPAGE</a></li>
 					<li><a class="lout" href="/member/logout" >LOGOUT</a></li>
 					<li><a class="c" href="/cart/cartList">CART</a></li>
 				</c:if>	

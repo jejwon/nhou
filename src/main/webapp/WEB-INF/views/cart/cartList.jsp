@@ -11,7 +11,12 @@
 <meta charset="UTF-8">
 <title>장바구니 담기(수량)</title>
 <style type="text/css">
-
+input:focus {
+    outline: none;
+  }
+.container {
+	font-size: 20px;
+}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -21,7 +26,6 @@
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 
 
-<h1> ${member.userId}의 장바구니</h1>
 	
 <form action="/cart/pay" id="orderForm">
 	<div class="container">
@@ -35,10 +39,12 @@
 		<!-- 장바구니 정보 -->
 	
 		<div class="wholeCartCount">
-			<table>
+			<input name="userId" type="hidden" value="${cart.member_userId }" >					
+			<input name="cartId" type="hidden" value="${cart.cartId }">							
+			<table class="table">
 				<thead>
 					<tr>
-						<th>#</th>
+						
 						<th>상품명</th>
 						<th>가격</th>
 						<th>수량</th>
@@ -53,20 +59,19 @@
 					
 						<c:if test="${member.userId == cart.member_userId }">
 							<tr class="tr">
-								<td>	
-								<input name="userId" type="text" value="${cart.member_userId }">					
-								<input name="cartId" type="text" value="${cart.cartId }">
-								</td>
+								
 								<td>${cart.productName}</td>
-								<td><input type="text"   name="price" value="${cart.price}">원</td>
+								<td><input type="text"  name="price" value="${cart.price}" style="border:none;"readonly>\</td>
 								<td>
-								<input type="number" name="count" min="1" max="10" value="${cart.count }"> 
-								<a class="countModifyButton" data-cart-id="${cart.cartId}">변경</a>
+								<input type="number" name="count" min="1" max="10" value="${cart.count }" > 
+								<button class="btn" style="background-color: #DCC1B0; border-radius:0px;"><a class="countModifyButton" data-cart-id="${cart.cartId}" style="text-decoration:none; color:black;">변경</a></button>
 								</td> <!-- 수량 조절 -->
 								<td>
-								<input type="text" name="sum" value="${cart.price * cart.count}" >
+								<input type="text" name="sum" value="${cart.price * cart.count}" style="border:none;" readonly>
 								</td>
-								<td><a class="itemDeleteButton" data-cart-id="${cart.cartId}">삭제</a> </td>
+								<td>
+								<button class="btn" style="background-color: #D5D4D1; border-radius:0px;"><a class="itemDeleteButton" data-cart-id="${cart.cartId}"  style="text-decoration:none; color:black;">삭제</a> 
+								</td>
 							</tr>	
 						</c:if>	
 					</c:forEach>
@@ -75,6 +80,10 @@
 		
 			</table>
 		</div>		
+		
+		<div id="button1">
+			<button type="button" id="orderSubmit" class="btn btn-outline-primary" style="background-color: #DCC1B0; border-radius:0px; border:none; color: black;">주문하기</button>
+		</div>
 
 </div>
 </form>
@@ -92,9 +101,6 @@
 </form>
 
 
-<div id="button1">
-	<button type="button" id="orderSubmit" class="btn btn-outline-primary">주문하기</button>
-</div>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
