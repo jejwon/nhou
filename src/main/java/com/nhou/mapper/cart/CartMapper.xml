@@ -82,6 +82,12 @@
 
 	</select>
 	
+<select id="getMyOrder" resultType="com.nhou.domain.order.OrderDto">
+select 
+	 *
+from
+	nhou_order
+</select>
 	
 	
 </mapper>

@@ -74,6 +74,11 @@ public class CartServiceImpl implements CartService{
 	public int orderItemInsert(OrderItemDto orderItem) {
 		return cartMapper.orderItemInsert(orderItem);
 	}
+	
+	@Override
+	public List<OrderDto> getMyOrder(OrderDto order) {
+		return cartMapper.getMyOrder(order);
+	}
 
 	
 }

@@ -21,10 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhou.domain.member.MemberDto;
+import com.nhou.domain.order.OrderDto;
 import com.nhou.domain.qna.PageInfo;
 import com.nhou.domain.qna.QnADto;
 import com.nhou.domain.store.StoreDto;
+import com.nhou.service.cart.CartService;
 import com.nhou.service.member.MemberService;
+import com.nhou.service.order.OrderService;
 import com.nhou.service.qna.QnAService;
 import com.nhou.service.store.StoreService;
 
@@ -38,6 +41,8 @@ public class MyPageController {
 	private QnAService qnaService;
 	@Autowired
 	private StoreService storeService;
+	@Autowired
+	private CartService cartService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -51,7 +56,16 @@ public class MyPageController {
 	}
 	
 	@GetMapping("myPageOrderList")
-	public void listOrder() {
+	public void listOrder(Principal principal, Model model, OrderDto order) {
+		String loginId = principal.getName();
+		MemberDto member = memberService.getById(loginId);
+		List<OrderDto> list = cartService.getMyOrder(order);
+		
+		model.addAttribute("member", member);
+		model.addAttribute("list", list);
+		
+		System.out.println("마이페이지 계정" + member);
+		System.out.println("내가 주문한 리스트" + list);
 		
 	}
 	

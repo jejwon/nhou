@@ -162,9 +162,11 @@
 					<li><a class="j" href="${pageContext.request.contextPath}/member/join">JOIN</a></li>
 				</c:if>
 				<c:if test="${loggedIn }">
+
 					<li><a class="mp" href="${pageContext.request.contextPath}/myPage/myPageList">${member.userId }님의 MYPAGE</a></li>
 					<li><a class="lout" href="${pageContext.request.contextPath}/member/logout" >LOGOUT</a></li>
 					<li><a class="c" href="${pageContext.request.contextPath}/cart/cartList">CART</a></li>
+
 				</c:if>	
 					<li><a class="co" href="${pageContext.request.contextPath}/board/boardList">COMMUNITY</a></li>
 				<c:if test="${loggedIn }">

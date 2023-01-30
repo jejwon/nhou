@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.net.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -57,7 +58,8 @@
 								</td>
 								<td>${sellList.stock }</td>
 								<td>${sellList.price }</td>
-								<td>${sellList.insertDatetime }</td>
+								<td><fmt:parseDate value="${ sellList.insertDatetime }" pattern="yyyy-MM-dd'T'HH:mm" var="time"/>
+								<fmt:formatDate value="${time }" pattern="yyyy.MM.dd HH:mm"/></td>
 							</tr>
 					</c:forEach>
 				</tbody>
