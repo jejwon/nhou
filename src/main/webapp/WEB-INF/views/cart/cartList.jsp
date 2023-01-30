@@ -27,7 +27,7 @@ input:focus {
 
 
 	
-<form action="/cart/pay" id="orderForm">
+<form action="${pageContext.request.contextPath}/cart/pay" id="orderForm">
 	<div class="container">
 				
 		<div class="wholeCartList"></div> 
@@ -64,13 +64,13 @@ input:focus {
 								<td><input type="text"  name="price" value="${cart.price}" style="border:none;"readonly>\</td>
 								<td>
 								<input type="number" name="count" min="1" max="10" value="${cart.count }" > 
-								<button class="btn" style="background-color: #DCC1B0; border-radius:0px;"><a class="countModifyButton" data-cart-id="${cart.cartId}" style="text-decoration:none; color:black;">변경</a></button>
+								<!-- <button class="btn" style="background-color: #DCC1B0; border-radius:0px;"> --><a class="countModifyButton" data-cart-id="${cart.cartId}" style="text-decoration:none; color:black;">변경</a><!-- </button> -->
 								</td> <!-- 수량 조절 -->
 								<td>
 								<input type="text" name="sum" value="${cart.price * cart.count}" style="border:none;" readonly>
 								</td>
 								<td>
-								<button class="btn" style="background-color: #D5D4D1; border-radius:0px;"><a class="itemDeleteButton" data-cart-id="${cart.cartId}"  style="text-decoration:none; color:black;">삭제</a> 
+								<!-- <button class="btn" style="background-color: #D5D4D1; border-radius:0px;"> --><a class="itemDeleteButton" data-cart-id="${cart.cartId}"  style="text-decoration:none; color:black;">삭제</a> 
 								</td>
 							</tr>	
 						</c:if>	
@@ -88,14 +88,14 @@ input:focus {
 </div>
 </form>
 <!-- 수량 변경 저장됨 -->
-<form action="/cart/cartModify" method="post" class="countModifyForm">
+<form action="${pageContext.request.contextPath}/cart/cartModify" method="post" class="countModifyForm">
 	<input type="hidden" name="cartId" class="modifyCartId"/>
 	<input type="hidden" name="count" class="modifyCount"/>
 	<input type="hidden" name="userId" value="${cart.member_userId }"/>
 	
 </form>
 <!-- 상품 개별 삭제 -->
-<form action="/cart/cartDelete" method="post" class="itemDeleteForm">
+<form action="${pageContext.request.contextPath}/cart/cartDelete" method="post" class="itemDeleteForm">
 	<input type="hidden" name="cartId" class="deleteCartId"/>
 	<input type="hidden" name="userId" value="${cart.member_userId }"/>	
 </form>

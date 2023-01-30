@@ -100,7 +100,7 @@
 					<input type="hidden" value="${store.productId }" name="product_productId">			
 					<button id="putCart" type="button" class="btn btn-outline-primary btn-lg" style="width: 250px; height: 55px;">장바구니</button>			
 					
-					<a href="/cart/pay"><button type="button" class="btn btn-primary btn-lg" style="width: 250px; height: 55px;">바로구매</button></a>
+					<a href="${pageContext.request.contextPath}/cart/pay"><button type="button" class="btn btn-primary btn-lg" style="width: 250px; height: 55px;">바로구매</button></a>
 		
 					</div>					
 				</div>					
@@ -227,7 +227,7 @@ $('#putCart').on('click', function(){
 	 cart.option = $('input[name=option]').val();
 //장바구니 추가를 요청하는 ajax 코드
 	$.ajax({
-		url: '/cart/cartInsert', //호출할 url 
+		url: '${pageContext.request.contextPath}/cart/cartInsert', //호출할 url 
 		dataType: 'JSON',
 		type: 'POST', //url 호출 할 방법(GET, POST, PATCH 등)
 		data: cart, //서버로 보낼 데이터
