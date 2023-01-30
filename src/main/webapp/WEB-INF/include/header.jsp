@@ -162,7 +162,7 @@
 					<li><a class="j" href="/member/join">JOIN</a></li>
 				</c:if>
 				<c:if test="${loggedIn }">
-					<li><a class="mp" href="/myPage/myPageList"><${member.userId }>님의 MYPAGE</a></li>
+					<li><a class="mp" href="/myPage/myPageList">${member.userId }님의 MYPAGE</a></li>
 					<li><a class="lout" href="/member/logout" >LOGOUT</a></li>
 					<li><a class="c" href="/cart/cartList">CART</a></li>
 				</c:if>	

@@ -2,7 +2,7 @@
 <%@ page import="java.net.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +13,15 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
+<input type="text" name="userId" value="${member.userId }">
+
+<c:forEach items="${list }" var="list">
+	<fmt:parseDate value="${list.orderDate }" pattern="yyyy-MM-dd'T'HH:mm" var="time"/>
+	<fmt:formatDate value="${time }" pattern="yyyy.MM.dd HH:mm"/>
+
+</c:forEach>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>

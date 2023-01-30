@@ -30,6 +30,8 @@ public interface CartService {
 
 	OrderDto getOrderInfo(OrderDto order);
 
+	List<OrderDto> getMyOrder(OrderDto order);
+
 
 
 

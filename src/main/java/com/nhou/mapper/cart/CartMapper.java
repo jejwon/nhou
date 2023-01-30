@@ -30,4 +30,6 @@ public interface CartMapper {
 	
 	OrderDto getOrderInfo(OrderDto order);
 
+	List<OrderDto> getMyOrder(OrderDto order);
+
 }

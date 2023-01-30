@@ -116,7 +116,7 @@ input:focus {
 							<tr class="tr">								
 								<td>
 								<input type="hidden" name="product_productId" value="${cart.product_productId }">
-								${cart.productName}
+								<input type="text" name="productName" value="${cart.productName}">
 								</td>
 								<td><input type="text" name="option" value="${cart.option }"></td>
 								<td><input type="text"   name="price" value="${cart.price}" readonly>\</td>
@@ -158,9 +158,9 @@ input:focus {
 								</tr>
 								<tr>
 									<td>주소</td>
-
-									<td>${member.address1 } <br> ${member.address2 } <${member.postal}> </td>
-
+									<td><input type="text" name="postal" value="${member.postal}" style="border-style: none;" readonly="readonly"> 
+										<input type="text" name="address1" value="${member.address1 }" style="border-style: none;" readonly="readonly"> <br> 
+										<input type="text" name="address2" value="${member.address2 }" style="border-style: none;" readonly="readonly"></td>
 								</tr>
 								
 						
@@ -246,16 +246,18 @@ input:focus {
 				최종결제금액: <input type="text" name="payment" value="<c:out value="${total}"/>">
 			</div>
 
-		<c:url value="/payment/orderPage" var="orderLink"></c:url>
-		<a href="${orderLink }">
+		<%-- <c:url value="/payment/orderPage" var="orderLink"></c:url>
+		<a href="${orderLink }"> </a>--%>
 			<button id="orderButton">주문하기</button>
-		</a>
+		
 
 
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script> <!-- jQuery -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script> <!-- iamport.payment.js -->
 </body>
 <script>
 const ctx = "${pageContext.request.contextPath}";
@@ -265,6 +267,7 @@ var r = Math.floor(Math.random()*10000)+1; //1~10000
 const order = {		
 		orderId : r, 
 		member_userId :  $('input[name=member_userId]').val(),
+		productName : $('input[name=productName]').val(),
 		address1 : '',
 		address2 : '',
 		postal : '',
@@ -282,8 +285,12 @@ const orderItem = {
 		selectOption : $('input[name=option]').val()
 		
 	}
+	
+
 console.log(order);
 console.log(orderItem);
+
+
 
 //주문하기
 $('#orderButton').on('click', function(){
@@ -311,6 +318,38 @@ $.ajax({
 				data: orderItem,
 				success: function(res){	
 					alert('성공');
+				
+					
+						IMP.init('imp13488808');
+
+						IMP.request_pay({
+							pg: "kakaopay",
+							pay_method: "card",
+							merchant_uid: order.orderId,
+							name: order.productName,
+							amount: order.payment,
+							buyer_name: order.receiverName,
+							buyer_email: "ONOFF@ONOFF.com",
+							buyer_addr: order.address1,
+							buyer_tel: order.receiverPhone,
+							buyer_postcode: order.postal,
+						}, function (rsp) {
+							console.log(rsp);
+							
+							if(rsp.success) { // 결제 성공시
+								var msg = "결제 완료";
+				
+								alert("결제 완료" + msg);
+								location.href = "${ctx}/myPage/myPageOrderList";
+						
+							} else {
+								alert("결제 실패");
+							}
+						});
+					
+					
+					
+					
 				}, fail: function(res){
 					alert('ㅠㅠ');
 				}	
@@ -325,6 +364,11 @@ $.ajax({
 	
 
 });
+
+
+
+
+
 
 
 

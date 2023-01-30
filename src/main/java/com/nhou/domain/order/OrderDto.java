@@ -23,7 +23,6 @@ public class OrderDto {
 	private int payment;
 	private String status;
 	private String member_userId;
-	
 
 	
 	private List<OrderItemDto> orders;
