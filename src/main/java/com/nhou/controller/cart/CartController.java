@@ -51,13 +51,20 @@ public class CartController {
 
 	}
 	
+	
 	@PostMapping("cartDelete")
 	public String delete(int cartId) {
 		cartService.delete(cartId);
 		
 		return "redirect:/cart/cartList";
+		
 	}
 	
+	@ResponseBody
+	@PostMapping("cartDeleteAll")
+	public int deleteAll(int cartId) {
+		return cartService.deleteAll(cartId);
+	}
 	
 	 @PostMapping("cartModify") 
 	 public String modify(CartDto cart) { 

@@ -32,6 +32,8 @@ public interface CartService {
 
 	List<OrderDto> getMyOrder(OrderDto order);
 
+	int deleteAll(int cartId);
+
 
 
 
