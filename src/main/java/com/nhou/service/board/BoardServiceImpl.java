@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,12 @@ import com.nhou.domain.board.BoardDto;
 import com.nhou.domain.board.PageInfo;
 import com.nhou.mapper.board.BoardMapper;
 import com.nhou.mapper.board.BoardReplyMapper;
+
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Service
 @Transactional
@@ -24,6 +31,12 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
 	private BoardReplyMapper boardReplyMapper;
+	
+	@Autowired
+	private S3Client s3Client;
+	
+	@Value("${aws.s3.bucket}")
+	private String bucketName;
 	
 	// 게시글 작성
 	/*
@@ -45,28 +58,33 @@ public class BoardServiceImpl implements BoardService {
 				// 파일명, 게시물id정보가 있어야함
 				boardMapper.insertFile(board.getBoardId(), file.getOriginalFilename());
 				
-				// 파일 저장
-				// 파일이 업로드 될때마다 boardId를 가져와 새폴더를 만드는 작업
-				File folder = new File("C:\\Users\\sj\\Desktop\\study\\upload\\nhou\\board\\"
-						+ board.getBoardId());
-				folder.mkdirs();
-				
-				File dest = new File(folder, file.getOriginalFilename());
-				
-				try {
-					// 받은 파일을 목적지로 전송 transferTo
-					file.transferTo(dest);
-				} catch (Exception e) {
-					// @Transactional은 RuntiemExecption에서만 rollback됨 
-					e.printStackTrace();
-					throw new RuntimeException(e);
-				}
+				uploadFile(board.getBoardId(), file);
 		 }
 			
 	}
 		
 		return cnt;
 		
+	}
+	
+	private void uploadFile(int boardId, MultipartFile file) {
+		try {
+			String key = "board/" + boardId + "/" + file.getOriginalFilename();
+			
+			PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+					.bucket(bucketName)
+					.key(key)
+					.acl(ObjectCannedACL.PUBLIC_READ)
+					.build();
+			
+			RequestBody requestBody = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
+		
+			s3Client.putObject(putObjectRequest, requestBody);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 	
 	// 게시글 목록
@@ -129,10 +147,7 @@ public class BoardServiceImpl implements BoardService {
 				// 1. File 테이블에서 record 지우기
 				boardMapper.deleteFileBoardIdAndFileName(boardId, boardFileName);
 				// 2. 저장소에 실제 파일 지우기
-				String path = "C:\\Users\\sj\\Desktop\\study\\upload\\nhou\\board\\" + boardId + boardFileName;
-				File file = new File(path);
-				
-				file.delete();
+				deleteFile(boardId, boardFileName);
 			}
 			
 		}
@@ -151,20 +166,7 @@ public class BoardServiceImpl implements BoardService {
 				boardMapper.insertFile(boardId, boardFileName);
 				
 				// 저장소에 실제 파일 추가
-				File folder = new File("C:\\Users\\sj\\Desktop\\study\\upload\\nhou\\board\\"
-						+ board.getBoardId());
-				folder.mkdirs();
-				
-				File dest = new File(folder, boardFileName);
-				
-				try {
-					// 받은 파일을 목적지로 전송 transferTo
-					file.transferTo(dest);
-				} catch (Exception e) {
-					// @Transactional은 RuntiemExecption에서만 rollback됨 
-					e.printStackTrace();
-					throw new RuntimeException(e);
-				}
+				uploadFile(boardId, file);
 			}
 		}
 		
@@ -174,18 +176,17 @@ public class BoardServiceImpl implements BoardService {
 	// 게시물 삭제하기
 	@Override
 	public int remove(int boardId) {		// service에 사용한 명명
-		// 파일 실제 저장소 지우기(로컬 저장소이므로 각자 pc파일폴더 만들어서 사용)
-		String path = "C:\\Users\\sj\\Desktop\\study\\upload\\nhou\\board\\" + boardId;
-		File folder = new File(path);
+		BoardDto board = boardMapper.select(boardId); // BoardDto에서 select를 가져와서
 		
-		File[] listFiles = folder.listFiles();
+		// list에 있는 (파일첨부 2개 이상) 가져와서 s3 저장소 파일 지움
+		List<String> fileNames = board.getBoardFileName();
 		
-		for (File file : listFiles) {
-			file.delete();
+		if(fileNames != null) {
+			for (String fileName : fileNames) {
+				// s3저장소 지우기
+				deleteFile(boardId, fileName);
+			}
 		}
-		
-		folder.delete();
-		
 		// db 파일 records 지우기
 		boardMapper.deleteFileByBoardId(boardId);
 		
@@ -195,6 +196,15 @@ public class BoardServiceImpl implements BoardService {
 		// 게시글 지울때
 		return boardMapper.delete(boardId); // mapper에서 사용할 명명
 		
+	}
+	
+	private void deleteFile(int boardId, String fileName) {
+		String key = "board/" + boardId + "/" + fileName;
+		DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+				.bucket(bucketName)
+				.key(key)
+				.build();
+		s3Client.deleteObject(deleteObjectRequest);
 	}
 	
 		// 좋아요
