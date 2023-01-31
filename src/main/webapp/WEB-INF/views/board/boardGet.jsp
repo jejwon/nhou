@@ -422,7 +422,7 @@ input[type="text"] {
 		</div>
 	</div>
 </div> <!-- 전체 container -->
-
+<jsp:include page="/WEB-INF/include/footer.jsp"></jsp:include>
 	<!-- 게시글 삭제확인 모달 -->
 	<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">

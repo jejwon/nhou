@@ -232,13 +232,13 @@ a:link, a:visited, a:hover, a:active {
 		<table class="table bg-white">
 			<thead class="bg-light">
 				<tr style="background-color: #DCC1B0;/* #E3A6A1; */">
-					<th style="width: 80px;">#</th>
-					<th style="width: 130px;">카테고리</th>
-					<th style="width: 800px;">제목</th>
-					<th>작성자</th>
-					<th>날짜</th>
-					<th>좋아요</th>
-					<th>조회수</th>
+					<th style="width: 80px; vertical-align: middle; text-align: center;">#</th>
+					<th style="width: 130px; vertical-align: middle; text-align: center;">카테고리</th>
+					<th style="width: 650px; vertical-align: middle; text-align: center;">제목</th>
+					<th style="width: 150px; vertical-align: middle; text-align: center;">작성자</th>
+					<th style="width: 50px; vertical-align: middle; text-align: center;">날짜</th>
+					<th style="width: 50px; vertical-align: middle; text-align: center;"><i class="fa-solid fa-heart"></i></th>
+					<th style="width: 50px; vertical-align: middle; text-align: center;"><i class="fa-solid fa-eye"></i></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -377,6 +377,7 @@ a:link, a:visited, a:hover, a:active {
 	</div>
 </div> <!-- 첫번째 container를 감싸는 div -->
 </section>
+<jsp:include page="/WEB-INF/include/footer.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
 </body>

@@ -69,7 +69,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	private void uploadFile(int boardId, MultipartFile file) {
 		try {
-			String key = "board/" + boardId + "/" + file.getOriginalFilename();
+			String key = "atrium/board/" + boardId + "/" + file.getOriginalFilename();
 			
 			PutObjectRequest putObjectRequest = PutObjectRequest.builder()
 					.bucket(bucketName)
@@ -199,7 +199,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	private void deleteFile(int boardId, String fileName) {
-		String key = "board/" + boardId + "/" + fileName;
+		String key = "atrium/board/" + boardId + "/" + fileName;
 		DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
 				.bucket(bucketName)
 				.key(key)
