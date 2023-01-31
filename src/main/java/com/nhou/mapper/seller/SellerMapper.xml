@@ -5,26 +5,5 @@
 <mapper namespace="com.nhou.mapper.seller.SellerMapper">
 
 <!-- 판매현황 리스트 -->
-<select id="selectSellerList" resultType="com.nhou.domain.seller.SellerDto">
-SELECT
-	ol.orderListId,
-	ol.orderDate,
-    ol.orderDetail_orderDetailId,
-    ol.orderStatus,
-    ol.product_productId,
-    ol.member_userId, <!-- 구매자 정보 -->
-    od.payment,
-    od.receiverName,
-    od.receiverPhone,
-    od.count,
-    p.productName,
-    p.member_userId, <!-- 판매자 정보 -->
-    od.address1,
-    od.address2,
-    m.userId
-FROM orderList ol LEFT JOIN orderDetail od ON ol.orderDetail_orderDetailId = od.orderDetailId
-				  LEFT JOIN member m ON ol.member_userId = m.userId
-                  LEFT JOIN product p ON ol.product_productId = p.productId
-WHERE ol.orderStatus = #{orderStatus}
-</select>
+
 </mapper>
