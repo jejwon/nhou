@@ -149,6 +149,7 @@
 </head>
 <body>
 	<sec:authorize access="isAuthenticated()"/>
+	<c:url value="/main/list" var="listLink"></c:url>
 
 	<!-- 로그인시 보이는 메뉴 설정 -->
 	<sec:authorize access="isAuthenticated()" var="loggedIn"/>
@@ -187,7 +188,7 @@
 				
 			<nav id="nav3">
 				<div class="home">
-					<a href="${pageContext.request.contextPath}/main/list">
+					<a href="${listLink }">
 						<img src="https://ifh.cc/g/PQ7QMk.png" alt="">
 					</a>
 				</div>

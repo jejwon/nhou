@@ -251,7 +251,7 @@ dl, ol, ul {
 	</form>
 	</div>
 </div> <!-- 전체 컨테이너 -->
-
+<jsp:include page="/WEB-INF/include/footer.jsp"></jsp:include>
 <!-- 수정 모달 -->
 <div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">

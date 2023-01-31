@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nhou.domain.cart.CartDto;
 import com.nhou.domain.member.MemberDto;
+import com.nhou.domain.order.OrderDto;
 import com.nhou.domain.seller.SellerDto;
 import com.nhou.domain.seller.SellerPageInfo;
+import com.nhou.domain.store.StoreDto;
 import com.nhou.service.member.MemberService;
 import com.nhou.service.seller.SellerService;
 
@@ -31,23 +33,27 @@ public class SellerController {
 
 	// 회원들 주문목록
 	@GetMapping("sellerList")
-	public void sellerList(@PathVariable("userId") String userId,
-						   @RequestParam(name="s") String s,
-						   Model model, Principal principal) {
+	public String sellerList(@RequestParam("userId") String userId,
+						   @RequestParam(name="s") String s, Model model, 
+						   Principal principal, StoreDto store, OrderDto order) {
+		String loginId = principal.getName();
+		MemberDto member = memberService.getById(userId);
 		
-		if(principal.getName() == userId) {
-			// 유저정보 가져오기
-			String loginId = principal.getName();
-			MemberDto member = memberService.getById(loginId);
-			System.out.println("로그인한 아이디" + loginId);
+		model.addAttribute("member", member);
+		
+		if (principal.getName() == loginId) {
+			List<StoreDto> storeList = sellerService.getProductList(store);
+			List<OrderDto> orderList = sellerService.getOrderList(order);
 			
-			// 상품 리스트 가져오기
-			List <SellerDto> sellerList = sellerService.selectSellerList(s);
-			System.out.println("판매현황 리스트" + sellerList);
+			model.addAttribute("storeList", storeList);
+			model.addAttribute("orderList", orderList);
 			
-			model.addAttribute("member", member);
-			model.addAttribute("sellerList", sellerList);
+			System.out.println("판매상품" + storeList);
+			System.out.println("판매현황" + orderList);
 			
+			return "redirect:/seller/sellerList";
+		} else {
+			return "redirect:/main/list";
 		}
 	}
 }
