@@ -3,18 +3,24 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.net.*" %>
-
 <c:set var="ctx" value="${ pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>장바구니 담기(수량)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
 <style type="text/css">
+/* 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
 input:focus {
     outline: none;
   }
+ /* 바디 */
 .container {
+	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 20px;
 }
 </style>
@@ -26,7 +32,7 @@ input:focus {
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
 
 
-	
+<section class="bg-light p-5">	
 <form action="${pageContext.request.contextPath}/cart/pay" id="orderForm">
 	<div class="container">
 				
@@ -61,16 +67,16 @@ input:focus {
 							<tr class="tr">
 								
 								<td>${cart.productName}</td>
-								<td><input type="text"  name="price" value="${cart.price}" style="border:none;"readonly>\</td>
+								<td><input type="text"  name="price" value="${cart.price}" style="border:none; width:150px;"readonly>원</td>
 								<td>
 								<input type="number" name="count" min="1" max="10" value="${cart.count }" > 
-								<!-- <button class="btn" style="background-color: #DCC1B0; border-radius:0px;"> --><a class="countModifyButton" data-cart-id="${cart.cartId}" style="text-decoration:none; color:black;">변경</a><!-- </button> -->
+								<div style="background-color: #D5D4D1;"><a class="countModifyButton" data-cart-id="${cart.cartId}" style="text-decoration:none; color:black;">변경</a></div>
 								</td> <!-- 수량 조절 -->
 								<td>
-								<input type="text" name="sum" value="${cart.price * cart.count}" style="border:none;" readonly>
+								<input type="text" name="sum" value="${cart.price * cart.count}" style="border:none; width:150px;" readonly>원
 								</td>
 								<td>
-								<!-- <button class="btn" style="background-color: #D5D4D1; border-radius:0px;"> --><a class="itemDeleteButton" data-cart-id="${cart.cartId}"  style="text-decoration:none; color:black;">삭제</a> 
+								<div style="background-color: #D5D4D1; width:100px;"><a class="itemDeleteButton" data-cart-id="${cart.cartId}"  style="text-decoration:none; color:black;">삭제</a></div>
 								</td>
 							</tr>	
 						</c:if>	
@@ -87,6 +93,7 @@ input:focus {
 
 </div>
 </form>
+</section>
 <!-- 수량 변경 저장됨 -->
 <form action="${pageContext.request.contextPath}/cart/cartModify" method="post" class="countModifyForm">
 	<input type="hidden" name="cartId" class="modifyCartId"/>
