@@ -34,8 +34,8 @@ public class SellerController {
 	// 회원들 주문목록
 	@GetMapping("sellerList")
 	public String sellerList(@RequestParam("userId") String userId,
-						   @RequestParam(name="s") String s, Model model, 
-						   Principal principal, StoreDto store, OrderDto order) {
+						     @RequestParam(name="s") String s, Model model, 
+						     Principal principal, StoreDto store, OrderDto order) {
 		String loginId = principal.getName();
 		MemberDto member = memberService.getById(userId);
 		
