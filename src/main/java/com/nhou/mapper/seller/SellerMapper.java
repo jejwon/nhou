@@ -19,6 +19,9 @@ public interface SellerMapper {
 	// 배송상태 수정
 	int update(OrderDto order);
 
+	// 배송상세 페이지 가져오기
+	List<OrderDto> get(int orderId, String member_userId);
+
 
 
 }

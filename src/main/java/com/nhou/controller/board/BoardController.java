@@ -43,9 +43,13 @@ public class BoardController {
 	
 	@PostMapping("boardInsert")
 	public String insert(BoardDto board, Principal principal, // 작성한 작성자 정보 가져옴
-			MultipartFile[] files, RedirectAttributes rttr) { 
+			MultipartFile[] files, RedirectAttributes rttr, Model model) { 
 		
 		String loginId = principal.getName();
+		MemberDto member = memberSeervice.getById(loginId);
+		
+		model.addAttribute("member", member);
+		
 		board.setMember_userId(loginId);
 		
 		/*
@@ -73,19 +77,27 @@ public class BoardController {
 					@RequestParam(name="t", defaultValue = "all") String type, // 검색할 범위(카테고리)
 					@RequestParam(name="q", defaultValue = "") String keyword, // 검색 키워드
 					@RequestParam(name = "category", defaultValue = "") String category, // 카테고리
-					PageInfo pageInfo, Model model) {
+					PageInfo pageInfo, Model model, Principal principal) {
 		
 		List<BoardDto> list = boardService.listBoard(page, type, keyword, pageInfo, category); // service에 listBoard로 넘어감
 		/* System.out.println("게시물" + list); */
+		String loginId = principal.getName();
+		MemberDto member = memberSeervice.getById(loginId);
 		
 		model.addAttribute("boardList", list); // boardList라는 곳에 list를 담겠다
+		model.addAttribute("member", member);
 	}
 	
 	// 게시글 보기
 	@GetMapping("boardGet")
 	public void get(@RequestParam(name="boardId") int boardId,
-			Model model, Authentication auth) {
+			Model model, Authentication auth, Principal principal) {
 			
+		String loginId = principal.getName();
+		MemberDto member = memberSeervice.getById(loginId);
+		
+		model.addAttribute("member", member);
+		
 		String member_userId = null;
 			
 		if (auth != null) {
@@ -104,7 +116,11 @@ public class BoardController {
 	@GetMapping("boardModify") // @은 외부 빈, #은 메소드의 파라미터
 	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #boardId)")
 	public void modify(@RequestParam(name="boardId") int boardId,
-			Model model) {
+			Model model, Principal principal) {
+		String loginId = principal.getName();
+		MemberDto member = memberSeervice.getById(loginId);
+		
+		model.addAttribute("member", member);
 		
 		BoardDto board = boardService.get(boardId); // service에 get을 사용
 	

@@ -138,6 +138,7 @@
 .cateTitle {
 	font-family: 'Nunito', sans-serif;
 	font-weight: bolder;
+	font-size: 20px;
 }
 
 

@@ -50,4 +50,34 @@ SET status = #{status}
 WHERE orderId = #{orderId}
 </update>
 
+<!-- 배송상세페이지 -->
+<select id="get" resultMap="orderMap">
+SELECT
+	nh.orderId,
+    nh.orderDate,
+    nh.address1,
+    nh.address2,
+    nh.postal,
+    nh.receiverName,
+    nh.receiverPhone,
+    nh.payment,
+    nh.status,
+    nh.member_userId
+FROM
+	nhou_order nh LEFT JOIN member m ON nh.member_userId = m.userId
+</select>
+
+<resultMap type="com.nhou.domain.order.OrderDto" id="orderMap">
+<id column="orderId" property="orderId"></id>
+<result column="payment" property="payment"/>
+<result column="orderDate" property="orderDate"/>
+<result column="member_userId" property="member_userId"/>
+<result column="status" property="status"/>
+<result column="itemPrice" property="itemPrice"/>
+<result column="count" property="count"/>
+<result column="address1" property="address1"/>
+<result column="address2" property="address2"/>
+<result column="receiverName" property="receiverName"/>
+<result column="receiverPhone" property="receiverPhone"/>
+</resultMap>
 </mapper>

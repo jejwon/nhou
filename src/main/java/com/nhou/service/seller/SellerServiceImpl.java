@@ -36,4 +36,9 @@ public class SellerServiceImpl implements SellerService {
 		return sellerMapper.update(order);
 	}
 	
+	@Override
+	public List<OrderDto> get(int orderId, String member_userId) {
+		return sellerMapper.get(orderId, member_userId);
+	}
+	
 }
