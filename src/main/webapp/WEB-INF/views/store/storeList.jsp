@@ -133,6 +133,10 @@ body{
   transform: translate(-50%, -50%);
 }
 
+.cateBtn {
+visibility: hidden;
+}
+
 </style>
 </head>
 <body>
@@ -149,13 +153,17 @@ body{
 	<div class="serv_list">
 		<div class="container">
 			<div class="title">
-				<h1>ITEM LIST</h1>
-				<ul>
-					<li><a href="">1</a></li>
-					<li><a href="">2</a></li>
-					<li><a href="">3</a></li>
-					<li><a href="">4</a></li>
-				</ul>
+				<c:url value="/store/storeList" var="listLink"></c:url>
+				<form action="${listLink }">
+					<div class="frame">
+						<button class="cateBtn" name="productCategory_categoryId" value="1">FURNITURE</button>
+						<button class="cateBtn" name="productCategory_categoryId" value="2">BEDDING</button>
+						<button class="cateBtn" name="productCategory_categoryId" value="3">LIVING FABRIC</button>
+						<button class="cateBtn" name="productCategory_categoryId" value="4">KITCHEN</button>
+						<button class="cateBtn" name="productCategory_categoryId" value="5">DECO</button>
+						<button class="cateBtn" name="productCategory_categoryId" value="6">PETS</button>
+					</div>
+				</form>
 			</div>
 		
 		<c:forEach items="${storeList }" var="store">
