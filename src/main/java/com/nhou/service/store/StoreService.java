@@ -140,7 +140,7 @@ public class StoreService {
 	 */
 
 	// 리스트
-	public List<StoreDto> listStore(Criteria cri, String category) {
+	public List<StoreDto> listStore(Criteria cri, String category, Long productCategory_categoryId ) {
 	
 		System.out.println("list Criteria" + cri);
 		
@@ -148,7 +148,7 @@ public class StoreService {
 		int records = cri.getAmount();
 		System.out.println(cri.getType());
 		
-		return storeMapper.getListWithPaging(cri, offset, records, category);
+		return storeMapper.getListWithPaging(cri, offset, records, category, productCategory_categoryId);
 	}
 
 	public int getTotal(Criteria cri) {

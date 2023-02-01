@@ -75,15 +75,16 @@ public class StoreController {
 	
 	@GetMapping("storeList")
 	public void list(@RequestParam(name="category", defaultValue = "") String category,
+			@RequestParam(name="productCategory_categoryId", required=false) Long productCategory_categoryId,
 					 StoreDto store, Criteria cri, Model model) {
-		
+		System.out.println("productCategory_categoryId "+productCategory_categoryId);
 		String keyword = cri.getKeyword();
 		cri.setKeyword("%" + cri.getKeyword() + "%");
-		List<StoreDto> list = service.listStore(cri, category);
+		List<StoreDto> list = service.listStore(cri, category, productCategory_categoryId);
 		List<CategoryDto> cateList = service.getCateList(cri);
 		
-		System.out.println(list);
-		System.out.println(cateList);
+		System.out.println("상품" + list);
+		System.out.println("카테고리" + cateList);
 		
 		model.addAttribute("storeList", list);
 		
