@@ -166,7 +166,8 @@
 		productId = #{productId}, 
 		productName = #{productName},
 		productContent = #{productContent}, 
-		price = #{price}, 
+		price = #{price},
+		productCategory_categoryId = #{productCategory_categoryId},
 		stock = #{stock}
 	WHERE
 		productId = #{productId}

@@ -95,7 +95,7 @@
 	<section class="container">
 		<header>Modify</header>
 		<form id="modifyForm" action="" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="productId" value="${store.productId }">
+    	<input type="hidden" name="productId" value="${store.productId }">
 		
 		<br>
 		
@@ -107,16 +107,39 @@
 			
 			<br>
 			
-		    <!-- 카테고리명 선택 -->
+<!--  	<sec:authorize access="hasAnyAuthority('0')">
+			<select name="auth"  class="form-select" aria-label="Default select example"style="width: 200px; margin: 0 10px;">
+	 			<c:choose>
+	 				<c:when test="${store.productCategory_categoryId == 1  }">
+			 			<option selected>furniture</option>	
+	 				</c:when>
+	 				<c:when test="${member.auth == 1  }">
+			 			<option selected>일반회원</option>	
+	 				</c:when>
+	 				<c:when test="${member.auth == 2  }">
+			 			<option selected>판매자</option>	
+	 				</c:when>
+	 			</c:choose>
+	  			<option value="1">일반회원 변경</option>
+	  			<option value="2">판매자 등록</option>
+	 			<c:if test="${member.auth == 0 }"> 
+	 			<option value="8">일반회원 + 블랙</option>
+	 			<option value="9">판매자 + 블랙</option>
+	 			 </c:if>
+			</select>
+		</sec:authorize> -->
+		
+			<!-- 카테고리명 선택 -->
 			<label for="categoryName">CategoryName</label>
-			<div class="select-box">
-				<select class="form-select border border-dark-subtle" name="productCategory_categoryId" id="productCategory_categoryId">
-					 <option value="1" name="furniture">Furniture</option>
-					 <option value="2" name="bedding">Bedding</option>
-					 <option value="3" name="Living&Fabric">Living&Fabric</option> 
-					 <option value="4" name="kitchen">Kitchen</option>
-					 <option value="5" name="deco">Deco</option>
-					 <option value="6" name="pets">Pets</option>
+			<div class="select-box">			
+				<select class="form-select border border-dark-subtle" name="productCategory_categoryId" id="productCategory_categoryId">				
+					<option selected>Open this select menu</option>
+		 			<option value=1 ${store.categoryId == 1 ? 'selected="selected"' : '' }>Furniture</option>
+		 			<option value=2 ${store.categoryId == 2 ? 'selected="selected"' : '' }>bedding</option>
+		 			<option value=3 ${store.categoryId == 3 ? 'selected="selected"' : '' }>Living&Fabric</option>
+		 			<option value=4 ${store.categoryId == 4 ? 'selected="selected"' : '' }>kitchen</option>
+		 			<option value=5 ${store.categoryId == 5 ? 'selected="selected"' : '' }>deco</option>
+		 			<option value=6 ${store.categoryId == 6 ? 'selected="selected"' : '' }>pets</option>
 				</select>
 			</div>
 				
