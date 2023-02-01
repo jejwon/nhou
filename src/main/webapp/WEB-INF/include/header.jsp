@@ -193,8 +193,6 @@
 					</a>
 				</div>
 			   	<ul class="menu-bottom">
-			   		<li><a href="${pageContext.request.contextPath}/store/storeRegister">상품등록</a></li>
-				  	<li><a href="${pageContext.request.contextPath}/store/storeList">NEW</a></li>
 					<li><a href="${pageContext.request.contextPath}/store/storeList?productCategory_categoryId=1">FURNITURE</a></li>
 					<li><a href="${pageContext.request.contextPath}/store/storeList?productCategory_categoryId=2">BEDDING</a></li>
 					<li><a href="${pageContext.request.contextPath}/store/storeList?productCategory_categoryId=3">LIVING FABRIC</a></li>
