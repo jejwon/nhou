@@ -14,34 +14,30 @@ import com.nhou.mapper.store.StoreReviewMapper;
 public class StoreReviewService {
 	
 	@Autowired
-	private StoreReviewMapper mapper;
+	private StoreReviewMapper storeReviewMapper;
 	
 	public int addReview(ReviewDto review) {
 		
-		return mapper.insert(review);
-		
+		return storeReviewMapper.insert(review);		
 	}
 
-	public List<ReviewDto> listReviewByproduct_productId(int product_productId) {
+	public List<ReviewDto> listReviewByproduct_productId(int product_productId, String username) {
 		
-		return mapper.selectReviewByproduct_productId(product_productId);
+		return storeReviewMapper.selectReviewByproduct_productId(product_productId, username);
 	}
 
 	public int removeByproductReplyId(int productReplyId) {
 	
-		return mapper.deleteByproductReplyId(productReplyId);
-		
+		return storeReviewMapper.deleteByproductReplyId(productReplyId);		
 	}
 
 	public ReviewDto getById(int productReplyId) {
 	
-		return mapper.selectById(productReplyId);
+		return storeReviewMapper.selectById(productReplyId);
 	}
 
 	public int modify(ReviewDto review) {
 		
-		return mapper.update(review);
-
-
+		return storeReviewMapper.update(review);
 	}
 }

@@ -2,7 +2,6 @@ package com.nhou.mapper.store;
 
 import java.util.List;
 
-import com.nhou.domain.store.CategoryDto;
 import com.nhou.domain.store.Criteria;
 import com.nhou.domain.store.StoreDto;
 
@@ -17,10 +16,6 @@ public interface StoreMapper {
 	 * 
 	 * int insertInfo(StoreDto store);
 	 */
-	// 상품 리스트 페이징 + 카테고리
-	// List<StoreDto> list(String type, String keyword, String categoryName);
-
-
 
 	StoreDto select(int productId);
 
@@ -33,19 +28,20 @@ public interface StoreMapper {
 	int insertFile(int product_productId, String productImage);
 	
 	int insertFile2(int product_productId, String productFileName);
+
+	int deleteFileByStoreId(int productId);
+
+	int deleteFileByStoreIdAndFileName(int product_productId, String productFileName);
 	
 	// 닉네임 정보 불러오기
 	String selectNick(String userId);
 
 	// 리스트 + 페이지네이션
 	List<StoreDto> list();
-	List<StoreDto> getListWithPaging(Criteria cri, int offset, int records, String category, Long productCategory_categoryId);
+	List<StoreDto> getListWithPaging(Criteria cri, int offset, int records, String category);
+	
 	// 페이징 총 갯수
 	int getTotalCount(Criteria cri, int productId);
-
-	public List<CategoryDto> getCategory();
-
-	public List<CategoryDto> getCateList();
 
 
 }
