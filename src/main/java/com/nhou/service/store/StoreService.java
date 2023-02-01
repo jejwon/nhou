@@ -7,14 +7,22 @@ import java.util.List;
 import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nhou.domain.board.BoardDto;
 import com.nhou.domain.store.Criteria;
 import com.nhou.domain.store.StoreDto;
 import com.nhou.mapper.store.StoreMapper;
 import com.nhou.mapper.store.StoreReviewMapper;
+
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 
 @Service
@@ -27,6 +35,12 @@ public class StoreService {
 	@Autowired
 	private StoreReviewMapper storeReviewMapper;
 	
+	@Autowired
+	private S3Client s3Client;
+	
+	@Value("${aws.s3.bucket}")
+	private String bucketName;
+	
 	public int register(StoreDto store, MultipartFile productFile1, MultipartFile[] productFile2) {
 //		db에 게시물 정보 저장
 //		System.out.println("service =============> "+store);
@@ -37,8 +51,10 @@ public class StoreService {
 //		파일명, 게시물id
 			storeMapper.insertFile(store.getProductId(), productFile1.getOriginalFilename());
 			
-//		파일 저장
-//		store id 이름의 새 폴더 만들기
+			uploadFile1(store.getProductId(), productFile1);
+
+/*		파일 저장
+		store id 이름의 새 폴더 만들기
 			File folder = new File("C:\\Users\\fgsfs\\Desktop\\Study\\upload\\nhou\\store\\" + store.getProductId());
 			folder.mkdirs();
 			File dest = new File(folder, productFile1.getOriginalFilename());
@@ -48,7 +64,7 @@ public class StoreService {
 				// @Transactional은 RuntimeException에서만 rollback됨
 				e.printStackTrace();
 				throw new RuntimeException(e);
-			}		
+			}	*/	
 					
 		}
 
@@ -56,10 +72,12 @@ public class StoreService {
 			if (file != null && file.getSize() > 0) {
 //			db에 파일 정보 저장
 //			파일명, 게시물id
-					storeMapper.insertFile2(store.getProductId(), file.getOriginalFilename());
+				storeMapper.insertFile2(store.getProductId(), file.getOriginalFilename());
 					
-	//			파일 저장
-	//			store id 이름의 새 폴더 만들기
+				uploadFile2(store.getProductId(), file);
+					
+	/*			파일 저장
+			    store id 이름의 새 폴더 만들기
 					File folder = new File("C:\\Users\\fgsfs\\Desktop\\Study\\upload\\nhou\\store\\" + store.getProductId());
 					folder.mkdirs();
 					File dest = new File(folder, file.getOriginalFilename());
@@ -69,12 +87,53 @@ public class StoreService {
 						// @Transactional은 RuntimeException에서만 rollback됨
 						e.printStackTrace();
 						throw new RuntimeException(e);
-					}
+					} */
 							
 				}		
 	      }
+		
 		return cnt;
-
+	}
+	
+	private void uploadFile1(int productId, MultipartFile productFile1) {
+		try {
+			String key = "atrium/store/" + productId + "/" + productFile1.getOriginalFilename();
+			
+			PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+					.bucket(bucketName)
+					.key(key)
+					.acl(ObjectCannedACL.PUBLIC_READ)
+					.build();
+			
+			RequestBody requestBody = RequestBody.fromInputStream(productFile1.getInputStream(), productFile1.getSize());
+		
+			s3Client.putObject(putObjectRequest, requestBody);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
+	private void uploadFile2(int productId, MultipartFile file) {
+		try {
+			String key = "atrium/store/" + productId + "/" + file.getOriginalFilename();
+			
+			
+			PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+					.bucket(bucketName)
+					.key(key)
+					.acl(ObjectCannedACL.PUBLIC_READ)
+					.build();
+			
+			RequestBody requestBody = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
+		
+			s3Client.putObject(putObjectRequest, requestBody);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 
@@ -102,42 +161,30 @@ public class StoreService {
 
 
 	public int update(StoreDto store, MultipartFile[] productFile2, List<String> removeFiles) {
-		int storeId = store.getProductId();
+		int productId = store.getProductId();
 		// removeFiles에 있는 파일명으로
 		if (removeFiles != null) {
-			for (String fileName : removeFiles) {
+			for (String storeFileName : removeFiles) {
 			
 			// 1. File 테이블에서 record 지우기
-			storeMapper.deleteFileByStoreIdAndFileName(storeId, fileName);
+			storeMapper.deleteFileByStoreIdAndFileName(productId, storeFileName);
 			// 2. 저장소에 실제 파일 지우기
-			String path = "C:\\Users\\fgsfs\\Desktop\\Study\\upload\\nhou\\store\\" + storeId + "\\" + fileName;
-			File file = new File(path);
-						
-				file.delete();
+			deleteFile(productId, storeFileName);
 			}
 		}
 		
 		for (MultipartFile file : productFile2) {
 			if (file != null && file.getSize() > 0) {
-				String name = file.getOriginalFilename();
+				String storeFileName = file.getOriginalFilename();
 				
 			// 파일 table에 해당 파일명 지우기
-				storeMapper.deleteFileByStoreIdAndFileName(storeId, name);
+				storeMapper.deleteFileByStoreIdAndFileName(productId, storeFileName);
 				
 			// File table 파일명 추가
-				storeMapper.insertFile2(storeId, name);
+				storeMapper.insertFile2(productId, storeFileName);
 				
 			// 저장소에 실제 파일 추가
-				File folder = new File("C:\\Users\\fgsfs\\Desktop\\Study\\upload\\nhou\\store\\" + store.getProductId());
-				folder.mkdirs();
-				File dest = new File(folder, file.getOriginalFilename());
-				try {
-					file.transferTo(dest);
-				} catch (IOException e) {
-					// @Transactional은 RuntimeException에서만 rollback됨
-					e.printStackTrace();
-					throw new RuntimeException(e);
-				}
+				uploadFile2(productId, file);
 		
 			}
 		}
@@ -148,16 +195,14 @@ public class StoreService {
 
 	public int remove(int productId) {
 		// 저장소의 파일 지우기
-		String path = "C:\\Users\\fgsfs\\Desktop\\Study\\upload\\nhou\\store\\" + productId;
-		File folder = new File(path);
+		StoreDto store = storeMapper.select(productId);
 		
-		File[] listFiles = folder.listFiles();
+		List<String> fileNames = store.getProductFileName();
 		
-		for(File file : listFiles) {
-			file.delete();
+		if(fileNames != null)
+			for(String fileName : fileNames) {
+				deleteFile(productId, fileName);
 		}
-		
-		folder.delete();
 		
 		// db 파일 record 지우기
 		storeMapper.deleteFileByStoreId(productId);
@@ -168,6 +213,15 @@ public class StoreService {
 		//게시물 지우기
 		return storeMapper.delete(productId);
 		
+	}
+	
+	private void deleteFile(int productId, String fileName) {
+		String key = "atrium/store/" + productId + "/" + fileName;
+		DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+				.bucket(bucketName)
+				.key(key)
+				.build();
+		s3Client.deleteObject(deleteObjectRequest);
 	}
 
 

@@ -126,6 +126,7 @@ public class StoreController {
 	  public void modify(int productId, Model model) {
 		  StoreDto store = service.get(productId);  
 		  model.addAttribute("store", store);
+		  //System.out.println("==============="+store);
 	  }
 	  
 	  @PostMapping("storeModify")
