@@ -7,7 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
 <style type="text/css">
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
 /* 사이드바 래퍼 스타일 */
   
   #page-wrapper {
@@ -40,6 +42,7 @@
   .sidebar-nav li {
     text-indent: 1.5em;
     line-height: 2.8em;
+    font-family: 'Nunito', sans-serif;
   }
   
   .sidebar-nav li a {
@@ -67,13 +70,13 @@
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
       <li class="sidebar-brand">
-        <span>판매자 관리 페이지</span>
+        <span style="font-family: 'Nunito', sans-serif; font-weight: bolder;">판매자 관리 페이지</span>
       </li>
       
       <li>
 		<c:url value="/store/storeRegister" var="registerLink"></c:url>
 		<a href="${registerLink}" >
-			<span>상품 등록</span>
+			<span style="font-family: 'Nunito', sans-serif; font-weight: bold;"><i class="fa-solid fa-cart-shopping"></i>&nbsp;상품 등록</span>
 		</a>
       </li>
 	  
@@ -81,15 +84,16 @@
       	<c:url value="/myPage/mySellerList" var="mySellerListLink">
       		<c:param name="userId" value="${member.userId }"></c:param>
       	</c:url>
-		<a href="${mySellerListLink }">등록한 상품</a>
+		<a href="${mySellerListLink }">
+		<span style="font-family: 'Nunito', sans-serif; font-weight: bold;"><i class="fa-solid fa-barcode"></i>&nbsp;등록한 상품</span>
+		</a>
 	  </li>
 	
       <li>
       	<c:url value="/seller/sellerList" var="orderListLink">
-      		<c:param name="s" value=""></c:param>
       	</c:url>
       		<a href="${orderListLink }">
-      			<span>판매 현황</span>
+      			<span style="font-family: 'Nunito', sans-serif; font-weight: bold;"><i class="fa-regular fa-clipboard"></i>&nbsp;판매 현황</span>
       		</a>
       </li>
     </ul>

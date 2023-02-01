@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhou.domain.member.MemberDto;
+import com.nhou.domain.store.CategoryDto;
 import com.nhou.domain.store.Criteria;
 import com.nhou.domain.store.PageDto;
 import com.nhou.domain.store.StoreDto;
@@ -75,32 +76,28 @@ public class StoreController {
 	
 	
 	
-	  @GetMapping("storeList") 
-	  public void list(@RequestParam(name="category", defaultValue = "") String category,
-					 StoreDto store, Criteria cri,Model model) { 
-		  // Request param 수집
-		  //business logic 
-		  String keyword = cri.getKeyword();
-		  cri.setKeyword("%" + cri.getKeyword() + "%");
-		  List<StoreDto> list = service.listStore(cri, category);
-
-		  System.out.println(list);
-		  System.out.println("category" + category);
-		  
-		  //List<StoreDto> list = service.listStore();
-		  
-		  //add attr to model 
-		  
-		  model.addAttribute("storeList", list);
-		  
-		  // 페이지네이션
-		  int total = service.getTotal(cri);
-		  model.addAttribute("pageMaker", new PageDto(cri, total));
+	@GetMapping("storeList")
+	public void list(@RequestParam(name="category", defaultValue = "") String category,
+			@RequestParam(name="productCategory_categoryId", required=false) Long productCategory_categoryId,
+					 StoreDto store, Criteria cri, Model model) {
+		System.out.println("productCategory_categoryId "+productCategory_categoryId);
+		String keyword = cri.getKeyword();
+		cri.setKeyword("%" + cri.getKeyword() + "%");
+		List<StoreDto> list = service.listStore(cri, category, productCategory_categoryId);
+		List<CategoryDto> cateList = service.getCateList(cri);
 		
-		  cri.setKeyword(keyword);
-
-		  // forward
-	  }
+		System.out.println("상품" + list);
+		System.out.println("카테고리" + cateList);
+		
+		model.addAttribute("storeList", list);
+		
+		// 페이지네이션
+		int total = service.getTotal(cri);
+		model.addAttribute("pageMaker", new PageDto(cri, total));
+		
+		cri.setKeyword(keyword);
+		
+	}
 	  
 	  
 	  @GetMapping("storeGet") 

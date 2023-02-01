@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.nhou.domain.board.BoardDto;
+import com.nhou.domain.store.CategoryDto;
+
 import com.nhou.domain.store.Criteria;
 import com.nhou.domain.store.StoreDto;
 import com.nhou.mapper.store.StoreMapper;
@@ -138,7 +139,7 @@ public class StoreService {
 
 
 	// 리스트
-	public List<StoreDto> listStore(Criteria cri, String category) {
+	public List<StoreDto> listStore(Criteria cri, String category, Long productCategory_categoryId) {
 	
 		System.out.println("list Criteria" + cri);
 		
@@ -146,7 +147,7 @@ public class StoreService {
 		int records = cri.getAmount();
 		System.out.println(cri.getType());
 		
-		return storeMapper.getListWithPaging(cri, offset, records, category);
+		return storeMapper.getListWithPaging(cri, offset, records, category, productCategory_categoryId);
 	}
 
 	public int getTotal(Criteria cri) {
@@ -222,6 +223,12 @@ public class StoreService {
 				.key(key)
 				.build();
 		s3Client.deleteObject(deleteObjectRequest);
+	}
+
+
+	    public List<CategoryDto> getCateList(Criteria cri) {
+		// TODO Auto-generated method stub
+		return storeMapper.getCateList();
 	}
 
 
