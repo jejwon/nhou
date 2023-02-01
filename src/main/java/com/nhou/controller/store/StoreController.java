@@ -135,7 +135,9 @@ public class StoreController {
 			  StoreDto store, 
 			  @RequestParam("productFile2") MultipartFile[] productFile2,
 			  @RequestParam(value="removeFiles", required=false) List<String> removeFiles,
-			  RedirectAttributes rttr) {		  
+			  RedirectAttributes rttr) {	
+		  //System.out.println("^^^^^^==============="+store);
+		  
 		  int cnt = service.update(store, productFile2, removeFiles);
 		  
 		  if (cnt==1) {

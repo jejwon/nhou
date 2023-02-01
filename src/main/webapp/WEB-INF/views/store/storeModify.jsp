@@ -134,12 +134,12 @@
 			<div class="select-box">			
 				<select class="form-select border border-dark-subtle" name="productCategory_categoryId" id="productCategory_categoryId">				
 					<option selected>Open this select menu</option>
-		 			<option value="furniture" ${store.categoryId == 1 ? 'selected="selected"' : '' }>Furniture</option>
-		 			<option value="bedding" ${store.categoryId == 2 ? 'selected="selected"' : '' }>bedding</option>
-		 			<option value="Living&Fabric" ${store.categoryId == 3 ? 'selected="selected"' : '' }>Living&Fabric</option>
-		 			<option value="kitchen" ${store.categoryId == 4 ? 'selected="selected"' : '' }>kitchen</option>
-		 			<option value="deco" ${store.categoryId == 5 ? 'selected="selected"' : '' }>deco</option>
-		 			<option value="pets" ${store.categoryId == 6 ? 'selected="selected"' : '' }>pets</option>
+		 			<option value=1 ${store.categoryId == 1 ? 'selected="selected"' : '' }>Furniture</option>
+		 			<option value=2 ${store.categoryId == 2 ? 'selected="selected"' : '' }>bedding</option>
+		 			<option value=3 ${store.categoryId == 3 ? 'selected="selected"' : '' }>Living&Fabric</option>
+		 			<option value=4 ${store.categoryId == 4 ? 'selected="selected"' : '' }>kitchen</option>
+		 			<option value=5 ${store.categoryId == 5 ? 'selected="selected"' : '' }>deco</option>
+		 			<option value=6 ${store.categoryId == 6 ? 'selected="selected"' : '' }>pets</option>
 				</select>
 			</div>
 				
