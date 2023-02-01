@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.nhou.domain.member.MemberDto;
 import com.nhou.domain.qna.PageInfo;
 import com.nhou.domain.qna.QnADto;
+import com.nhou.domain.qna.QnAReplyDto;
 import com.nhou.service.member.MemberService;
 import com.nhou.service.qna.QnAService;
 
@@ -32,14 +33,20 @@ public class QnAController {
 
 	
 	@GetMapping("qnaInsert")
-	public void insert(){
+	public void insert(Principal principal, Model model, MemberDto member){
+		String loginId = principal.getName();
+		member.setUserId(loginId);
 		
+		model.addAttribute("member", member);
 	}
 	//문의 작성
 	@PostMapping("qnaInsert")
 	public String insert(Principal principal, QnADto qna) {
 		String loginId = principal.getName();
 		qna.setMember_userId(loginId);
+		
+		
+		
 		qnaService.insert(qna);
 		
 		return "redirect:/qnaBoard/qnaList";
@@ -48,20 +55,27 @@ public class QnAController {
 	//문의 리스트
 	@GetMapping("qnaList")
 	public void list(@RequestParam(name="page", defaultValue="1") int page,//페이지
-					PageInfo pageInfo,Model model){
+					PageInfo pageInfo,Model model, Principal principal, MemberDto member){
+		String loginId = principal.getName();
+
+		member.setUserId(loginId);
+		
 		List<QnADto> list = qnaService.list(page, pageInfo);
 		
+		model.addAttribute("member", member);
 		model.addAttribute("qnaList", list);
 	}
 	
 	//문의 보기 페이지
 	@GetMapping("qnaGet")
-	public void get(@RequestParam(name="qnaId") int qnaId, Model model, Principal principal, MemberDto member) {
+	public void get(@RequestParam(name="qnaId") int qnaId, Model model, Principal principal, MemberDto member, QnAReplyDto qnaReply) {
 		String loginId = principal.getName();
 		QnADto qna = qnaService.getByQnAId(qnaId);
 		
 		member.setUserId(loginId);
 		
+		qnaReply.setWriter(loginId);
+		model.addAttribute("qnaReply", qnaReply);
 		model.addAttribute("member", member);
 		model.addAttribute("qna", qna);
 		

@@ -2,6 +2,8 @@ package com.nhou.domain.qna;
 
 import java.time.LocalDateTime;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
@@ -14,7 +16,7 @@ public class QnAReplyDto {
 	private String writer;
 	private int qna_qnaId;
 	
+	//@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	@JsonFormat(shape = Shape.STRING)
-	private LocalDateTime insertDatetime; //댓글 fetch 리스트 유지하기 -> stringify 형식변환!!
-	
+	private LocalDateTime insertDatetime; //댓글 fetch 리스트 유지하기 -> stringify 형식변환!!	
 }

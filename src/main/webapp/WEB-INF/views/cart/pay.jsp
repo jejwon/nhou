@@ -2,6 +2,7 @@
 <%@ page import="java.net.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<c:set var="ctx" value="${ pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,17 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style type="text/css">
+/* 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap');
+input:focus {
+    outline: none;
+  }
+ /* 바디 */
+.container {
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 20px;
+}
+
 .addressBox {
 	margin-top: 30px;
 }
@@ -90,7 +102,8 @@ input:focus {
 </head>
 <body>
 <jsp:include page="/WEB-INF/include/header.jsp"></jsp:include>
-	
+
+<section class="bg-light p-5">		
 	<div class="container">
 
 			
@@ -101,8 +114,7 @@ input:focus {
 						<th>옵션</th>
 						<th>가격</th>
 						<th>수량</th>
-						<th>합계</th>
-					
+						<th>합계</th>						
 					</tr>
 				</thead>
 			
@@ -116,15 +128,15 @@ input:focus {
 							<tr class="tr">								
 								<td>
 								<input type="hidden" name="product_productId" value="${cart.product_productId }">
-								<input type="text" name="productName" value="${cart.productName}">
+								<input type="text" name="productName" value="${cart.productName}" style="border:none; width:150px;"readonly>
 								</td>
-								<td><input type="text" name="option" value="${cart.option }"></td>
-								<td><input type="text"   name="price" value="${cart.price}" readonly>\</td>
+								<td><input type="text" name="option" value="${cart.option }" style="border:none; width:150px;"readonly></td>
+								<td><input type="text"   name="price" value="${cart.price}" style="border:none; width:150px;"readonly>원</td>
 								<td>
-								<input type="number" name="count"  value="${cart.count }" readonly> 
+								<input type="number" name="count"  value="${cart.count }" style="border:none; width:150px;"readonly> 
 								</td> <!-- 수량 조절 -->
 								<td>
-								<input type="text" name="sum" value="${cart.price * cart.count}" readonly>
+								<input type="text" name="sum" value="${cart.price * cart.count}" style="border:none; width:150px;"readonly>
 								</td>
 								
 							</tr>
@@ -148,27 +160,27 @@ input:focus {
 					<div class="addressInfo_div addressInfo_input1" style="display: block;">
 						<table>
 							<colgroup>
-								<col>
-								<col>
+								<col width="25%">
+								<col width="*">
 							</colgroup>
 							<tbody>
 								<tr>
 									<td>이름</td>
-									<td><input type="text" name="receiverName" value="${member.userName }" style="border-style: none;" readonly="readonly"></td>
+									<td><input  name="receiverName" class="form-control address_new" value="${member.userName }" readonly></td>
 								</tr>
 								<tr>
 									<td>주소</td>
-
-									<td><input type="text" name="postal" value="${member.postal}" style="border-style: none;" readonly="readonly"> 
-										<input type="text" name="address1" value="${member.address1 }" style="border-style: none;" readonly="readonly"> <br> 
-										<input type="text" name="address2" value="${member.address2 }" style="border-style: none;" readonly="readonly"></td>
-
+									<td> 
+										<input class="form-control" size="2" type="text" name="postal" style="width: 300px; height: 40px; display: inline-block; margin-bottom: 5px;" value="${member.postal}" readonly>
+										<input class="form-control" style="width: 300px; height: 40px; vertical-align: middle;" type="text"  name="address1" value="${member.address1 }" readonly>
+										<input class="form-control" style="width: 300px; height: 40px; margin-bottom: 3px; display: inline-block;" type="text" name="address2" value="${member.address2 }" readonly >
+									</td>
 								</tr>
-								
-						
 								<tr>
 									<td>전화번호</td>
-									<td><input type="text" name="receiverPhone" value="${member.phone }" style="border-style: none;" readonly="readonly"></td>
+									<td style="padding: 6px 10px;">
+										<input class="form-control phone_new" name="receiverPhone" value="${member.phone }" readonly>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -209,27 +221,24 @@ input:focus {
 					</div>
 				</div>
 			</div>
-
-		</div>		
+<hr>
 		
-
-		<input type="text" name="receiverName">
-
-		<h1>합계</h1>	
-			<div>
+			<div style="margin: 3px;">
 				배송비: 무료배송
 				<input type="radio" name="cal_info" value="card" checked><label>&nbsp;카드 결제</label>
 			</div>
-			<div>
-				최종결제금액: <input type="text" name="payment" value="<c:out value="${total}"/>">
+			<div style="margin: 3px;">
+				최종결제금액: <input type="text" name="payment" value="<c:out value="${total}"/>"  style="width: 150px;" readonly>원
 			</div>
 
 		<%-- <c:url value="/payment/orderPage" var="orderLink"></c:url>
 		<a href="${orderLink }"> </a>--%>
-			<button id="orderButton">주문하기</button>
+			<button id="orderButton" style="width: 150px; height: 50px; background-color: #DCC1B0; border-radius:0px; border:none; color: black;">결제하기</button>
+		</div>		
+
 		
 
-
+</section>
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>

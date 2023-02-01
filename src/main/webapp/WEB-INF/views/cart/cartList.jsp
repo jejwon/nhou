@@ -66,17 +66,17 @@ input:focus {
 						<c:if test="${member.userId == cart.member_userId }">
 							<tr class="tr">
 								
-								<td>${cart.productName}</td>
+								<td><input type="text" name="productName" value="${cart.productName}" style="border:none; width:150px;"readonly></td>
 								<td><input type="text"  name="price" value="${cart.price}" style="border:none; width:150px;"readonly>원</td>
 								<td>
 								<input type="number" name="count" min="1" max="10" value="${cart.count }" > 
-								<div style="background-color: #D5D4D1;"><a class="countModifyButton" data-cart-id="${cart.cartId}" style="text-decoration:none; color:black;">변경</a></div>
+								<a class="countModifyButton" data-cart-id="${cart.cartId}" style="text-decoration:underline; color:black;">변경</a>
 								</td> <!-- 수량 조절 -->
 								<td>
 								<input type="text" name="sum" value="${cart.price * cart.count}" style="border:none; width:150px;" readonly>원
 								</td>
 								<td>
-								<div style="background-color: #D5D4D1; width:100px;"><a class="itemDeleteButton" data-cart-id="${cart.cartId}"  style="text-decoration:none; color:black;">삭제</a></div>
+								<div style="background-color: #D5D4D1; width:80px; text-align: center;"><a class="itemDeleteButton" data-cart-id="${cart.cartId}"  style="text-decoration:none; color:black;">삭제</a></div>
 								</td>
 							</tr>	
 						</c:if>	
