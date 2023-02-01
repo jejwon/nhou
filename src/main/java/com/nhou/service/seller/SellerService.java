@@ -20,4 +20,7 @@ public interface SellerService {
 	// 배송상태 수정
 	public int update(OrderDto order);
 
+	// 주문 상세 가져오기
+	public List<OrderDto> get(int orderId, String member_userId);
+
 }

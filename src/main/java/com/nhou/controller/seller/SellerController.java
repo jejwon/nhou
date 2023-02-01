@@ -56,24 +56,23 @@ public class SellerController {
 		}
 		
 	}
-	// 주문 상세
-	@GetMapping("sellerModify")
-	public void get(@RequestParam("orderId") int orderId, Model model, OrderDto order, Principal principal, MemberDto member) {
-		String loginId = principal.getName();
-		member.setUserId(loginId);
-		
-		List<OrderDto> orderList = sellerService.getOrderList(order);
-		
-		model.addAttribute("orderList", orderList);
-		
-		System.out.println("리스트" + orderList);
-	}
+	
+	// 주문 상세 가져오기
+	/*
+	 * @GetMapping("sellerGet") public void get(@RequestParam("orderId") int
+	 * orderId, Model model, Principal principal) { String member_userId = null;
+	 * 
+	 * if (principal != null) { member_userId = principal.getName(); }
+	 * 
+	 * List<OrderDto> order = sellerService.get(orderId, member_userId);
+	 * model.addAttribute("order", order); System.out.println(order); }
+	 */
 	
 	// 배송상태 수정
-	@PostMapping("sellerModify")
-	public String update(OrderDto order) {
-		sellerService.update(order);
-		
-		return "reditect:/seller/sellerList";
-	}
+	@PostMapping("sellerModify") 
+	 public String update(OrderDto order) {
+	 sellerService.update(order);
+	
+	 return "redirect:/seller/sellerList"; }
+	 
 }
