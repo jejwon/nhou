@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.net.*" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -21,36 +22,54 @@
     <div class="container-fluid">
     	<div class="containerTitle">
       		<h1 style="margin-bottom: 10px;">${member.userId }님의 판매 현황</h1>
-				<input type="text" name="userId" value="${member.userId }" readonly="readonly">    	</div>
+				<input type="hidden" name="userId" value="${member.userId }" readonly="readonly">    	</div>
     	
     	<!-- 주문 현황 리스트 -->
     	<div class="productList">
 			<table class="table table-hover container">
 				<thead>
-					<tr scope="row">
-						<th>#</th>
-						<th>상품명</th>
-						<th>주문수량</th>
-						<th>가격</th>
-						<th>배송상태</th>
+					<tr scope="row" style="background-color: #DCC1B0; width: 900px;">
+						<th style="width: 200px; vertical-align: middle; text-align: center;">주문번호</th>
+						<th style="width: 200px; vertical-align: middle; text-align: center;">주문인</th>
+						<th style="width: 100px; vertical-align: middle; text-align: center;">가격</th>
+						<th style="width: 300px; vertical-align: middle; text-align: center;">주문날짜</th>
+						<th style="width: 80px; vertical-align: middle; text-align: center;">주문수량</th>
+						<th style="width: 100px; vertical-align: middle; text-align: center;">배송상태</th>
 					</tr>
 				</thead>
+				
 				<tbody>
-					<c:forEach items="${sellerList}" var="list">
-						<c:url value="/store/storeGet" var="sellingList">
-							<c:param name="orderListId" value="${sellingList.orderListId }"></c:param>
-						</c:url>
-						<tr>
-							<td>${list.orderListId }</td>
-							<td>${list.productName }</td>
-							<td>${list.count }</td>
-							<td>${list.payment }</td>
-							<td>${list.orderStatus }</td>
-						</tr>
-					</c:forEach>				
+				<c:forEach items="${orderList}" var="orderList">
+					<c:url value="/seller/sellerModify" var="getLink">
+						<c:param name="orderId" value="${orderList.orderId }"></c:param>
+					</c:url>
+					<tr onclick="location.href='${getLink }'" class="titleClick">
+						<td style="vertical-align: middle; text-align: center;">${orderList.orderId }</td>
+						<td style="vertical-align: middle; text-align: center;">${orderList.userName }</td>
+						<td style="vertical-align: middle; text-align: center;">${orderList.payment }</td>
+						<td style="vertical-align: middle; text-align: center;">
+						<fmt:parseDate value="${ orderList.orderDate }" pattern="yyyy-MM-dd'T'HH:mm" var="time"/>
+						<fmt:formatDate value="${time }" pattern="yyyy.MM.dd HH:mm"/>
+						</td>
+						<td style="vertical-align: middle; text-align: center;">${orderList.count }</td>
+						<td style="vertical-align: middle; text-align: center;">
+						<c:if test="${orderList.status == '배송준비중' }">
+							<span class="badge bg-primary rounded-pill">${orderList.status}</span>  
+						</c:if>
+						<c:if test="${orderList.status == '배송중' }">
+							<span class="badge bg-success rounded-pill">${orderList.status}</span>  
+						</c:if>
+						<c:if test="${orderList.status == '배송완료' }">
+							<span class="badge bg-secondary rounded-pill">${orderList.status}</span>  
+						</c:if>
+						</td>
+					</tr>
+					</c:forEach>
 				</tbody>
 			</table>
     	</div>
+    	
+    	
     </div>
   </div>
 

@@ -9,60 +9,57 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style type="text/css">
+/* Import Google font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 .serv_list {
 	padding-top: 30px;
 	padding-bottom: 40px;
+	
 }
 .serv_list .container {
-	max-width: 1100px;
+	max-width: 1500px;
 	height: 1500px;
 	margin: auto;
+	font-family: "Poppins", sans-serif;
 }
-
 .serv_list .container .title ul {
 	padding-left: 0;
 	list-style: none;
 }
-
 .serv_list .container .title ul li{
 	display: inline;
 	margin-right: 30px;
 }
-
 .serv_list .container .title ul li a{
 	text-decoration: none;
 	color: #444;
 }
-
 .serv_list .container .item_list{
 	display: block;
 	flex-wrap: wrap;
 	justify-content: space-between;
 }
-
 .serv_list .container .item_list .card{
 	border: 1px solid #eee;
 	border-radius: 5px;
-	height: 350px;
+	height: 500px; 
 	width: 250px;
-	padding: 5px;
+	padding: 18px; 
 	margin-bottom: 10px;
 	margin-right: 0;
 	float: left;
 }
-
 .serv_list .container .item_list .card img{
-	height: 200px;
+	height: 500px;
 	width: 250px;
+	object-fit:cover;
 }
 .serv_list .container .item_list .card .text p{
-	font-size: 14px;
+	font-size: 12px;
 	opacity: .8;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 }
-.serv_list .container .item_list .card .text p::after{
-	content: "원";
-}
+
 .serv_list .container .item_list .card .text button{
 	background: black;
 	color: white;
@@ -78,7 +75,6 @@
 	background: transparent;
 	color: black;
 }
-
 /* 바닥영역 */
 #buttom {
 	margin: 30px 0;
@@ -86,11 +82,56 @@
 	position: absolute;
 	top: 80%;
 }
-
 #buttom .paginationBox {
 	display: inline-block;
 }
 
+body{
+  background: #f2f2f2;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #588068;
+  border-right: none;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchBtn {
+  width: 40px;
+  height: 36px;
+  border: 1px solid #588068;
+  background: #588068;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap{
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
 </style>
 </head>
@@ -109,29 +150,38 @@
 		<div class="container">
 			<div class="title">
 				<h1>ITEM LIST</h1>
-				<c:url value="/store/storeList" var="listLink"></c:url>
-				<form action="${listLink }">
-					<button  name="productCategory_categoryId" value="6">PETS</button>
-				</form>
+				<ul>
+					<li><a href="">1</a></li>
+					<li><a href="">2</a></li>
+					<li><a href="">3</a></li>
+					<li><a href="">4</a></li>
+				</ul>
 			</div>
 		
 		<c:forEach items="${storeList }" var="store">
 		<c:url value="/store/storeGet" var="getLink">
 			<c:param name="productId" value="${store.productId }"></c:param>
 		</c:url>
+		
 			<div class="item_list">
-				<div class="card" onclick="location.href='${getLink}'">
-					<div class="img">
-						<img src="" alt="">
-					</div>
-					<div class="text">
-						<h2>${store.productName }</h2> <!-- 상품 이름 -->
-						<span>${store.categoryName }</span> <!-- 상품 설명 -->
-						<p>${store.price }</p> <!-- 상품 설명 -->
-						<button><i class="fa fa-check" aria-hidden="true"></i>사러가기</button>
+				<div class="card" style="width: 18rem; border:none; line-height:8px;" onclick="location.href='${getLink}'">
+					<img src="/image/${store.productId}/${store.productImage}" class="card-img-top rounded" alt="...">
+					<div class="card-body">
+						<!-- 상품명 -->
+						<h5 class="card-title">${store.productName }</h5>
+						<!-- 판매자 -->
+						<p calss="card-text" style="font-size: 13px;">🧡${store.member_userId }</p>
+						<!-- 카테고리명 -->
+						<p p calss="card-text" style="font-size: 13px;">${store.categoryName }</p>
+						<!-- 상품가격 -->
+						<p>${store.price } 원</p>
+<!--					<button><i class="fa fa-check" aria-hidden="true"></i>사러가기</button>   -->	
+						<a href="#" class="btn btn-primary btn-sm border border-light" style="background-color: #9D8A76;">사러가기</a>
 					</div>
 				</div>
 			</div>
+			
+			
 			</c:forEach>
 		</div>
 	</div>
@@ -154,14 +204,16 @@
 			</select>
 			<!-- 검색바 -->
 			<div class="searchWrap">
-				<input type="text" name='keyword' placeholder="검색어"
-				        value='<c:out value="${pageMaker.cri.keyword }"/>'>
-				<input type='hidden' name='pageNum'
-						value='<c:out value="${pageMaker.cri.pageNum }"/>'> 
-				<input type='hidden' name='amount'
-						value='<c:out value="${pageMaker.cri.amount }"/>'>
-				
-				<button class="searchBtn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+				<div class="search">
+					<input type="text" name='keyword' placeholder="검색어"
+					        value='<c:out value="${pageMaker.cri.keyword }"/>'>
+					<input type='hidden' name='pageNum'
+							value='<c:out value="${pageMaker.cri.pageNum }"/>'> 
+					<input type='hidden' name='amount'
+							value='<c:out value="${pageMaker.cri.amount }"/>'>
+					
+					<button class="searchBtn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+				</div>
 			</div>
 		</form>
 	</div>
@@ -171,7 +223,7 @@
 		<ul class="pagination" style="position: absolute; right: 50%;">
 			<c:if test="${pageMaker.prev }">
 				<li class="page-item">
-					<a class="page-link" href="${pageMaker.startPage -1 }" aria-label="Previous"> <i class="fa-solid fa-angle-left"></i></a>
+					<a class="page-link" href="${pageMaker.startPage -1 }" aria-label="Previous"> <i class="fa-solid fa-angles-left"></i></a>
 				</li>
 			</c:if>
 			
@@ -194,10 +246,8 @@
 	</form>
 </div>
 </div> <!-- 전체컨테이너 -->
-<jsp:include page="/WEB-INF/include/footer.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script type="text/javascript">
-const ctx = "${pageContext.request.contextPath}";
 /* 페이징 버튼처리 */
 var actionForm = document.getElementById("actionForm");
 

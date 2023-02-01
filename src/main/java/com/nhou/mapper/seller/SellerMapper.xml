@@ -4,27 +4,50 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nhou.mapper.seller.SellerMapper">
 
-<!-- 판매현황 리스트 -->
-<select id="selectSellerList" resultType="com.nhou.domain.seller.SellerDto">
+<!-- 판매상품 리스트 -->
+<select id="getProductList" resultType="com.nhou.domain.store.StoreDto">
 SELECT
-	ol.orderListId,
-	ol.orderDate,
-    ol.orderDetail_orderDetailId,
-    ol.orderStatus,
-    ol.product_productId,
-    ol.member_userId, <!-- 구매자 정보 -->
-    od.payment,
-    od.receiverName,
-    od.receiverPhone,
-    od.count,
-    p.productName,
-    p.member_userId, <!-- 판매자 정보 -->
-    od.address1,
-    od.address2,
-    m.userId
-FROM orderList ol LEFT JOIN orderDetail od ON ol.orderDetail_orderDetailId = od.orderDetailId
-				  LEFT JOIN member m ON ol.member_userId = m.userId
-                  LEFT JOIN product p ON ol.product_productId = p.productId
-WHERE ol.orderStatus = #{orderStatus}
+	*
+FROM
+	product
 </select>
+
+<!-- 판매현황 -->
+<select id="getOrderList" resultMap="getMap">
+SELECT
+	nh.orderId,
+	oi.count,
+    oi.itemPrice,
+    nh.member_userId,
+    nh.orderDate,
+    nh.payment,
+    nh.status,
+    oi.product_productId,
+    m.userName
+FROM
+	nhou_order nh LEFT JOIN orderItem oi ON nh.orderId = oi.nhou_order_orderId
+				  LEFT JOIN member m ON nh.member_userId = m.userId
+WHERE nh.orderDate
+ORDER BY nh.orderDate DESC
+</select>
+
+<resultMap type="com.nhou.domain.order.OrderDto" id="getMap">
+<id column="orderId" property="orderId"></id>
+<result column="payment" property="payment"/>
+<result column="orderDate" property="orderDate"/>
+<result column="member_userId" property="member_userId"/>
+<result column="status" property="status"/>
+<result column="itemPrice" property="itemPrice"/>
+<result column="count" property="count"/>
+<result column="product_productId" property="product_productId"/>
+<result column="userName" property="userName"/>
+</resultMap>
+
+<!-- 배송상태 수정 -->
+<update id="update">
+UPDATE nhou_order
+SET status = #{status}
+WHERE orderId = #{orderId}
+</update>
+
 </mapper>

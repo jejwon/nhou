@@ -4,17 +4,18 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.nhou.mapper.store.StoreReviewMapper">
-
+	
 	<delete id="deleteByReviewId">
 	DELETE FROM productReply
-	WHERE productReplyId = #{product_productId}
+	WHERE product_productId = #{product_productId}
 	</delete>
 
 	
 	<insert id="insert">
-	INSERT INTO productReply (productReplyId, product_productId, member_userId, writer, content, star)
-	VALUES (#{productReplyId}, #{product_productId}, #{member_userId}, #{writer}, #{content}, #{star})
+	INSERT INTO productReply (productReplyId, product_productId, member_userId, content, star)
+	VALUES (#{productReplyId}, #{product_productId}, #{member_userId}, #{content}, #{star})
 	</insert>
+	
 	
 	<update id="update">
 	UPDATE productReply
@@ -24,36 +25,66 @@
 		productReplyId =  #{productReplyId}
 	</update>
 	
+	
 	<select id="selectById" resultType="com.nhou.domain.store.ReviewDto">
 	SELECT
-		productReplyId,
-		product_productId,
-		writer,
-		content
+		pr.productReplyId,
+		pr.product_productId,
+		pr.member_userId,
+		pr.content,
+		pr.insertDatetime,
+		m.nickName
 	FROM
-		productReply
+		productReply pr LEFT JOIN member m ON pr.member_userId = m.userId
 	WHERE
 		productReplyId = #{productReplyId}
 	</select>
+	
 	
 	<delete id="deleteByproductReplyId">
 	DELETE FROM productReply
 	WHERE productReplyId = #{productReplyId}
 	</delete>
 	
-
+	
 	<select id="selectReviewByproduct_productId" resultType="com.nhou.domain.store.ReviewDto">
 	SELECT
-		productReplyId,
-		product_productId,
-		writer,
-		content
+		pr.productReplyId,
+		pr.product_productId,
+		pr.content,
+		pr.insertDatetime,
+		m.nickName,
+		pr.member_userId,
+		(pr.member_userId = #{username}) editable
 	FROM
-		productReply
+		productReply pr LEFT JOIN member m ON pr.member_userId = m.userId
 	WHERE
 		product_productId = #{product_productId}
 	ORDER BY
 		productReplyId DESC
 	</select>
+	
+	<delete id="deleteByMemberId">
+	DELETE FROM productReply
+	WHERE member_userId = #{member_userId}
+	</delete>
+
+	<!-- 평점 
+	<select id="getStarAvg" resultType="double">
+  	
+  		SELECT star
+  		FROM productReply
+  		WHERE product_productId = #{product_productId}
+  	
+  	</select>
+
+	<update id="updateStarAvg">
+	
+		UPDATE product
+		SET starAvg = #{starAvg}
+		WHERE productId = #{productId}
+	
+	</update> -->
+
 
 </mapper>

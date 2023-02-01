@@ -4,12 +4,12 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,10 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhou.domain.member.MemberDto;
-import com.nhou.domain.store.StoreDto;
-import com.nhou.domain.store.CategoryDto;
 import com.nhou.domain.store.Criteria;
 import com.nhou.domain.store.PageDto;
+import com.nhou.domain.store.StoreDto;
 import com.nhou.service.store.StoreService;
 
 @Controller
@@ -54,6 +53,7 @@ public class StoreController {
 		String loginId = principal.getName();
 		store.setMember_userId(loginId);
 		System.out.println(loginId);
+		
 		/*
 		 * Request param 수집/가공 
 		 * System.out.println("controller ==========> "+store);
@@ -73,58 +73,69 @@ public class StoreController {
 		
 	}
 	
-	@GetMapping("storeList")
-	public void list(@RequestParam(name="category", defaultValue = "") String category,
-					 StoreDto store, Criteria cri, Model model) {
+	
+	
+	  @GetMapping("storeList") 
+	  public void list(@RequestParam(name="category", defaultValue = "") String category,
+					 StoreDto store, Criteria cri,Model model) { 
+		  // Request param 수집
+		  //business logic 
+		  String keyword = cri.getKeyword();
+		  cri.setKeyword("%" + cri.getKeyword() + "%");
+		  List<StoreDto> list = service.listStore(cri, category);
+
+		  System.out.println(list);
+		  System.out.println("category" + category);
+		  
+		  //List<StoreDto> list = service.listStore();
+		  
+		  //add attr to model 
+		  
+		  model.addAttribute("storeList", list);
+		  
+		  // 페이지네이션
+		  int total = service.getTotal(cri);
+		  model.addAttribute("pageMaker", new PageDto(cri, total));
 		
-		String keyword = cri.getKeyword();
-		cri.setKeyword("%" + cri.getKeyword() + "%");
-		List<StoreDto> list = service.listStore(cri, category);
-		List<CategoryDto> cateList = service.getCateList(cri);
-		
-		System.out.println(list);
-		System.out.println(cateList);
-		
-		model.addAttribute("storeList", list);
-		
-		// 페이지네이션
-		int total = service.getTotal(cri);
-		model.addAttribute("pageMaker", new PageDto(cri, total));
-		
-		cri.setKeyword(keyword);
-		
-	}
+		  cri.setKeyword(keyword);
+
+		  // forward
+	  }
 	  
 	  
 	  @GetMapping("storeGet") 
 	  public void get(int productId, Model model, Principal principal, MemberDto member) { 
 		  String loginId = principal.getName();
 		  member.setUserId(loginId);
-		  
 		  // Request param 생략가능
 	  
 		  // Business logic 
 		  StoreDto store = service.get(productId);
-		  
+		
+//		  System.out.println(store);
 	  
-		  System.out.println(store);
-	  
-		  //add attr to model 
+		  //add attr to model
 		  model.addAttribute("member", member);
 		  model.addAttribute("store", store);
-		  
+	  
 		  // forward
 	  }
 	  
 	  @GetMapping("storeModify")
+	  @PreAuthorize("@storeSecurity.checkUserId(authentication.name, #productId)")
 	  public void modify(int productId, Model model) {
 		  StoreDto store = service.get(productId);  
 		  model.addAttribute("store", store);
 	  }
 	  
 	  @PostMapping("storeModify")
-	  public String modify(StoreDto store, RedirectAttributes rttr) {
-		  int cnt = service.update(store);
+	  @PreAuthorize("@storeSecurity.checkUserId(authentication.name, #store.productId)")
+	  public String modify(
+			  StoreDto store, 
+			  @RequestParam("productFile2") MultipartFile[] productFile2,
+			  @RequestParam(value="removeFiles", required=false) List<String> removeFiles,
+			  RedirectAttributes rttr) {		  
+		  int cnt = service.update(store, productFile2, removeFiles);
 		  
 		  if (cnt==1) {
 			  rttr.addFlashAttribute("message", "게시물이 수정되었습니다.");
@@ -137,6 +148,7 @@ public class StoreController {
 	  }
 	  
 	  @PostMapping("storeRemove")
+	  @PreAuthorize("@storeSecurity.checkUserId(authentication.name, #productId)")
 	  public String remove(int productId, RedirectAttributes rttr) {
 		  int cnt = service.remove(productId);
 		  

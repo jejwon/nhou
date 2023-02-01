@@ -361,10 +361,11 @@ input[type="text"] {
 
 
 <!-- 파일 -->
+<c:set var="ctx" value="${pageContext.request.contextPath}"></c:set>
 <div class="imgBox">
 	<c:forEach items="${board.boardFileName }" var="fileName">
 		<div class="img">
-			<img class="img-fluid img-thumbnail" alt="" src="/imagePath/${board.boardId }/${fileName}"
+			<img class="img-fluid img-thumbnail" alt="" src="${ctx }/atrium/board/${board.boardId}/${fileName}"
 				 width="500px" height="400px">
 		</div>
 	</c:forEach>

@@ -123,7 +123,7 @@
 		
 		<div class="mb-3">
 			<label class="form-label">파일</label>
-			<input multiple type="file" accept="image/*" class="form-control" name="files">
+			<input multiple type="file" class="form-control" name="files">
 		</div>
 		
 		
