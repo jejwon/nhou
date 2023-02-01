@@ -2,6 +2,7 @@
 <%@ page import="java.net.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,12 +72,12 @@
 		<table class="table bg-white">
 			<thead class="bg-light">
 				<tr style="background-color: #DCC1B0;">
-					<td style="width: 60px;">#</td>
-					<td style="width: 100px;">종류</td>
-					<td style="width: 600px;">제목</td>
-					<td style="width: 150px;">작성자</td>
-					<td style="width: 250px;">작성일시</td>
-					<td style="width: 100px;">답변상태</td>
+					<td style="width: 60px; font-weight: bold;">#</td>
+					<td style="width: 100px; font-weight: bold;">종류</td>
+					<td style="width: 600px; font-weight: bold;">제목</td>
+					<td style="width: 150px; font-weight: bold;">작성자</td>
+					<td style="width: 250px; font-weight: bold;">작성일시</td>
+					<td style="width: 100px; font-weight: bold;">답변상태</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -101,8 +102,8 @@
 					<td>${qna.nickName }</td>
 					
 					<td id="day">
-					${qna.insertDatetime }
-					
+					<fmt:parseDate value="${qna.insertDatetime }" pattern="yyyy-MM-dd'T'HH:mm" var="time"/>
+					<fmt:formatDate value="${time }" pattern="yyyy.MM.dd HH:mm"/>					
 					</td>				
 					<c:choose>
 					<c:when test="${qna.countReply == 0}">

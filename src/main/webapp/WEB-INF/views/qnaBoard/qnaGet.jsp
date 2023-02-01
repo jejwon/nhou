@@ -2,6 +2,7 @@
 <%@ page import="java.net.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <%-- security 사용하기위해 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,8 +49,8 @@
 }
 #back {
 	display: inline-block;
-	position: absolute;
-	left: 300px;
+	position: absolute;	
+	left: 930px;
 	background-color: #D5D4D1;
 }
 /*댓글 삭제 버튼*/
@@ -83,7 +84,7 @@
 <section class="bg-light p-5">
 	<div class="container" >
 			<h1>문의보기</h1>
-
+${qnaReply.content }
 	<div id="box">		
 		
 		<select id="qnaCategory"class="form-select" aria-label="Disabled select example" disabled> 
@@ -165,7 +166,7 @@
 <!-- 댓글 입력 -->
 <hr>
 
-<c:if test="${member.auth == 0 }">
+<c:if test="${member.userId == 'admin' }">
 	<div class="container">
 		<div class="form-floating mb-3">
 			  <input type="text" class="form-control" id="qnaReplyInput" placeholder="답변쓰기" >
@@ -181,10 +182,11 @@
 
 <%-- <input type="hidden" id="memberAuth"value="${member.auth }" /> --%>
 <div class="container" >
-	<div  id="replyListContainer"></div>
+	<div  id="replyListContainer">	
+	</div>
 </div>			
 
-
+${qnaReply.insertDatetime }
 <%-- 댓글 삭제 확인 모달 --%>
 	<!-- Modal -->
 	<div class="modal fade" id="deleteReplyConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -237,14 +239,13 @@ function listReply(){
 		const replyListContainer = document.querySelector("#replyListContainer");
 		//한 번 지우고 다시 불러오기
 		replyListContainer.innerHTML = "";
-		
 		for(const item of list){
-		
+			
 		const deleteReplyButtonId = `deleteReplyButton\${item.qnaReplyId}`;
 		const deleteButton = `<button  class="btn btn-outline " data-bs-toggle="modal" data-bs-target="#deleteReplyConfirmModal" 
 		data-reply-id="\${item.qnaReplyId}" id="\${deleteReplyButtonId}"
 		style="background-color: #DCC1B0; margin: 0 0 0 70px;">삭제</button>`
-
+	
 		
 		//const editReplyButtonId = `editReplyButton\${item.qnaReplyId}`;
 		//const editButton = `<button data-bs-toggle="modal" data-bs-target="#editReplyConfirmModal" data-reply-id="\${item.qnaReplyId}" id="\${editReplyButtonId}">수정</button>`
@@ -253,9 +254,10 @@ function listReply(){
 							<label for="qnaAnswer" class="form-label"></label>							
 							<textarea class="form-control" id="qnaAnswer" rows="3" style="resize: none; height:150px;" readonly>
 							<관리자 답변>
-							\${item.content}</textarea>						
-							<div class="time">
-							 \${item.insertDatetime}
+							\${item.content}																		
+							</textarea>						
+							<div>
+							\${item.insertDatetime}
 							</div>
 							<c:if test="${member.auth == 0 }">
 							<div id="button3">

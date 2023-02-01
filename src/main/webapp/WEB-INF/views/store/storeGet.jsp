@@ -251,7 +251,14 @@ $('#putCart').on('click', function(){
 		type: 'POST', //url 호출 할 방법(GET, POST, PATCH 등)
 		data: cart, //서버로 보낼 데이터
 		success: function(){
-			//서버가 요청을 성공적으로 수행했을 때 수행될 메소드, 파라미터는 서버가 반환한 값
+
+			//서버가 요청을 성공적으로 수행했을 때 수행될 메소드, 파라미터는 서버가 반환한 값			
+			if(confirm("장바구니에 담겼습니다. 장바구니로 이동하시겠습니까?")) {
+			    window.location.href = "${ctx}/store/storeList"
+			}
+		}, fail: function(){
+			alert("ㅠㅠ");
+
 		}
 
 	})

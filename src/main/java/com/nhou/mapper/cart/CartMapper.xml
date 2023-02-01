@@ -24,7 +24,7 @@
 	<!-- 장바구니 수량 수정 -->
 	<update id="update">
 	UPDATE cart
-	SET count = #{count} where cartId = #{cartId}
+	SET count = #{count} WHERE cartId = #{cartId}
 	</update>
 	
 	<!-- 장바구니 얻어오기 -->

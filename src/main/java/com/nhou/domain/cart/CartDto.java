@@ -6,7 +6,7 @@ import lombok.Data;
 public class CartDto {
 
 	//cart
-	private Integer cartId;
+	private int cartId;
 	private int product_productId;
 	private String member_userId;
 	private int count;
