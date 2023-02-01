@@ -66,6 +66,10 @@
 		product p LEFT JOIN member m ON p.member_userId = m.userId
 				  LEFT JOIN productCategory pc ON p.productCategory_categoryId = pc.categoryId
 	WHERE 1=1
+	<!-- 카테고리 분류 -->
+	<if test="productCategory_categoryId != null and productCategory_categoryId !=''">
+	AND p.productCategory_categoryId = #{productCategory_categoryId}
+	</if>
 	<!-- 검색조건 -->
 	<if test="cri.type!=null and cri.type!=''">
 		<include refid="criteria"></include>
@@ -197,5 +201,14 @@
 			</if>
 		</trim>
 	</select>
+<!-- 카테고리 조회 -->
+<select id="getCateList" resultType="com.nhou.domain.store.CategoryDto">
+SELECT 
+	pc.categoryId,
+	pc.categoryName,
+	p.productCategory_categoryId
+FROM
+productCategory pc LEFT JOIN product p ON pc.categoryId = p.productCategory_categoryId
+</select>
 
 </mapper>
