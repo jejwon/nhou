@@ -195,12 +195,12 @@
 			   	<ul class="menu-bottom">
 			   		<li><a href="${pageContext.request.contextPath}/store/storeRegister">상품등록</a></li>
 				  	<li><a href="${pageContext.request.contextPath}/store/storeList">NEW</a></li>
-					<li><a href="#">FURNITURE</a></li>
-					<li><a href="#">BEDDING</a></li>
-					<li><a href="#">LIVING FABRIC</a></li>
-					<li><a href="#">KITCHEN</a></li>
-					<li><a href="#">DECO</a></li>
-					<li><a href="#">PETS</a></li>
+					<li><a href="${pageContext.request.contextPath}/store/storeList?productCategory_categoryId=1">FURNITURE</a></li>
+					<li><a href="${pageContext.request.contextPath}/store/storeList?productCategory_categoryId=2">BEDDING</a></li>
+					<li><a href="${pageContext.request.contextPath}/store/storeList?productCategory_categoryId=3">LIVING FABRIC</a></li>
+					<li><a href="${pageContext.request.contextPath}/store/storeList?productCategory_categoryId=4">KITCHEN</a></li>
+					<li><a href="${pageContext.request.contextPath}/store/storeList?productCategory_categoryId=5">DECO</a></li>
+					<li><a href="${pageContext.request.contextPath}/store/storeList?productCategory_categoryId=6">PETS</a></li>
 			    </ul>
 			</nav>
 		</div>

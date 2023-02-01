@@ -40,21 +40,9 @@ public class MainController {
     
 		member.setUserId(username);
 		model.addAttribute("member", member);
-}
+	}
 	
 	
-
-	// 메인 상품 리스트
-	/*
-	 * @GetMapping("list") public void list(Model model) {
-	 * 
-	 * List<StoreDto> list = mainService.list();
-	 * 
-	 * model.addAttribute("list", list); System.out.println("상품 리스트 출력" + list);
-	 * 
-	 * 
-	 * }
-	 */
 	
 }
 

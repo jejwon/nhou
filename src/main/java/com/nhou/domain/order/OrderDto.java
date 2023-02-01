@@ -38,4 +38,6 @@ public class OrderDto {
 	private String selectOption;
 	private int nhou_order_orderId;
 	
+	private String userName;
+	
 }

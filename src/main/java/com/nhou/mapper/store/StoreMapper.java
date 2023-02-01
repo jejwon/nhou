@@ -39,7 +39,7 @@ public interface StoreMapper {
 
 	// 리스트 + 페이지네이션
 	List<StoreDto> list();
-	List<StoreDto> getListWithPaging(Criteria cri, int offset, int records, String category);
+	List<StoreDto> getListWithPaging(Criteria cri, int offset, int records, String category, Long productCategory_categoryId);
 	// 페이징 총 갯수
 	int getTotalCount(Criteria cri, int productId);
 

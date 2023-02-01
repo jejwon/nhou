@@ -31,19 +31,19 @@
     <div class="container-fluid">
     	<div class="containerTitle">
       		<h1 style="margin-bottom: 10px;">등록한 상품 목록</h1>
-			<input type="text" name="userId" readonly="readonly" value="${sellerList.userId }">
+			<input type="hidden" name="userId" readonly="readonly" value="${sellerList.userId }">
     	</div>
     	
     	<!-- 리스트 -->
     	<div class="productList">
 			<table class="table table-hover container">
 				<thead>
-					<tr scope="row">
-						<th>#</th>
-						<th>상품명</th>
-						<th>재고</th>
-						<th>가격</th>
-						<th>상품 등록일</th>
+					<tr scope="row" style="background-color: #DCC1B0; width: 900px;">
+						<th style="width: 200px; vertical-align: middle; text-align: center;">상품번호</th>
+						<th style="width: 400px; vertical-align: middle; text-align: center;">상품명</th>
+						<th style="width: 200px; vertical-align: middle; text-align: center;">재고</th>
+						<th style="width: 200px; vertical-align: middle; text-align: center;">가격</th>
+						<th style="width: 200px; vertical-align: middle; text-align: center;">상품 등록일</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -52,13 +52,13 @@
 							<c:param name="productId" value="${sellList.productId }"></c:param>
 						</c:url>
 							<tr onclick="location.href='${getLink}'">
-								<td>${sellList.productId }</td>
-								<td class="listTitle col-sm-6">
+								<td style="vertical-align: middle; text-align: center;">${sellList.productId }</td>
+								<td style="vertical-align: middle; text-align: center;" class="listTitle col-sm-6">
 									<a href="${getLink }">${sellList.productName }</a>
 								</td>
-								<td>${sellList.stock }</td>
-								<td>${sellList.price }</td>
-								<td><fmt:parseDate value="${ sellList.insertDatetime }" pattern="yyyy-MM-dd'T'HH:mm" var="time"/>
+								<td style="vertical-align: middle; text-align: center;">${sellList.stock }</td>
+								<td style="vertical-align: middle; text-align: center;">${sellList.price }</td>
+								<td style="vertical-align: middle; text-align: center;"><fmt:parseDate value="${ sellList.insertDatetime }" pattern="yyyy-MM-dd'T'HH:mm" var="time"/>
 								<fmt:formatDate value="${time }" pattern="yyyy.MM.dd HH:mm"/></td>
 							</tr>
 					</c:forEach>

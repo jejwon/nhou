@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nhou.domain.cart.CartDto;
 import com.nhou.domain.order.OrderDto;
+import com.nhou.domain.order.OrderItemDto;
 import com.nhou.domain.seller.SellerDto;
 import com.nhou.domain.seller.SellerPageInfo;
 import com.nhou.domain.store.StoreDto;
@@ -28,6 +29,11 @@ public class SellerServiceImpl implements SellerService {
 	@Override
 	public List<OrderDto> getOrderList(OrderDto order) {
 		return sellerMapper.getOrderList(order);
+	}
+	
+	@Override
+	public int update(OrderDto order) {
+		return sellerMapper.update(order);
 	}
 	
 }

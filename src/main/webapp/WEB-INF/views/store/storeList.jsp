@@ -91,6 +91,10 @@
 	display: inline-block;
 }
 
+.cateBtn {
+visibility: hidden;
+}
+
 
 </style>
 </head>
@@ -108,10 +112,16 @@
 	<div class="serv_list">
 		<div class="container">
 			<div class="title">
-				<h1>ITEM LIST</h1>
 				<c:url value="/store/storeList" var="listLink"></c:url>
 				<form action="${listLink }">
-					<button  name="productCategory_categoryId" value="6">PETS</button>
+					<div class="frame">
+						<button class="cateBtn" name="productCategory_categoryId" value="1">FURNITURE</button>
+						<button class="cateBtn" name="productCategory_categoryId" value="2">BEDDING</button>
+						<button class="cateBtn" name="productCategory_categoryId" value="3">LIVING FABRIC</button>
+						<button class="cateBtn" name="productCategory_categoryId" value="4">KITCHEN</button>
+						<button class="cateBtn" name="productCategory_categoryId" value="5">DECO</button>
+						<button class="cateBtn" name="productCategory_categoryId" value="6">PETS</button>
+					</div>
 				</form>
 			</div>
 		
