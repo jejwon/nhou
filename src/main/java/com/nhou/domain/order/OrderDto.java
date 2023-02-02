@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import java.util.List;
 
+import com.nhou.domain.store.StoreDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,5 +41,8 @@ public class OrderDto {
 	private int nhou_order_orderId;
 	
 	private String userName;
+	private List<StoreDto> products;
+	private String seller;
+	private int stock;
 	
 }

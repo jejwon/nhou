@@ -41,4 +41,13 @@ public class SellerServiceImpl implements SellerService {
 		return sellerMapper.get(orderId, member_userId);
 	}
 	
+	@Override
+	public StoreDto getProductInfo(StoreDto store) {
+		return sellerMapper.getProductInfo(store);
+	}
+	
+	@Override
+	public int stockCheck(StoreDto store) {
+		return sellerMapper.stockCheck(store);
+	}
 }

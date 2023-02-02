@@ -35,6 +35,7 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${list }" var="list">
+					<c:if test="${list.member_userId == member.userId}">
 					<c:url value="/store/storeGet" var="getLink">
 						<c:param name="productId" value="${list.productId }"></c:param>
 					</c:url>
@@ -50,6 +51,7 @@
 						<fmt:formatDate value="${time }" pattern="yyyy.MM.dd HH:mm"/></td>
 						<td style="vertical-align: middle; text-align: center;">${list.status }</td>
 					</tr>
+					</c:if>
 				</c:forEach>
 			</tbody>
 		</table>

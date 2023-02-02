@@ -23,10 +23,14 @@ SELECT
     nh.payment,
     nh.status,
     oi.product_productId,
-    m.userName
+    m.userName,
+    p.member_userId AS seller,
+    p.stock,
+    p.productId
 FROM
 	nhou_order nh LEFT JOIN orderItem oi ON nh.orderId = oi.nhou_order_orderId
 				  LEFT JOIN member m ON nh.member_userId = m.userId
+                  Left join product p ON oi.product_productId = p.productId
 WHERE nh.orderDate
 ORDER BY nh.orderDate DESC
 </select>
@@ -41,6 +45,15 @@ ORDER BY nh.orderDate DESC
 <result column="count" property="count"/>
 <result column="product_productId" property="product_productId"/>
 <result column="userName" property="userName"/>
+<result column="seller" property="seller"/>
+<collection property="products" resultMap="products"></collection>
+</resultMap>
+
+<resultMap type="com.nhou.domain.store.StoreDto" id="products">
+<result column="productId" property="productId"/>
+<result column="member_userId" property="member_userId"/>
+<result column="seller" property="seller"/>
+<result column="stock" property="stock"/>
 </resultMap>
 
 <!-- 배송상태 수정 -->
@@ -80,4 +93,26 @@ FROM
 <result column="receiverName" property="receiverName"/>
 <result column="receiverPhone" property="receiverPhone"/>
 </resultMap>
+
+<select id="getProductInfo" resultMap="productMap">
+select
+	p.productId,
+	p.member_userId
+from 
+	product p LEFT JOIN member m ON p.member_userId = m.userId
+where p.member_userId = #{member_userId};
+</select>
+
+<resultMap type="com.nhou.domain.store.StoreDto" id="productMap">
+<id column="productId" property="productId"></id>
+<result column="member_userId" property="member_userId"/>
+</resultMap>
+
+
+<!-- 상품 수량 조절 -->
+<update id="stockCheck">
+UPDATE product
+SET stock = stock - #{stock}
+WHERE productId = #{productId}
+</update>
 </mapper>
