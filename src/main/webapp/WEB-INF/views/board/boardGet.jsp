@@ -365,7 +365,7 @@ input[type="text"] {
 <div class="imgBox">
 	<c:forEach items="${board.boardFileName }" var="fileName">
 		<div class="img">
-			<img class="img-fluid img-thumbnail" alt="" src="${imgUrl }/atrium/board/${board.boardId}/${fileName}"
+			<img class="img-fluid img-thumbnail" alt="" src="${imgUrl }/board/${board.boardId}/${fileName}"
 				 width="500px" height="400px">
 		</div>
 	</c:forEach>
