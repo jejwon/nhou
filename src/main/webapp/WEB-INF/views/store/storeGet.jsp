@@ -254,7 +254,7 @@ $('#putCart').on('click', function(){
 
 			//서버가 요청을 성공적으로 수행했을 때 수행될 메소드, 파라미터는 서버가 반환한 값			
 			if(confirm("장바구니에 담겼습니다. 장바구니로 이동하시겠습니까?")) {
-			    window.location.href = "${ctx}/store/storeList"
+			    window.location.href = "${ctx}/cart/cartList"
 			}
 		}, fail: function(){
 			alert("ㅠㅠ");
