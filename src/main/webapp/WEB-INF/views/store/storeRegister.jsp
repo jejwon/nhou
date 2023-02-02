@@ -96,7 +96,7 @@
 
 	<section class="container">
 		<header>Registration</header>
-		<form action="/store/storeRegister" method="post" enctype="multipart/form-data" class="form">
+		<form action="${pageContext.request.contextPath}/store/storeRegister" method="post" enctype="multipart/form-data" class="form">
 			
 		<!-- 판매자 -->
 			<div class="input-box">
