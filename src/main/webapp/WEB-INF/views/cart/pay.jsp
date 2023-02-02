@@ -298,7 +298,7 @@ $.ajax({
 		data: order,
 		success: function(res){	
 			//orderItem.nhou_order_orderId = order.orderId;
-			alert('1번 성공!'); //리턴 타입 void -> int로 
+			//alert('1번 성공!'); //리턴 타입 void -> int로 
 		
 			$.ajax({	
 				url: '/cart/orderItemInsert',
@@ -306,7 +306,7 @@ $.ajax({
 				type: 'POST',
 				data: orderItem,
 				success: function(res){	
-					alert('2번 성공');
+					//alert('2번 성공');
 					
 					$.ajax({
 						url: '/cart/cartDeleteAll',
@@ -314,7 +314,7 @@ $.ajax({
 						type: 'POST',
 						data: cart,
 						success: function(res){
-							alert('삭제 성공');
+							//alert('삭제 성공');
 							
 						IMP.init('imp13488808');
 
@@ -333,13 +333,13 @@ $.ajax({
 							console.log(rsp);
 							
 							if(rsp.success) { // 결제 성공시
-								var msg = "결제 완료";
+								var msg = "결제가 완료되었습니다.";
 				
 								alert("결제 완료" + msg);
 								location.href = "${ctx}/myPage/myPageOrderList";
 						
 							} else {
-								alert("결제 실패");
+								alert("결제를 실패했습니다.");
 							}
 						});
 	
