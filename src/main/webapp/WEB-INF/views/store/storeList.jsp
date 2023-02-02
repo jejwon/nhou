@@ -173,7 +173,7 @@ visibility: hidden;
 		
 			<div class="item_list">
 				<div class="card" style="width: 18rem; border:none; line-height:8px;" onclick="location.href='${getLink}'">
-					<img src="/image/${store.productId}/${store.productImage}" class="card-img-top rounded" alt="...">
+					<img src="${imgUrl }/store/${store.productId}/${store.productImage}" class="card-img-top rounded" alt="...">
 					<div class="card-body">
 						<!-- 상품명 -->
 						<h5 class="card-title">${store.productName }</h5>

@@ -164,7 +164,7 @@
 		<!-- 상품 대표 이미지 -->
 			<h5>Thumbnail</h5>
 			<div class="col-md-4">
-				<img src="/image/${store.productId}/${store.productImage}" class="rounded" alt="...">
+				<img src="${imgUrl }/store/${store.productId}/${store.productImage}" class="rounded" alt="...">
 			</div>
 			
 			<br>
@@ -183,7 +183,7 @@
 						</div>
 						<div class="col-10">
 							<div class="col-md-4">
-								<img src="/image/${store.productId}/${file}" class="img-fluid rounded-start" alt="...">
+								<img src="${imgUrl }/store/${store.productId}/${file}" class="img-fluid rounded-start" alt="...">
 							</div>
 						</div>
 					</div>
@@ -195,7 +195,7 @@
 		<!-- 상품대표이미지 파일 -->
 			Thumbnail
 			<div class="input-group">
-			  <input type="file" accept="image/*" class="form-control" name ="productFile1" id="inputGroupFile1" aria-describedby="inputGroupFileAddon1" aria-label="Upload">
+			  <input type="file" class="form-control" name ="productFile1" id="inputGroupFile1" aria-describedby="inputGroupFileAddon1" aria-label="Upload">
 			</div>
 			
 			<br>
@@ -203,7 +203,7 @@
 		<!-- 상품이미지 파일(추가) -->
 			Add Images
 			<div class="input-group">
-			  <input multiple type="file" accept="image/*" class="form-control" name ="productFile2" id="inputGroupFile2" aria-describedby="inputGroupFileAddon2" aria-label="Upload">
+			  <input multiple type="file" class="form-control" name ="productFile2" id="inputGroupFile2" aria-describedby="inputGroupFileAddon2" aria-label="Upload">
 			</div>
 		
 			<br>

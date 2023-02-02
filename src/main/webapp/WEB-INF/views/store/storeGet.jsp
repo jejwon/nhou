@@ -47,7 +47,7 @@
 			<div class="card mb-3" style="max-width: 2000px; border:none;">
 				<div class="row g-0">
 				<div class="col-md-4">
-					<img src="/image/${store.productId}/${store.productImage}" class="rounded" alt="...">
+					<img src="${imgUrl }/store/${store.productId}/${store.productImage}" class="rounded" alt="...">
 				</div>
 				<div class="col-md-8">
 					<div class="card-body">
@@ -123,7 +123,7 @@
 						<h4 id="scrollspyHeading1">상세정보</h4>
 							<c:forEach items="${store.productFileName}" var="file">
 							<div class="col-md-4">
-								<img src="/image/${store.productId}/${file}" class="img-fluid rounded-start" alt="...">
+								<img src="${imgUrl }/store/${store.productId}/${file}" class="img-fluid rounded-start" alt="...">
 							</div>
 							</c:forEach>
 					</div>
