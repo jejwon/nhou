@@ -56,7 +56,7 @@ public class StoreController {
 		System.out.println(loginId);
 		
 		/*
-		 * Request param 수집/가공 
+		 * 
 		 * System.out.println("controller ==========> "+store);
 		 */		 
 		
