@@ -16,6 +16,10 @@
 .container {
 	font-family: "Poppins", sans-serif;
 }
+
+.contents h6 {
+	font-family: "Poppins", sans-serif;
+}
 </style>
 </head>
 <body>
@@ -59,7 +63,9 @@
 		
 					<h5 class="card-text"><small class="text-muted">🧡${store.member_userId }</small></h5>
 					
-					<h6 class="card-text" name="productContent" id="productContent">${store.productContent }</h6>		
+					<hr>
+					
+					<h6 class="card-text contents" name="productContent" id="productContent">${store.productContent }</h6>		
 					
 					<br>
 

@@ -127,7 +127,7 @@ input:focus {
 						<c:if test="${member.userId == cart.member_userId }">
 							<tr class="tr">								
 								<td>
-								<input type="hidden" name="product_productId" value="${cart.product_productId }">
+								<input type="text" name="product_productId" value="${cart.product_productId }">
 								<input type="text" name="productName" value="${cart.productName}" style="border:none; width:150px;"readonly>
 								</td>
 								<td><input type="text" name="option" value="${cart.option }" style="border:none; width:150px;"readonly></td>

@@ -22,6 +22,10 @@ public interface SellerMapper {
 	// 배송상세 페이지 가져오기
 	List<OrderDto> get(int orderId, String member_userId);
 
+	StoreDto getProductInfo(StoreDto store);
+	
+	// 상품 수량 조절
+	public int stockCheck(StoreDto store);
 
 
 }

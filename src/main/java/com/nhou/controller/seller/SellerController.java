@@ -22,6 +22,7 @@ import com.nhou.domain.seller.SellerPageInfo;
 import com.nhou.domain.store.StoreDto;
 import com.nhou.service.member.MemberService;
 import com.nhou.service.seller.SellerService;
+import com.nhou.service.store.StoreService;
 
 @Controller
 @RequestMapping("seller")
@@ -47,32 +48,29 @@ public class SellerController {
 			
 			model.addAttribute("storeList", storeList);
 			model.addAttribute("orderList", orderList);
+			System.out.println("상품등록자 정보" + storeList);
+			System.out.println("내상품 주문한 고객정보" + orderList);
 			
-			/*
-			 * System.out.println("판매상품" + storeList); System.out.println("판매현황" +
-			 * orderList);
-			 */
 			
 		}
 		
 	}
 	
-	// 주문 상세 가져오기
-	/*
-	 * @GetMapping("sellerGet") public void get(@RequestParam("orderId") int
-	 * orderId, Model model, Principal principal) { String member_userId = null;
-	 * 
-	 * if (principal != null) { member_userId = principal.getName(); }
-	 * 
-	 * List<OrderDto> order = sellerService.get(orderId, member_userId);
-	 * model.addAttribute("order", order); System.out.println(order); }
-	 */
-	
 	// 배송상태 수정
 	@PostMapping("sellerModify") 
 	 public String update(OrderDto order) {
 	 sellerService.update(order);
-	
+	 
+	 List<OrderDto> orderList = sellerService.getOrderList(order);
+	 StoreDto products = new StoreDto();
+	 
+	 for (OrderDto i : orderList) {
+		 products.setProductId(i.getProduct_productId());
+		 products.setStock(i.getCount());
+		 sellerService.stockCheck(products);
+	 }
+
 	 return "redirect:/seller/sellerList"; }
+	
 	 
 }
