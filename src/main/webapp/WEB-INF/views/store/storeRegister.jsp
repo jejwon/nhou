@@ -142,7 +142,7 @@
 		<!-- 상품대표이미지 -->
 			Thumbnail
 			<div class="input-group">
-			  <input type="file" accept="image/*" class="form-control" name ="productFile1" id="inputGroupFile1" aria-describedby="inputGroupFileAddon1" aria-label="Upload">
+			  <input type="file" class="form-control" name ="productFile1" id="inputGroupFile1" aria-describedby="inputGroupFileAddon1" aria-label="Upload">
 			</div>
 		
 		<br>
@@ -150,7 +150,7 @@
 		<!-- 상품이미지(추가) -->
 			Add Images
 			<div class="input-group">
-			  <input multiple type="file" accept="image/*" class="form-control" name ="productFile2" id="inputGroupFile2" aria-describedby="inputGroupFileAddon2" aria-label="Upload">
+			  <input multiple type="file" class="form-control" name ="productFile2" id="inputGroupFile2" aria-describedby="inputGroupFileAddon2" aria-label="Upload">
 			</div>
 		
 		<br>
