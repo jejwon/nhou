@@ -24,9 +24,12 @@
     <div class="container-fluid">
     	<div class="containerTitle">
       		<h1 style="margin-bottom: 10px;">${member.userId }님의 판매 현황</h1>
-				<input type="hidden" name="userId" value="${member.userId }" readonly="readonly">    	</div>
-    	
+				<input type="hidden" name="userId" value="${member.userId }" readonly="readonly">
+				
+		
+		</div>
     	<!-- 주문 현황 리스트 -->
+    	<c:if test=""></c:if>
     	<div class="productList">
 			<table class="table table-hover container">
 				<thead>
@@ -44,6 +47,8 @@
 				
 				<tbody>
 				<c:forEach items="${orderList}" var="orderList">
+					<input type="hidden" name="seller" value="${orderList.seller }">
+					<c:if test="${member.userId == orderList.seller}">
 					<tr>
 						<td style="vertical-align: middle; text-align: center;">${orderList.orderId }</td>
 						<td style="vertical-align: middle; text-align: center;">${orderList.userName }</td>
@@ -77,7 +82,8 @@
 							<a style="text-decoration: none; color: black; background-color: #DCC1B0; padding: 10px;" class="statusModifyButton" data-order-id="${orderList.orderId }">수정</a>
 						</td>
 					</tr>
-					</c:forEach>
+					</c:if>
+				</c:forEach>
 				</tbody>
 			</table>
     	</div>

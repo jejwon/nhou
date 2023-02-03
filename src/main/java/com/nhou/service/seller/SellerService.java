@@ -23,4 +23,8 @@ public interface SellerService {
 	// 주문 상세 가져오기
 	public List<OrderDto> get(int orderId, String member_userId);
 
+	public StoreDto getProductInfo(StoreDto store);
+
+	// 상품 수량 조절
+	public int stockCheck(StoreDto store);
 }
