@@ -291,7 +291,7 @@ $('#orderButton').on('click', function(){
 	order.receiverPhone = $('input[name=receiverPhone]').val();	
 
 $.ajax({
-		url: '/cart/payInsert',
+		url: '${pageContext.request.contextPath}/cart/payInsert',
 		dataType: 'JSON',
 		//async의 값을 false로 주면 동기방식으로 전역변수에 셋팅
 		type: 'POST',
@@ -301,7 +301,7 @@ $.ajax({
 			//alert('1번 성공!'); //리턴 타입 void -> int로 
 		
 			$.ajax({	
-				url: '/cart/orderItemInsert',
+				url: '${pageContext.request.contextPath}/cart/orderItemInsert',
 				dataType: 'JSON',
 				type: 'POST',
 				data: orderItem,
@@ -309,7 +309,7 @@ $.ajax({
 					//alert('2번 성공');
 					
 					$.ajax({
-						url: '/cart/cartDeleteAll',
+						url: '${pageContext.request.contextPath}/cart/cartDeleteAll',
 						dataType: 'JSON',
 						type: 'POST',
 						data: cart,
@@ -336,7 +336,7 @@ $.ajax({
 								var msg = "결제가 완료되었습니다.";
 				
 								alert("결제 완료" + msg);
-								location.href = "${ctx}/myPage/myPageOrderList";
+								location.href = "${pageContext.request.contextPath}/myPage/myPageOrderList";
 						
 							} else {
 								alert("결제를 실패했습니다.");
