@@ -19,6 +19,7 @@ import com.nhou.domain.qna.PageInfo;
 import com.nhou.domain.qna.QnADto;
 import com.nhou.domain.qna.QnAReplyDto;
 import com.nhou.service.member.MemberService;
+import com.nhou.service.qna.QnAReplyService;
 import com.nhou.service.qna.QnAService;
 
 @Controller
@@ -82,9 +83,10 @@ public class QnAController {
 	}
 	
 	//문의 삭제
-	@PreAuthorize("@qnABoardSecurity.checkWriter(authentication.name, #qnaId)")
+	//@PreAuthorize("@qnABoardSecurity.checkWriter(authentication.name, #qnaId)")
 	@PostMapping("delete")
 	public String remove(int qnaId) {
+	
 		qnaService.delete(qnaId);
 		
 		return "redirect:/main/list";

@@ -95,12 +95,12 @@
 
 
 	<section class="container">
-		<header>Registration</header>
+		<header>상품등록</header>
 		<form action="${pageContext.request.contextPath}/store/storeRegister" method="post" enctype="multipart/form-data" class="form">
 			
 		<!-- 판매자 -->
 			<div class="input-box">
-			  <label>Seller</label>
+			  <label>판매자 이름</label>
 			  <input 
 			  	 value="<sec:authentication property="name"/>"
 			  	 readonly type="text" class="form-control" name="member_userId" style="border:none">
@@ -109,7 +109,7 @@
 		<br>
 			
 		<!-- 카테고리명 선택 -->
-			<label for="categoryName">CategoryName</label>
+			<label for="categoryName">분류</label>
 			<div class="select-box">
 				<select class="form-select" name="productCategory_categoryId" id="productCategory_categoryId">
 					 <option value="1" name="furniture">Furniture</option>
@@ -125,7 +125,7 @@
 								    				
 		<!-- 상품명 -->
 			<div class="input-box">
-			  <label for="productName">ProductName</label>
+			  <label for="productName">상품명</label>
 			  <input type="text" class="form-control" id="productName" name="productName">
 			</div>
 		
@@ -133,14 +133,14 @@
 			
 		<!-- 상품상세 -->
 			<div class="input-box">
-			  <label for="productContents">Textarea</label>
+			  <label for="productContents">상품상세</label>
 			  <textarea class="form-control" id="Contents" rows="3" name="productContents"></textarea>
 			</div>
 		
 		<br>
 			
 		<!-- 상품대표이미지 -->
-			Thumbnail
+			상품대표이미지
 			<div class="input-group">
 			  <input type="file" class="form-control" name ="productFile1" id="inputGroupFile1" aria-describedby="inputGroupFileAddon1" aria-label="Upload">
 			</div>
@@ -148,7 +148,7 @@
 		<br>
 		
 		<!-- 상품이미지(추가) -->
-			Add Images
+			상품이미지(추가)
 			<div class="input-group">
 			  <input multiple type="file" class="form-control" name ="productFile2" id="inputGroupFile2" aria-describedby="inputGroupFileAddon2" aria-label="Upload">
 			</div>
@@ -156,7 +156,7 @@
 		<br>
 		
 		<!-- 판매가 -->
-			Price
+			판매가
 			<div class="input-group">
 			  <input type="text" class="form-control" name="price" aria-label="Dollar amount">
 			  <span class="input-group-text">₩</span>
@@ -165,7 +165,7 @@
 		<br>
 			
 		<!-- 재고 -->
-			Stock
+			재고
 			<div class="input-group">
 			  <input type="text" class="form-control" name="stock" aria-label="EA">
 			  <span class="input-group-text">ea</span>
@@ -174,7 +174,7 @@
 		<br>
 			
 		<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-			<button class="btn btn-secondary" type="submit">Submit</button>
+			<button class="btn btn-secondary" type="submit">등록하기</button>
 		</div>
 		</form>
 	</section>		

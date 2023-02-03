@@ -33,10 +33,7 @@
 	margin: 20px; 
 }
 /* 삭제버튼 */
-#button1 {
-	text-align: center;
-	position: relative;
-}
+
 #deleteSubmit {
 	display: inline-block;
 	position: absolute;
@@ -74,7 +71,9 @@
 	position: absolute;
 	background-color: #DCC1B0;
 }
-
+#adminContent {
+	margin: 0px;
+}
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -85,6 +84,7 @@
 	<div class="container" >
 			<h1>문의보기</h1>
 ${qnaReply.content }
+			<sec:authentication property="name" var="username"/>
 	<div id="box">		
 		
 		<select id="qnaCategory"class="form-select" aria-label="Disabled select example" disabled> 
@@ -114,19 +114,15 @@ ${qnaReply.content }
 		  <textarea class="form-control"id="floatingTextarea" name="content" style="resize: none; height: 150px;"readonly>${qna.content }</textarea>
 		  <label for="floatingTextarea">문의 내용</label>
 		</div>
-		
-		<%-- <input readonly type="text" value="${member_userId }" name="member_userId"> --%>
-		<%-- <c:if test="${qna.member_userId == username}"> </c:if>--%>
-			<sec:authentication property="name" var="username"/>
-			
+
 			<c:if test="${qna.member_userId == member.userId }">
 				<c:url value="/qnaBoard/delete" var="deleteLink"/>
 				<form id="deleteForm" action="${deleteLink }" method="post">
 					<input type="hidden" name="qnaId" value="${qna.qnaId }">
+					<div id="button1">	
+						<button type="submit" id="deleteSubmit" class="btn btn-outline" >삭제</button>					
+					</div>
 				</form>		
-				<div id="button1">	
-					<button id="deleteSubmit" class="btn btn-outline"  data-bs-toggle="modal" data-bs-target="#deleteQnAModal" data-reply-id="${qna.qnaId}"  >삭제</button>					
-				</div>
 			</c:if>			
 
 			<div class="button2">
@@ -138,25 +134,6 @@ ${qnaReply.content }
 	</div>
 </div>
 
-<%-- 댓글 삭제 확인 모달 --%>
-	<!-- Modal -->
-	<div class="modal fade" id="deleteQnAModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalLabel">문의 삭제 확인</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        문의를 삭제하시겠습니까?
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" data-bs-dismiss="modal" id="deleteQnASubmit" class="btn btn-danger">삭제</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
 <%--댓글 작성 --%>
 <br>
 <br>
@@ -252,14 +229,13 @@ function listReply(){
 		
 		const replyDiv = ` 
 							<label for="qnaAnswer" class="form-label"></label>							
-							<textarea class="form-control" id="qnaAnswer" rows="3" style="resize: none; height:150px;" readonly>
-							<관리자 답변>
-							\${item.content}																		
+							<textarea class="form-control" id="qnaAnswer" style="resize: none; height:150px; padding:0px 5px; text-align: left;" readonly>						
+							\${item.content}	
 							</textarea>						
 							<div>
 							\${item.insertDatetime}
 							</div>
-							<c:if test="${member.auth == 0 }">
+							<c:if test="${member.userId == 'admin' }">
 							<div id="button3">
 							\${deleteButton} 								
 							</div>
@@ -301,10 +277,11 @@ document.querySelector("#qnaReplySend").addEventListener("click", function(){
 	})
 	.then(() => listReply());
 });
-//삭제 모달 버튼 클릭하면 삭제 form 전송
-	document.querySelector("#deleteQnASubmit").addEventListener("click", function(){
-		document.querySelector("#deleteForm").submit();
-});	
+
+//삭제 버튼 클릭하면 삭제 form 전송
+document.querySelector("#deleteSubmit").addEventListener("click", function() {
+	document.querySelector("#deleteForm").submit();
+});
 </script>
 </body>
 </html>
