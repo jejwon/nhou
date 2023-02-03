@@ -156,7 +156,7 @@
 		<!-- 상품상세 -->
 			<div class="input-box">
 			  <label for="productContent">Textarea</label>
-			  <textarea class="form-control" id="productContent" rows="3" name="productContent"></textarea>
+			  <textarea class="form-control" id="productContent" rows="3" name="productContent" >${store.productContent }</textarea>
 			</div>
 			
 			<br>
