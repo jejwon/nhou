@@ -21,6 +21,7 @@ import com.nhou.domain.store.CategoryDto;
 import com.nhou.domain.store.Criteria;
 import com.nhou.domain.store.PageDto;
 import com.nhou.domain.store.StoreDto;
+import com.nhou.service.member.MemberService;
 import com.nhou.service.store.StoreService;
 
 @Controller
@@ -29,6 +30,9 @@ public class StoreController {
 
 	@Autowired
 	private StoreService service;
+	
+	@Autowired
+	private MemberService memberSerivce;
 	
 	@GetMapping("storeRegister")
 	// forward to view
@@ -79,12 +83,17 @@ public class StoreController {
 	@GetMapping("storeList")
 	public void list(@RequestParam(name="category", defaultValue = "") String category,
 			@RequestParam(name="productCategory_categoryId", required=false) Long productCategory_categoryId,
-					 StoreDto store, Criteria cri, Model model) {
+					 StoreDto store, Criteria cri, Model model, Principal principal) {
 		System.out.println("productCategory_categoryId "+productCategory_categoryId);
 		String keyword = cri.getKeyword();
 		cri.setKeyword("%" + cri.getKeyword() + "%");
 		List<StoreDto> list = service.listStore(cri, category, productCategory_categoryId);
 		List<CategoryDto> cateList = service.getCateList(cri);
+		
+		String loginId = principal.getName();
+		MemberDto member = memberSerivce.getById(loginId);
+		
+		model.addAttribute("member", member);
 		
 		System.out.println("상품" + list);
 		System.out.println("카테고리" + cateList);

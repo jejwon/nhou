@@ -1,5 +1,6 @@
 package com.nhou.controller.member;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,6 +119,31 @@ public class MemberController {
 	@GetMapping("login")
 	public void login() {
 		
+	}
+	
+	// 관리자 회원관리
+	@GetMapping("get")
+	public void getAndModify(@RequestParam(name="userId")String userId, Model model, Principal principal) {
+		String loginId = principal.getName();
+		MemberDto member = memberService.getById(loginId);
+			
+		MemberDto memberInfoByUserId = (MemberDto) memberService.selectMemberInfoByUserId(userId).get(0);
+		System.out.println(memberInfoByUserId);
+			
+		model.addAttribute("member", member);
+		model.addAttribute("memberInfoByUserId", memberInfoByUserId);
+			
+		}
+	
+	// 관리자 회원정보 수정
+	@PostMapping("addAuth")
+	public String addAuth(String userId, MemberDto member, Model model, Principal principal) {
+		
+		int auth = member.getAuth();
+		
+		memberService.updateAuth(userId, auth);
+		
+		return "redirect:/member/get?userId="+userId;
 	}
 	
 	
