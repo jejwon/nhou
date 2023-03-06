@@ -1,3 +1,4 @@
+
 package com.nhou.mapper.member;
 
 import java.util.List;
@@ -23,6 +24,14 @@ public interface MemberMapper {
 	// 회원탈퇴
 	int deleteById(String userId);
 	public void memberDelete(MemberDto member) throws Exception;
+	// 회원조회
+	List<MemberDto> selectMemberList(int offset, int records, String keyword, String type);
+	// 전체회원정보 검색가능을 위한 select count
+	public int selectAllMemberCount(String type, String keyword);
+	// 관리자용 회원정보 조회수정
+	MemberDto selectMemberInfoByUserId(String userId);
+	// 관리자 회원권한 부여
+	int updateAuth(String userId, int auth);
 	
 
 }

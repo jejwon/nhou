@@ -1,6 +1,7 @@
 package com.nhou.controller.member;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,9 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhou.domain.member.MemberDto;
+import com.nhou.domain.member.PageInfo;
 import com.nhou.service.member.MemberService;
 
 @Controller
@@ -21,8 +24,19 @@ public class AdminController {
 	private MemberService memberService;
 	
 	@GetMapping("memberInfo")
-	public void list(Model model) {
-		model.addAttribute("memberList", memberService.list());
+	public void list(@RequestParam(name="page", defaultValue = "1") int page,
+					PageInfo memberPageInfo,
+					@RequestParam(name="q") String keyword,
+					@RequestParam(name="t") String type,
+					Model model, Principal principal) {
+		String loginId = principal.getName();
+		MemberDto member = memberService.getById(loginId);
+		
+		List<MemberDto> memberList = memberService.selectMemberList(page, memberPageInfo, keyword, type);
+		
+		model.addAttribute("member", member);
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("memberPageInfo", memberPageInfo);
 		//System.out.println(model);
 	}
 	

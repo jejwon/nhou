@@ -4,6 +4,8 @@ import java.util.List;
 
 
 import com.nhou.domain.member.MemberDto;
+import com.nhou.domain.member.PageInfo;
+import com.nhou.service.store.StoreService;
 
 public interface MemberService {
 	
@@ -25,6 +27,15 @@ public interface MemberService {
 	// 회원탈퇴
 	public void memberDelete(MemberDto member) throws Exception;
 	public int remove(String userId);
+
+	// 회원정보조회
+	List<MemberDto> selectMemberList(int page, PageInfo memberPageInfo, String keyword, String type);
+
+	// 관리자 회원정보 조회수정
+	List<Object> selectMemberInfoByUserId(String userId);
+
+	// 회원 권한 수정
+	int updateAuth(String userId, int auth);
 
 
 	

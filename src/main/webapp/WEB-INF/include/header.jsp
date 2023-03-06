@@ -174,7 +174,14 @@
 				</c:if>	
 					<li><a class="qna" href="${pageContext.request.contextPath}/qnaBoard/qnaList">QnABOARD</a></li>
 				<c:if test="${member.userId == 'admin' }">
-					<li><a class="info" href="${pageContext.request.contextPath}/admin/memberInfo">MEMBER_INFO</a></li>
+					<c:url value="/admin/memberInfo" var="allMemberListLink">
+						<c:param name="page" value="1"/>
+		      			<c:param name="t" value="all"/>
+		      			<c:param name="q" value=""/>
+					</c:url>
+					<li>
+						<a class="info" href="${allMemberListLink}">MEMBER_INFO</a>
+					</li>
 				</c:if>
 				<c:if test="${member.auth == 2 }">
 					<c:url value="/myPage/mySellerList" var="mySellerListLink">

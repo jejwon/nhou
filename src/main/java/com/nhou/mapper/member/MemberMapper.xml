@@ -134,4 +134,102 @@ SELECT * FROM member WHERE nickName = #{nickName}
 SELECT * FROM member WHERE email  = #{email}
 </select>
 
+<!-- 회원 검색 -->
+<select id="selectAllMemberCount" resultType="int">
+SELECT COUNT(*)
+FROM member
+WHERE
+	<trim prefixOverrides="OR">
+	<if test="type == 'all' or type == 'userId'">
+ 		OR userId LIKE #{keyword}
+	</if>
+	<if test="type == 'all' or type == 'userName'">
+ 		OR userName LIKE #{keyword}
+	</if>
+	</trim>
+</select>
+
+<!-- 모든 회원정보 List로 가져오기 , 페이지네이션 & 검색 기능 추가 -->
+<select id="selectMemberList" resultMap="memberListMap">
+SELECT 
+ 	userId,
+ 	userName,
+ 	'****' password,
+ 	nickName,
+ 	address1,
+ 	address2,
+ 	email,
+ 	birthDate,
+ 	phone,
+ 	auth
+FROM
+ 	member
+WHERE
+ 	<trim prefixOverrides="OR">
+ 	<if test="type == 'all' or type == 'userId'">
+ 		OR userId LIKE #{keyword}
+ 	</if>
+ 	<if test="type == 'all' or type == 'userName'">
+ 		OR userName LIKE #{keyword}
+ 	</if>
+ 	</trim>
+ORDER BY userName
+LIMIT #{offset}, #{records}
+</select>
+
+<resultMap type="com.nhou.domain.member.MemberDto" id="memberListMap">
+	<id column="userId" property="userId" />
+ 	<result column="userName" property="userName" />
+ 	<result column="password" property="password" />
+ 	<result column="nickName" property="nickName" />
+ 	<result column="email" property="email" />
+ 	<result column="address1" property="address1" />
+ 	<result column="address2" property="address2" />
+ 	<result column="birthDate" property="birthDate" />
+ 	<result column="phone" property="phone" />
+ 	<result column="auth" property="auth"/>
+</resultMap>
+
+<!-- userId 모든 정보 조회 -->
+<select id="selectMemberInfoByUserId" resultMap="memberList">
+SELECT
+	userId,
+ 	userName,
+ 	password,
+ 	nickName,
+ 	address1,
+ 	address2,
+ 	email,
+ 	birthDate,
+ 	phone,
+ 	auth,
+ 	insertDatetime
+ FROM
+ 	member
+ WHERE
+ 	userId = #{userId}
+</select>
+<resultMap type="com.nhou.domain.member.MemberDto" id="memberList">
+	<id column="userId" property="userId" />
+ 	<result column="userName" property="userName" />
+ 	<result column="password" property="password" />
+ 	<result column="nickName" property="nickName" />
+ 	<result column="email" property="email" />
+ 	<result column="address1" property="address1" />
+ 	<result column="address2" property="address2" />
+ 	<result column="birthDate" property="birthDate" />
+ 	<result column="phone" property="phone" />
+ 	<result column="auth" property="auth"/>
+ 	<result column="insertDatetime" property="insertDatetime"/>
+</resultMap>
+
+<!-- 회원권한 수정 -->
+<update id="updateAuth">
+UPDATE 
+	member 
+SET
+	auth = #{auth}
+WHERE 
+	userId = #{userId}
+</update>
  </mapper>
